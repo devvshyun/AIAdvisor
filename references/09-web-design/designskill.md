@@ -1,5 +1,4 @@
 # AI 티 안 나는 웹사이트, 클로드로 만드는 법
-- 원문: https://lazyowen.com/guides/designskill
 - 도구·주제: Claude Code + taste-skill + impeccable (+ 선택: Claude Design) · 웹 디자인 (2026-08-06 갱신, STEP 6개 · 약 10분)
 - 한 줄 요약: 스킬 2개 설치 → `/impeccable init`으로 디자인 기준 파일(PRODUCT.md, DESIGN.md) 저장 → 빌드 요청에 가드레일 추가 → `impeccable detect`로 AI 티를 자동 검사.
 

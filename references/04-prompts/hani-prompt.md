@@ -1,5 +1,4 @@
 # 클로드 코드에 무료 프롬프트 라이브러리 연결하는 법
-- 원문: https://lazyowen.com/guides/hani-prompt
 - 도구·주제: Claude Code + prompts.chat 플러그인(MCP) · 프롬프트 라이브러리 (2026-09-20 공개, STEP 5개 · 약 15분)
 - 한 줄 요약: prompts.chat(2,300개+ 공개 프롬프트)을 플러그인으로 연결해, 요청 문장에 검색 지시를 넣으면 클로드가 필요한 프롬프트를 찾아 적용하게 한다.
 

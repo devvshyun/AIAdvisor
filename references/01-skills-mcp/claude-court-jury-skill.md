@@ -1,5 +1,4 @@
 # 아이디어를 클로드 12명 재판에 세우는 스킬
-- 원문: https://lazyowen.com/guides/claude-court-jury-skill
 - 도구·주제: Claude Code (court-skill, `/court`) · 의사결정 검증 / 멀티에이전트 (스킬·MCP, 비즈니스, 10분, STEP 4개, 2026-10-08 공개)
 - 한 줄 요약: `/court` 스킬이 검사, 변호인, 배심원 12명, 판사 역할의 에이전트를 돌려 내 아이디어에 유죄/무죄 표결과 "무죄가 되는 조건"을 알려 준다.
 

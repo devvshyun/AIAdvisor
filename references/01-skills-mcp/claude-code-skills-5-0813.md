@@ -1,5 +1,4 @@
 # 클로드 코드 필수 스킬 5개
-- 원문: https://lazyowen.com/guides/claude-code-skills-5-0813
 - 도구·주제: Claude Code · 스킬 설치 (브라우저/탐색/디자인/MCP/작업 관리)
 - 한 줄 요약: agent-browser, find-skills, design-taste-frontend, mcp-builder, GSD 5개를 npx 한 줄씩 설치하고 `ls`로 확인한 뒤 작은 요청으로 실사용 점검.
 

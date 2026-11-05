@@ -1,5 +1,4 @@
 # 월 1000만원 버는 유튜브 채널, 클로드 오퍼스로 만드는 5단계 (얼굴 없는 유튜브 채널)
-- 원문: https://lazyowen.com/guides/faceless-youtube-channel-opus-higgsfield
 - 도구·주제: Claude Opus 5.5 · Higgsfield MCP/CLI · 얼굴 없는 유튜브 채널 / 영상 제작 파이프라인 (2026-10-08 공개, STEP 5개, 약 14분 분량 글)
 - 한 줄 요약: 리서치 → 대본 재구성(Opus 5.5) → 힉스필드 연결 → 설명 영상 제작 → 쇼츠 변환의 5단계 워크플로. 월 1000만원은 제목상의 문구이며 수익 보장이 아니다.
 
@@ -9,7 +8,7 @@
 
 ## 준비물 / 필요 도구
 - Claude: 모델 목록에서 Opus 5.5를 고를 수 있는 플랜 — https://claude.ai / Opus 5.5 https://www.anthropic.com/claude-opus-5-5
-- Higgsfield 유료 구독 필수. 클로드를 통한 생성마다 표준 요율로 크레딧 차감(구체 요금은 원문에 없음)
+- Higgsfield 유료 구독 필수. 클로드를 통한 생성마다 표준 요율로 크레딧 차감(구체 요금은 Higgsfield 요금표 확인)
   - MCP 안내 https://higgsfield.ai/mcp · MCP 서버 URL `https://mcp.higgsfield.ai/mcp`
   - 스킬 저장소(MIT) https://github.com/higgsfield-ai/skills (스타 1,200+) · 스킬 목록 https://higgsfield.ai/skills
   - 설명 영상 스킬 Editorial Motion Graphics https://higgsfield.ai/skills/editorial-motion-graphics

@@ -1,5 +1,4 @@
 # ChatGPT한테 '사진 고쳐줘' 대신 쓰는 프롬프트 10개
-- 원문: https://lazyowen.com/guides/chatgpt-modify-photo-prompt
 - 도구·주제: ChatGPT(Images, 사진 편집) · 사진 편집 프롬프트 (프롬프트, 영상·이미지, 12분 읽기, STEP 4개, 약 10분 실습, 2026-09-27 갱신. 검증 기준: ChatGPT Images 2.5, 공식 도움말 확인)
 - 한 줄 요약: "사진 고쳐줘" 대신 지킬 것/바꿀 것을 한 번에 적은 영어 편집 프롬프트 10종을 대괄호 칸만 채워 붙여넣어 ChatGPT 사진 편집 품질을 올린다.
 

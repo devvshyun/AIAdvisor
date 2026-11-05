@@ -1,5 +1,4 @@
 # ECC 하나 설치해서 클로드에 엔지니어 전부를 맡기는 법
-- 원문: https://lazyowen.com/guides/ecc-claude-code-agent-team
 - 도구·주제: Claude Code 플러그인 ECC · 에이전트/스킬/명령 번들, 설계-TDD-테스트-보안 점검 워크플로
 - 한 줄 요약: ECC 플러그인 하나(명령 두 줄)를 설치해 planner·security-reviewer 등 에이전트와 `/ecc:plan`, `/ecc:test-coverage`, `/ecc:security-scan` 명령으로 기능 하나를 설계부터 보안 점검까지 한 줄씩 맡긴다. (2026-09-30 갱신, 약 25분, 검증 기준: ECC v2.2.2 / Claude Code 2.1.283)
 

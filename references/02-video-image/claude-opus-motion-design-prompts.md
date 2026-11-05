@@ -1,5 +1,4 @@
 # 오퍼스 프롬프트 하나로 15초 모션 영상
-- 원문: https://lazyowen.com/guides/claude-opus-motion-design-prompts
 - 도구·주제: Claude Code(Opus 5.5) · ffmpeg · 코드로 15초 모션그래픽 MP4 생성
 - 한 줄 요약: Claude Code를 `--model claude-opus-5-5 --effort max`로 열어 영어 프롬프트 하나로 15초 모션 쇼릴 코드를 만들게 하고 ffmpeg로 MP4 렌더한다. (원문 2026-10-05 갱신, 읽는 데 10분, 4단계)
 

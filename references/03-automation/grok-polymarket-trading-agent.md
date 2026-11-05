@@ -1,5 +1,4 @@
 # 그록 50달러 자동매매 에이전트
-- 원문: https://lazyowen.com/guides/grok-polymarket-trading-agent
 - 도구·주제: Grok Bot (xAI, Cursor 계정) · Polymarket 모의(페이퍼) 매매 에이전트
 - 한 줄 요약: Grok Bot이 10분마다 Polymarket 시장을 훑어 가상 $50으로 모의 거래하는 루틴을 만드는 방법. 실거래는 다루지 않음. (2026-10-08 갱신, 읽는 데 15분, 4단계 약 30분, 검증 기준일 2026-10-03)
 

@@ -1,5 +1,4 @@
 # GitHub 레포를 한눈에 읽는 치트키 사이트 2곳
-- 원문: https://lazyowen.com/guides/github-repo-diagram-ingest-cheats
 - 도구·주제: GitDiagram · GitIngest (+ ChatGPT/Claude) · 낯선 레포 빠르게 파악 (코딩, 12분 읽기, STEP 4개, 약 14분 실습, 2026-10-08 갱신)
 - 한 줄 요약: GitHub 주소의 `hub` 세 글자만 바꿔(`github` → `gitdiagram`/`gitingest`) 레포 구조를 그림(GitDiagram)으로 보고, 전체를 AI용 텍스트(GitIngest)로 묶어 ChatGPT/Claude에 붙여 질문한다.
 

@@ -1,5 +1,4 @@
 # 발표 자료 뽑는 클로드 프롬프트 6개
-- 원문: https://lazyowen.com/guides/claude-presentation-prompts-6
 - 도구·주제: Claude (claude.ai) · 발표 자료(PPTX) 생성 프롬프트
 - 한 줄 요약: 한 대화 안에서 설계도→슬라이드 구조→스토리→디자인→내용→다듬기 6개 프롬프트를 순서대로 보낸 뒤 .pptx 파일을 요청한다. (2026-10-19 공개, 읽는 데 8분, 5단계 약 14분)
 

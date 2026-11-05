@@ -1,5 +1,4 @@
 # AI가 쓴 글은 문체가 아니라 이야기 구조에서 걸립니다 (StoryScope)
-- 원문: https://lazyowen.com/guides/storyscope-ai-fiction
 - 도구·주제: StoryScope(논문 + GitHub 저장소) + Claude/ChatGPT 진단 프롬프트 · 글쓰기 / AI 티 제거 (공부·리서치, 13분 읽기, STEP 8개, 2026-08-18 공개)
 - 한 줄 요약: 문체가 아니라 "이야기를 짜는 방식(서사 구조)"으로 AI 소설을 93.2% 가려낸다는 StoryScope 논문을 정리하고, 내 글을 같은 기준으로 진단·수정하는 체크리스트와 프롬프트를 제공한다.
 
@@ -12,7 +11,6 @@
 - 저자: Jenna Russell, Rishanth Rajendhran, Chau Minh Pham, Mohit Iyyer (University of Maryland, College Park), John Wieting (Google DeepMind)
 - 공식 GitHub: https://github.com/jenna-russell/storyscope — 파이프라인 코드, 프롬프트 10,272개, AI 생성 서사 51,336편. 사람 소설 원문은 저작권 때문에 비공개(Books3 원본을 따로 구해야 함).
 - 진단용: ChatGPT 또는 Claude 대화창. 논문·저장소·가이드 모두 무료.
-- 가이드 PDF(A4 9쪽): https://lazyowen.com/guide-pdf/storyscope-ai-fiction.pdf
 
 ## 단계별 방법
 ### 요약 3줄 (Quick Start)

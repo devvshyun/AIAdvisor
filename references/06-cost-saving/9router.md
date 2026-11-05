@@ -1,5 +1,4 @@
 # Claude Code 한도 뒤에도 계속 코딩하는 9Router 설정
-- 원문: https://lazyowen.com/guides/9router
 - 도구·주제: 9Router + Claude Code · 비용 절약 / 한도 이후 자동 폴백 (10분 읽기, STEP 10개, 2026-08-06 갱신판)
 - 한 줄 요약: 주 모델과 백업 모델을 9Router의 Fallback Combo로 묶어 Claude Code 한도 초과나 라우팅 가능한 오류 때 자동으로 다음 모델로 넘기고, Cursor 등 다른 도구에도 같은 엔드포인트를 쓴다.
 - 참고: 같은 주제의 2026-08-19판은 `9router-free-fallback.md`.

@@ -1,5 +1,4 @@
 # 디자인 스킬 5개 (클로드한테 디자인 시키기 전에 깔 것)
-- 원문: https://lazyowen.com/guides/claude-design-top-5-skill
 - 도구·주제: Claude Code + 스킬 5종 · AI 웹디자인 품질
 - 한 줄 요약: Awesome DESIGN.md, Image to Code, Taste, agent-browser, Web Design Guidelines를 순서대로 설치해 디자인 고정→참고 이미지→탈 AI 스타일→자기 검증→배포 전 검사 흐름을 만든다. (2026-08-25 공개, 읽는 데 16분, 7단계 따라 하면 약 28분)
 

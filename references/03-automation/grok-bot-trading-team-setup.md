@@ -1,5 +1,4 @@
 # 그록 에이전트 7개로 트레이딩 팀 만드는 법
-- 원문: https://lazyowen.com/guides/grok-bot-trading-team-setup
 - 도구·주제: Grok Bot(x.ai) + worldmonitor · 모의 트레이딩 에이전트 팀
 - 한 줄 요약: Grok Bot 앱에서 총괄 봇 CHIEF 1개 + 역할 봇 6개(SCAN/VET/BOOK/SIZE/FILLS/RISK)를 만들고, 밈코인 데스크와 예측시장 데스크 두 그룹으로 실제 돈 없는 모의 매매 팀을 돌린다. (2026-10-20 공개, 약 60분)
 
@@ -149,7 +148,7 @@ RISK 대화창에 지켜볼 코인 하나의 계약 주소(SCAN 후보의 `contr
 - 기준값은 출발점일 뿐이며 모의 보고를 보며 숫자만 조정
 - 기본 설치 worldmonitor는 데이터가 비어 degraded로 도는 것이 정상(전체 데이터는 Docker/Redis/수집 스크립트 필요)
 - 시작 잔고 1,000달러(SIZE 6% 상한 ≥ 최소 주문 50달러)
-- 투자 수익을 보장하는 내용이 아님. 실제 자금 운용은 원문에서도 다루지 않음
+- 투자 수익을 보장하는 내용이 아님. 실제 자금 운용은 다루지 않음
 
 ## 문제 해결
 - 그록 봇이 열리지 않음: X 구독 Plus·Free에는 Grok Bot이 없음 → Premium 이상 또는 SuperGrok 계열로 로그인

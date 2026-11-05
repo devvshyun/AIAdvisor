@@ -1,5 +1,4 @@
 # Claude Code 스킬 TOP 5, 겹치지 않게 설치하는 가이드
-- 원문: https://lazyowen.com/guides/claude-skills-top5
 - 도구·주제: Claude Code 플러그인 (superpowers, ECC, karpathy-skills, awesome-claude-code, wshobson/agents) · 스킬/플러그인 선택·설치
 - 한 줄 요약: 많이 깔지 말고 역할이 안 겹치게 하나씩 설치하고, `claude plugin details`로 고정(always-on) 토큰 비용까지 확인하라는 가이드.
 

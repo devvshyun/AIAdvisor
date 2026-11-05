@@ -1,5 +1,4 @@
 # 돈 잃을 때마다 자기 코드를 다시 짜는 AI 트레이딩 시스템 만드는 법
-- 원문: https://lazyowen.com/guides/self-improving-ai-trading-loop
 - 도구·주제: Claude Code + alpaca-py(알파카 모의 계좌) · 트레이딩 리서치 루프 / 자동화 (2026-11-02 공개, STEP 5개 · 약 105분)
 - 한 줄 요약: 아이디어 → 전략 코드 → 백테스트 → 코드로 건 손실 한도 아래 모의 매매 → 사후 검토 → 실패 장부 누적의 5단계 루프를 Claude Code로 구성한다. 돈을 벌어 주는 기계도 투자 조언도 아니다.
 

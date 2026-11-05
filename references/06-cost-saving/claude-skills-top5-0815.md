@@ -1,5 +1,4 @@
 # 클로드 코드를 쓰기 전에 깔아야 하는 플러그인 5개
-- 원문: https://lazyowen.com/guides/claude-skills-top5-0815
 - 도구·주제: Claude Code · 비용 절약 / 스킬·MCP (2026-08-26 갱신, STEP 6개 · 약 36분)
 - 한 줄 요약: 한도 소진·맥락 망각을 막는 무료 도구 5개(OmniRoute, Headroom, Claude-mem, Claude Code Setup, Task Observer)를 하나씩 설치하고 진짜 붙었는지 확인한다.
 

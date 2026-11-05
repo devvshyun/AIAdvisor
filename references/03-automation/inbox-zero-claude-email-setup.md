@@ -1,5 +1,4 @@
 # 메일 답장, 이제 클로드한테 맡기는 세팅법
-- 원문: https://lazyowen.com/guides/inbox-zero-claude-email-setup
 - 도구·주제: Inbox Zero · Claude Code(또는 Claude 앱 커넥터) · 이메일 분류/답장 초안 자동화 (2026-10-08 갱신, STEP 5개 · 약 60분)
 - 한 줄 요약: Gmail/Outlook 위에서 동작하는 오픈소스 AI 메일 비서 Inbox Zero로 분류·답장 초안·후속 연락 추적을 켜고, API 키+CLI(또는 커넥터)로 Claude가 규칙과 통계를 읽기 전용으로 점검하게 하는 5단계.
 

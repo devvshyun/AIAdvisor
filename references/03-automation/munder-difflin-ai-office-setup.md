@@ -1,5 +1,4 @@
 # AI 오피스를 통째로 고용하는 법: 먼더 디플린
-- 원문: https://lazyowen.com/guides/munder-difflin-ai-office-setup
 - 도구·주제: Munder Difflin (+ Claude Code / Codex / Antigravity) · 멀티 에이전트 관리 데스크톱 앱
 - 한 줄 요약: 클로드 코드·코덱스 같은 AI 코딩 에이전트 여러 개를 사무실 화면 하나에 모으고, 팀장 에이전트 마이클에게만 말하면 마이클이 일을 나눠 맡기는 무료 앱의 설치·운영법. 챗봇이 아니고 AI 모델도 들어 있지 않다. (2026-10-08 공개, 읽는 데 13분, 따라 하면 약 33분)
 

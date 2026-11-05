@@ -1,5 +1,4 @@
 # 클로드 효과음 도구 3개 (오픈버스 API · 리얼 SFX · 이어샷)
-- 원문: https://lazyowen.com/guides/claude-sound-effects-tools
 - 도구·주제: Claude Code + Openverse API / real-sfx 스킬 / earshot · 영상 효과음 (STEP 3개)
 - 한 줄 요약: 공개 효과음 검색(Openverse), 영상에 실제 녹음 효과음을 맞는 프레임에 삽입(real-sfx), 맞는 소리가 없을 때 코드로 생성(earshot) 세 도구를 설치해 Claude Code에 연결한다. 모두 무료, 코드는 MIT.
 

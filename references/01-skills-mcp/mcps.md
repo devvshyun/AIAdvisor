@@ -1,5 +1,4 @@
 # 클로드 코드에 무조건 깔아야 하는 MCP 5개
-- 원문: https://lazyowen.com/guides/mcps
 - 도구·주제: Claude Code + MCP (Perplexity, Playwright, Firecrawl, Glif, Chrome DevTools) · MCP 연결 (스킬·MCP, 13분 읽기, 약 38분 실습, STEP 8개, 2026-08-06 갱신)
 - 한 줄 요약: 검색·브라우저 조작·크롤링·이미지 생성·내 탭 점검 능력을 `claude mcp add` 한 줄씩으로 붙이고 실제 연결을 확인하는 가이드.
 

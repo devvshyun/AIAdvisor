@@ -1,5 +1,4 @@
 # 돈을 못 벌면 진짜 죽는 AI 에이전트 오토마톤 설치법
-- 원문: https://lazyowen.com/guides/automaton-self-funding-ai-agent
 - 도구·주제: Automaton (Conway Research) · 자가 자금조달 AI 에이전트 / 실험 (2026-09-27 갱신·검증, Automaton v0.2.1, Node.js v24.21.0, STEP 5개)
 - 한 줄 요약: 크립토 지갑 잔고로 자신의 추론 비용을 내고 잔고 0이 1시간 지속되면 스스로 멈추는 오픈소스(MIT) 터미널 에이전트를 소스에서 빌드해 지갑·지출 한도 설정까지 해보는 실험 가이드.
 

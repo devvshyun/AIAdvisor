@@ -1,5 +1,4 @@
 # 클로드 코드 토큰 3배로 오래 쓰는 무료 도구 3개
-- 원문: https://lazyowen.com/guides/tokensave
 - 도구·주제: Ponytail · Graphify · Headroom (Claude Code) · 비용 절약 / 토큰 절약 (2026-08-06 갱신, STEP 7개 · 약 17분)
 - 한 줄 요약: 토큰이 새는 세 지점(AI가 쓰는 코드량, 찾느라 읽는 파일량, 모델에 실제로 보내는 양)을 각각 막는 무료 도구 3개를 함께 설치하고, `headroom savings`로 실제 절감을 확인한다.
 

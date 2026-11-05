@@ -1,5 +1,4 @@
 # 클로드 트레이더 Phil
-- 원문: https://lazyowen.com/guides/phil-ai-trader-paper-1000
 - 도구·주제: Claude Code · Phil(오픈소스) · Polymarket · AI 모의 트레이딩 / 자기개선 전략
 - 한 줄 요약: Claude Code가 가상 $1,000으로 Polymarket 단기 시장을 모의 거래하고, 결과마다 전략 파일을 고쳐 git 커밋으로 남기는 실험 저장소를 돌리는 4단계. (2026-10-08 갱신, 읽는 데 10분)
 

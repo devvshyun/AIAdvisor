@@ -1,5 +1,4 @@
 # 클로드로 전문가가 만든 것 같은 웹사이트 만드는 법 (디자인 스킬 3개 + 연결 도구 2개)
-- 원문: https://lazyowen.com/guides/claude-designer-kill
 - 도구·주제: Claude Code + emil-design-eng / Impeccable / Taste(design-taste-frontend) + Playwright MCP / Figma MCP · AI 웹디자인 품질 향상 (웹 디자인, 스킬·MCP, 16분 읽기, STEP 5개, 약 20분 실습, 2026-09-19 갱신)
 - 한 줄 요약: 디자인 기준(스킬 3개)과 확인 도구(MCP 2개)를 설치하고 구체적인 브리프를 줘서 보라색 그라데이션·똑같은 카드 세 장 같은 "AI 티" 나는 사이트에서 벗어난다.
 

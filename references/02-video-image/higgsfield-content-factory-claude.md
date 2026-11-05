@@ -1,5 +1,4 @@
 # 힉스필드 콘텐츠 팩토리 숏폼 공장
-- 원문: https://lazyowen.com/guides/higgsfield-content-factory-claude
 - 도구·주제: Higgsfield Content Factory + Claude 커넥터 · 숏폼 설명 영상 / 제품 홍보 (STEP 5개, 약 16분)
 - 한 줄 요약: Higgsfield MCP를 Claude에 연결하고 Content Factory에서 스타일을 골라 30초 9:16 애니메이션 설명 영상을 만든 뒤, 제품 소개와 판매 링크 연결까지 잇는다.
 

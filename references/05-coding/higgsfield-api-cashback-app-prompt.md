@@ -1,5 +1,4 @@
 # Higgsfield + GPT-6 Astra로 앱 만드는 프롬프트
-- 원문: https://lazyowen.com/guides/higgsfield-api-cashback-app-prompt
 - 도구·주제: ChatGPT(GPT-6 Astra) · Higgsfield API · 이미지/영상 생성 자동화 앱을 만들게 하는 프롬프트 (2026-09-27 공개, 읽는 데 3분, 섹션 2개: 프롬프트 원문 + 한글 설명)
 - 한 줄 요약: GPT-6 Astra 새 대화에 영어 프롬프트 하나를 붙여, 상품 사진/고객 요청을 Higgsfield API로 이미지·영상으로 바꾸는 자동화 앱을 만들게 한다.
 
@@ -10,13 +9,11 @@
 ## 준비물 / 필요 도구
 - ChatGPT에서 GPT-6 Astra 모델 선택 (https://chatgpt.com)
 - Higgsfield API (프롬프트가 "연결된 내 Higgsfield API"를 전제함)
-- 원문 상단 안내(홍보 링크): 9월 30일까지 Higgsfield API 비용 100% 캐시백 링크 https://higgsfield.ai/s/higgsfield-api-ig-v2-lazy_owen-yDmFfb — 작성 시점 기준 기한이 이미 지났을 수 있으니 확인 필요
-- PDF: https://lazyowen.com/guide-pdf/higgsfield-api-cashback-app-prompt.pdf (A4 3쪽)
 - 페이지에는 설치 명령, 저장소, API 키 발급·연결 절차, 구체 요금 안내가 없음(프롬프트 안에서 "필요한 연결을 쉬운 말로 설명"하게 시킴)
 
 ## 단계별 방법
 1. ChatGPT에서 GPT-6 Astra를 고르고 새 대화를 연다
-2. 프롬프트 원문을 통째로 첫 메시지로 붙여넣는다 (영어 원문은 원문 페이지에서 복사)
+2. 프롬프트 원문을 통째로 첫 메시지로 붙여넣는다
 3. AI가 한 번에 하나씩 묻는 질문(내 아이디어, 내 고객, 자동화하고 싶은 일)에 답한다. 막히면 제시되는 현실적 아이디어 3개 중 고른다
 4. 앱이 만들어지면 AI가 쉬운 말로 설명하는 필요 연결 설정(Higgsfield API 연결 등)을 진행한다
 5. 요청 1건으로 먼저 테스트하고, 이어 10건으로 테스트한다

@@ -1,5 +1,4 @@
 # 클로드 세션 명령어 5개
-- 원문: https://lazyowen.com/guides/claude-code-session-commands-5
 - 도구·주제: Claude Code · 세션 관리 명령어 (/btw, /recap, ESC 두 번(/rewind), /branch, Ctrl+S)
 - 한 줄 요약: 대화에 남기지 않는 질문, 한 줄 요약, 되감기, 갈림길, 프롬프트 보관 5가지와 git 저장 지점을 함께 쓰는 법. (2026-10-17 공개, 읽는 데 11분, 5단계 약 8분)
 

@@ -1,5 +1,4 @@
 # 클로드가 남기는 표식 지우기
-- 원문: https://lazyowen.com/guides/remove-ai-marks
 - 도구·주제: watermarks-remover (Guillaume Meyer, MIT) · AI 생성물 표식 점검/제거
 - 한 줄 요약: 글 속 안 보이는 문자와 이미지/PDF 메타데이터는 도구로 제거·검증할 수 있고, 단어 선택 패턴은 검증 방법이 없다는 한계를 안내한다. (2026-08-21 공개, 읽는 데 12분, 6단계 따라 하면 약 53분)
 

@@ -1,5 +1,4 @@
 # 클로드로 이력서를 탈락시키려는 채용 심사단 만드는 법
-- 원문: https://lazyowen.com/guides/claude-resume-hiring-panel
 - 도구·주제: Claude Code 스킬 `hiring-panel` · 이력서 평가/개선
 - 한 줄 요약: hiring-panel 스킬을 설치하면 자동 검사 1명 + 채용 관리자 1명 + 독립 평가자 5명이 이력서를 서로 다른 관점에서 심사해 탈락 사유 목록과 수정본을 만들어 준다.
 

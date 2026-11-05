@@ -1,5 +1,4 @@
 # 유튜브 튜토리얼을 클로드가 실행하는 스킬로 바꾸는 세 가지 세팅
-- 원문: https://lazyowen.com/guides/claude-youtube-skill
 - 도구·주제: Claude Code + claude-video(watch 스킬) + Gemini + skill-creator · 영상 학습 → 재사용 스킬
 - 한 줄 요약: 클로드에게 영상을 보는 눈(watch 스킬)을 달고, 같은 영상을 Gemini가 두 번째 눈으로 따로 읽게 한 뒤, 두 기록을 SPEC.md로 합쳐 skill-creator로 실제 실행되는 스킬로 굽는 순서. (2026-09-10 공개, 읽는 데 16분, 따라 하면 약 54분, STEP 9개)
 

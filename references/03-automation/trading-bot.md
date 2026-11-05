@@ -1,5 +1,4 @@
 # 클로드 코드로 만드는 5자산 자동매매 봇
-- 원문: https://lazyowen.com/guides/trading-bot
 - 도구·주제: Claude Code + Alpaca(alpaca-py) · 자동매매 봇 제작 (교육용)
 - 한 줄 요약: Claude Code로 SPY·QQQ·BTC/USD·GLD·USO 5자산 봇을 만들고 백테스트 → 2주 모의투자 → 손실 한도 → 아침저녁 리포트 → 실계좌 순서로 8단계에 걸쳐 검증하며 넘어가는 방법. (2026-08-06 갱신, 약 23분, STEP 8개)
 
@@ -203,7 +202,7 @@ ALPACA_LIVE_CONFIRM=I_UNDERSTAND_REAL_MONEY
 ```bash
 python main.py live --once
 ```
-3. 금액: Alpaca는 최소 입금액이 없다. 전부 잃어도 생활에 지장 없는 금액으로. 1% 룰이라 1,000만 원 계좌면 한 번에 최대 10만 원(원문 기준 $10,000 계좌에 $100).
+3. 금액: Alpaca는 최소 입금액이 없다. 전부 잃어도 생활에 지장 없는 금액으로. 1% 룰이라 1,000만 원 계좌면 한 번에 최대 10만 원($10,000 계좌라면 $100).
 4. 24시간 가동: VPS(월 $5~10, DigitalOcean·Railway)
 5. 자동 재시작 — PM2: `pm2 list`에 `trading-bot`이 online이면 정상
 ```bash

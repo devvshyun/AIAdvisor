@@ -1,5 +1,4 @@
 # Claude Code 한도 이후에도 작업을 이어가는 OmniRoute 입문 가이드
-- 원문: https://lazyowen.com/guides/omniroute
 - 도구·주제: OmniRoute + Claude Code · 비용 절약 / 한도 이후 폴백 + 토큰 압축 (2026-08-06 갱신, npm 공개판 v3.8.48 기준, STEP 8개 · 약 32분)
 - 한 줄 요약: Claude Code와 여러 AI 제공자 사이의 로컬 게이트웨이를 세워, Claude 한도가 끝나면 연결해 둔 다른 모델로 요청을 넘기고 긴 도구 출력은 보내기 전에 압축한다.
 

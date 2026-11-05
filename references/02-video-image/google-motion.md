@@ -1,5 +1,4 @@
 # 모션 그래픽 한 편을 10분 만에 만드는 레퍼런스 번역법
-- 원문: https://lazyowen.com/guides/google-motion
 - 도구·주제: Claude + Google Flow(Omni Flash) + ffmpeg · 레퍼런스 영상 → 생성 프롬프트 → 모션 그래픽
 - 한 줄 요약: 따라 하고 싶은 모션 그래픽을 프레임 사진으로 잘라 Claude에게 읽혀 생성 프롬프트로 번역시키고, 그 프롬프트를 Google Flow(Omni Flash)에 넣어 클립으로 받는다. (2026-09-12 공개, STEP 6개)
 

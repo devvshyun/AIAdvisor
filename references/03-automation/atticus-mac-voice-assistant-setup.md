@@ -1,5 +1,4 @@
 # 맥용 자비스 아티커스(Atticus) 설치하고 세팅하는 법
-- 원문: https://lazyowen.com/guides/atticus-mac-voice-assistant-setup
 - 도구·주제: Atticus (macOS) + Claude Code · 음성 비서 / 맥 제어 (자동화, 4분 읽기, 2026-10-28 공개)
 - 한 줄 요약: 단축키를 누른 채 영어로 말하면 앱 실행, 창 이동, 파일 찾기를 해 주는 무료 오픈소스(MIT) 앱을 명령 한 줄로 설치하고 권한을 세팅한다.
 

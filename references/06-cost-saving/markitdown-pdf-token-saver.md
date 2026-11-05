@@ -1,5 +1,4 @@
 # 클로드에 PDF 올리면 토큰 2배, 무료 마크잇다운으로 줄이는 법
-- 원문: https://lazyowen.com/guides/markitdown-pdf-token-saver
 - 도구·주제: Microsoft MarkItDown · markitdown-mcp · Claude Desktop · 토큰 절약 / 문서 변환 (비용 절약, 13분 읽기, STEP 5개, 약 22분 실습, 2026-09-28 공개, MarkItDown v0.1.8 기준)
 - 한 줄 요약: PDF/Word/Excel/PowerPoint를 글자만 남긴 마크다운으로 변환해 Claude에 올려 토큰을 줄이고, MCP로 Claude Desktop 대화 안에서 바로 변환하게 연결한다.
 

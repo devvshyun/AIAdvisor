@@ -1,5 +1,4 @@
 # ChatGPT로 SNS 관리
-- 원문: https://lazyowen.com/guides/chatgpt-metricool-social-manager
 - 도구·주제: ChatGPT 앱(Metricool for Social Media) · Metricool · SNS 분석/예약 자동화
 - 한 줄 요약: ChatGPT에 Metricool 앱을 연결해 SNS 성과 분석, 콘텐츠 아이디어, 게시물 예약을 대화로 처리하는 5단계(프롬프트 10개). (2026-10-05 갱신, 읽는 데 12분, 따라 하면 약 20분)
 

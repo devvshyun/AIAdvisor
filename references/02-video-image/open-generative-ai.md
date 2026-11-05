@@ -1,5 +1,4 @@
 # 유료 영상 AI 대신 쓰는 무료 스튜디오 입문 가이드 (Open Generative AI)
-- 원문: https://lazyowen.com/guides/open-generative-ai
 - 도구·주제: Open Generative AI · 영상·이미지 생성 (2026-08-11 공개, STEP 7개, 약 31분)
 - 한 줄 요약: 오픈소스(MIT) 앱 하나로 이미지·영상 모델 200여 개를 한 화면에서 쓰고, muapi-cli와 스킬로 Claude Code/Codex 자동화까지 하는 입문.
 

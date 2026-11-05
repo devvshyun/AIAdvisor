@@ -1,5 +1,4 @@
 # 클로드·버지로 시네마틱 광고 5개
-- 원문: https://lazyowen.com/guides/claude-buzzy-product-video-ads
 - 도구·주제: Claude Code + Buzzy(버지) MCP · 제품 사진 → 영상 광고 (2026-10-25 갱신, STEP 5개)
 - 한 줄 요약: Buzzy MCP를 Claude Code에 연결해 제품 사진 한 장으로 15초 광고를 만들고, 같은 사진으로 조명·각도가 다른 5개 버전을 뽑아 폴더에 모은다.
 

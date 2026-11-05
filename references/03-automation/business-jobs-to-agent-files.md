@@ -1,5 +1,4 @@
 # 회사 전체를 파일과 폴더로 옮기는 4단계, 업무 137개 지도
-- 원문: https://lazyowen.com/guides/business-jobs-to-agent-files
 - 도구·주제: Claude Code(또는 claude.ai) · 마크다운 파일 · 업무 지도화 / 에이전트용 업무 문서
 - 한 줄 요약: 반복 업무를 부서별 폴더 + 업무당 `.md` 파일 하나로 적어 AI 에이전트가 읽고 실행하게 만드는 방법. SkillTree(skilltreeos.ai) 운영 창업가가 2026-09-03 공개, 본인 회사를 부서 7개·업무 137개로 운영. (2026-09-30 갱신, 약 18분, 검증 기준 Claude Code v2.1.283)
 
@@ -63,10 +62,10 @@
 | 6~8점 | 먼저 파일로 | 반복 잦고 규칙 분명, 부담 적음. 업무 20~40개가 여기 해당 |
 | 3~5점 | 확인 후 넘기기 | 에이전트가 초안을 쓰고 나가기 전에 내가 승인 |
 | 0~2점 | 내가 계속 | 관계·감각·큰 결정. 적어 두면 나만 할 일이 보임 |
-원문 회사에서 6점 이상: 답장 분류, 성사·실패 분석, 구매 신호 포착, 업무 매뉴얼 작성, 회의 요약, 청구서 독촉. 사람이 쥔 업무: 큰 거래의 전략, 브랜드 목소리, 최종 발행 승인.
+사례 회사에서 6점 이상: 답장 분류, 성사·실패 분석, 구매 신호 포착, 업무 매뉴얼 작성, 회의 요약, 청구서 독촉. 사람이 쥔 업무: 큰 거래의 전략, 브랜드 목소리, 최종 발행 승인.
 
 ### STEP 3. 6점 이상만 파일로 옮기기 (파일 하나에 15~30분)
-1. 원문 회사의 폴더 모양(업무 수)
+1. 사례 회사의 폴더 모양(업무 수)
 ```
 business/
 sales/           업무 22개 (세일즈)
@@ -97,7 +96,7 @@ mkdir -p business/sales business/deals business/marketing business/operations bu
 ls business
 ```
 `ls business`에 폴더 7개 이름이 보이면 성공.
-6. 업무 파일 7칸 템플릿(업무마다 파일 하나). 예시는 원문의 `trigger-detection.md`(구매 신호 포착)
+6. 업무 파일 7칸 템플릿(업무마다 파일 하나). 예시는 `trigger-detection.md`(구매 신호 포착)
 ```
 # trigger-detection.md
 
@@ -145,7 +144,7 @@ find business -name "*.md" | wc -l
 business/back-office/collections.md 파일을 읽고 그 파일의 단계대로 오늘 할 일을 해 주세요. 파일에 없는 규칙이 필요하면 멈추고 무엇이 빠졌는지 알려 주세요.
 ```
 
-## 업무 137개 지도 (원문 회사의 파일명, 참고용)
+## 업무 137개 지도 (사례 회사의 파일명, 참고용)
 내 사업에 없는 업무는 지우고 워크시트 채우는 참고로만 쓴다.
 
 - sales 22: icp-definition(이상적 고객상) · market-mapping(시장 지도) · trigger-detection(구매 신호 포착) · lookalike-modeling(닮은 회사 찾기) · database-mining(DB에서 잠재 고객 캐기) · web-and-maps-scraping(웹·지도 업체 목록) · social-mining(SNS 잠재 고객) · list-building(연락 목록) · contact-enrichment(담당자 연락처 채우기) · email-verification(이메일 검증) · account-enrichment(회사 정보 채우기) · fit-scoring(적합도 점수) · personalization-research(맞춤 메시지 조사) · cold-email-drafting(첫 연락 메일) · linkedin-messaging(링크드인 메시지) · proof-matching(맞는 사례 고르기) · cold-call-scripting(첫 통화 스크립트) · video-prospecting(영상 영업 메시지) · campaign-orchestration(캠페인 순서 설계) · campaign-launch(발송 시작) · deliverability(메일 도달률) · send-optimization(발송 시간·빈도)

@@ -1,5 +1,4 @@
 # 아무도 모르는 ChatGPT 신기능 4개 세팅하는 법
-- 원문: https://lazyowen.com/guides/chatgpt-new-features-four
 - 도구·주제: ChatGPT (Word 추가 기능, dots, 스페이스, 스티커팩) · 신기능 세팅 (자동화, 프롬프트, 12분 읽기, STEP 4개, 약 18분 실습, 2026-10-20 공개)
 - 한 줄 요약: 워드 안의 ChatGPT, 앱을 닫아도 일하는 dots, 함께 쓰는 스페이스, 셀카 스티커팩을 켜는 곳과 요청 문장, 요금제별 가능 여부를 정리했다.
 

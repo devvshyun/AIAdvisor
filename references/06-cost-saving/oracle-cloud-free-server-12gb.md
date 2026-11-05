@@ -1,5 +1,4 @@
 # 오라클 클라우드 12기가 서버 평생 무료로 받는 법
-- 원문: https://lazyowen.com/guides/oracle-cloud-free-server-12gb
 - 도구·주제: Oracle Cloud(OCI) Always Free (Ubuntu, ssh, tmux) · 무료 서버 / 비용 절감
 - 한 줄 요약: 오라클 클라우드 Always Free의 Arm(Ampere A1) 2 OCPU·메모리 12GB 서버를 가입부터 생성, ssh 접속, tmux로 봇 상시 구동까지 만들고 무료 범위 안에서 유지한다. (2026-11-04 공개, 읽는 데 11분, 따라 하면 약 33분, STEP 5개)
 

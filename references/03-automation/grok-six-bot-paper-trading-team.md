@@ -1,5 +1,4 @@
 # 그록 봇 6개 트레이딩 팀, 클로드 코드로 그대로 만드는 법
-- 원문: https://lazyowen.com/guides/grok-six-bot-paper-trading-team
 - 도구·주제: Claude Code + Grok API(xAI) + DexScreener + Solana RPC · 솔라나 신규 토큰 모의(paper) 트레이딩 봇 (자동화, 코딩, 16분 읽기, STEP 5개, 2026-10-27 공개)
 - 한 줄 요약: Claude Code 프롬프트 한 번으로 grok-trader 프로젝트를 만들고, 발굴·뉴스·여론·차트·리스크·결정 6개 봇 지시문으로 후보를 거르고 가상 잔고로만 매매하는 대시보드까지 돌린다. 실제 주문·지갑 연결 없음.
 
@@ -64,7 +63,7 @@ claude
 - 토글 프롬프트로 이미 폴더를 만들었다면 mkdir 줄은 빼고 `cd grok-trader` 후 `claude`만(같은 이름 폴더가 있으면 mkdir 오류로 뒤 명령 미실행). 처음 열면 브라우저 로그인, 입력창이 보이면 성공.
 
 ### STEP 2. 빌드 프롬프트로 모의 매매 봇 생성 (15분)
-Claude Code에 빌드 프롬프트 한 번 전송(전문은 원문 참고). 프롬프트 뼈대:
+Claude Code에 빌드 프롬프트 한 번 전송. 프롬프트 뼈대:
 - 목적: `grok-trader`라는 초보자용 Python 3 모의 매매 봇, Grok 봇 6개가 솔라나 신규 토큰을 나눠 판단.
 - 요구 13개 요지:
   1. 발굴: 60초마다 `GET https://api.dexscreener.com/token-profiles/latest/v1` → `chainId == "solana"`만. 토큰별 `GET https://api.dexscreener.com/token-pairs/v1/solana/{tokenAddress}`로 풀 데이터(liquidity.usd, volume, priceChange, txns, pairCreatedAt, priceUsd). 프로필 한도 분당 60회 준수. 존재가 불확실한 엔드포인트는 쓰지 말고 TODO.

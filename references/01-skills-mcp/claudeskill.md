@@ -1,5 +1,4 @@
 # Claude Code 필수 설정 4개, 한 번에 붙이는 퀵 가이드
-- 원문: https://lazyowen.com/guides/claudeskill
 - 도구·주제: ECC · Ponytail · Claude-Mem (Claude Code 플러그인) + Obsidian · 스킬/플러그인 + 메모리 보관함 (2026-08-06 갱신, STEP 6개, 약 9분)
 - 한 줄 요약: 플러그인 3개와 Obsidian 보관함을 셸 블록 하나로 한 번에 설치·연결하고, 결과 확인과 첫 작업까지 마무리하는 퀵 가이드.
 

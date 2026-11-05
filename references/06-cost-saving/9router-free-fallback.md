@@ -1,5 +1,4 @@
 # 9Router 백업 모델 설정
-- 원문: https://lazyowen.com/guides/9router-free-fallback
 - 도구·주제: 9Router + Claude Code · 비용 절약 / 한도 이후 무료 폴백
 - 한 줄 요약: 로컬 라우터 9Router의 Fallback Combo로, Claude Code 한도 소진 시 무료 모델로 자동 이어가는 9단계 설정. (갱신 2026-08-19, 읽는 데 11분)
 

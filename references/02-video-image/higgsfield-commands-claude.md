@@ -1,5 +1,4 @@
 # 클로드에서 쓰는 힉스필드 명령어 8개
-- 원문: https://lazyowen.com/guides/higgsfield-commands-claude
 - 도구·주제: Claude + Higgsfield MCP 커넥터 · 말하는 영상에 모션 그래픽 효과 입히기 (영상·이미지, 11분, 2026-10-30 갱신)
 - 한 줄 요약: Higgsfield 커넥터를 Claude에 붙이고 `/tier-list` 등 8개 슬래시 명령어로 직접 찍은 말하는 클립에 그래픽 효과를 넣는다.
 

@@ -1,5 +1,4 @@
 # 챗GPT 쓸 때 모르면 손해인 코드 100개
-- 원문: https://lazyowen.com/guides/chatgpt-prompt-codes-100
 - 도구·주제: ChatGPT · 프롬프트 약속어(코드) 모음 (2026-10-09 공개, STEP 5개 · 약 14분)
 - 한 줄 요약: 질문 앞에 ELI5, TLDR 같은 영어 코드 한 단어와 그 뜻 한 줄을 붙여 ChatGPT 답의 길이·난이도·말투를 바꾸는 방법과 코드 100개 목록(아래는 뜻을 요약한 것).
 

@@ -1,5 +1,4 @@
 # 클로드에 뉴테이크 MCP 연결해서 AI 숏드라마 만드는 법
-- 원문: https://lazyowen.com/guides/claude-newtake-mcp-ai-short-drama
 - 도구·주제: Claude / Claude Code + Newtake MCP · AI 숏드라마(이미지→영상) 제작 (2026-11-04 공개, STEP 4개, 약 18분)
 - 한 줄 요약: Newtake 원격 MCP를 Claude에 연결해 캐릭터 시트·배경 → 5단계 장면 설계 → 태그한 에셋으로 15초 9:16 영상을 생성한다.
 

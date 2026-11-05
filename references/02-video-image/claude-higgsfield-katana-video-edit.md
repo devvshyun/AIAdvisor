@@ -1,5 +1,4 @@
 # 클로드에 원본 영상 올리고 10분 뒤 모션 그래픽 완성본 받는 법
-- 원문: https://lazyowen.com/guides/claude-higgsfield-katana-video-edit
 - 도구·주제: Claude + Higgsfield 카타나(Katana) 커넥터 · 프리셋 기반 영상 재편집
 - 한 줄 요약: Claude에 Higgsfield 커넥터를 연결하고 `/katana` 프리셋(Personalized edits / Style transfer / Motion transfer)으로 내 원본 영상을 레퍼런스 편집 스타일(컷 순서·길이·음악 컷)로 다시 만든다. 약 20분, 영상 1개당 편집 약 10분. (2026-10-14 공개)
 

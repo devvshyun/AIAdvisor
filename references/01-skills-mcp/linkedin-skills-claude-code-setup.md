@@ -1,5 +1,4 @@
 # 링크드인 스킬 12개
-- 원문: https://lazyowen.com/guides/linkedin-skills-claude-code-setup
 - 도구·주제: Claude Code 플러그인(linkedin-skills) · Apify · 링크드인 그로스 / 반응자 분석
 - 한 줄 요약: 링크드인 스킬 묶음을 설치해 프로필/콘텐츠/댓글 초안을 키 없이 쓰고, Apify 토큰을 연결해 내 포스트 반응자를 동료/윗선/잠재 고객 3그룹으로 나눈다. (4단계)
 
@@ -12,7 +11,7 @@
 - Claude Code(맥·윈도·리눅스) 또는 유료 플랜(Pro·Max·Team·Enterprise)의 데스크톱·웹 앱(설정에서 코드 실행 켜기). 반응 분석엔 Git + Python 3. STEP 3 명령은 맥 터미널 기준.
 - Apify: https://console.apify.com/sign-up (월 $5 무료 크레딧, 초과 시 결과 1,000건당 $1~5; 반응자 50명 약 $0.25)
 - 자동 발행용 Publora(선택, 무료 월 15개), 이미지 생성 Pixfaro(선택)
-- 스킬은 무료, Claude 구독은 별도. 전체 이름 목록은 원문에 없음. 키 없이 도는 4개: 프로필 다듬기, 콘텐츠 계획, AI 티 빼기, 인터뷰.
+- 스킬은 무료, Claude 구독은 별도. 전체 스킬 이름 목록은 공개되지 않음. 키 없이 도는 4개: 프로필 다듬기, 콘텐츠 계획, AI 티 빼기, 인터뷰.
 - README: https://github.com/sergebulaev/linkedin-skills#install , 문제 해결 `#troubleshooting`
 
 ## 단계별 방법

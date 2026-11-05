@@ -1,5 +1,4 @@
 # 클로드 코드로 66가지 스타일의 바이럴 애니메이션 만드는 법
-- 원문: https://lazyowen.com/guides/claude-code-animation-skill-66-styles
 - 도구·주제: Claude Code (lemo-opuscar 스킬) · 코드 기반 영상/애니메이션 생성
 - 한 줄 요약: lemo-opuscar 스킬 하나를 설치하면 클로드가 스토리·나레이션·음악·효과음을 만들고 영상을 코드로 한 프레임씩 렌더링한다(영상 생성 AI·스톡 영상 미사용). 66가지 스타일 중 고르거나 나만의 스타일을 만들 수 있다.
 

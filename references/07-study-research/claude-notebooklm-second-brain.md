@@ -1,5 +1,4 @@
 # 클로드에게 절대 안 잊는 두 번째 뇌 붙이기 (NotebookLM)
-- 원문: https://lazyowen.com/guides/claude-notebooklm-second-brain
 - 도구·주제: Claude Code + NotebookLM(Gemini Notebook) + notebooklm-mcp · 장기 기억 / 리서치 (2026-08-06 갱신, STEP 5개 · 약 11분)
 - 한 줄 요약: NotebookLM을 MCP로 연결하고 저장용 스킬을 만들어 대화 요약을 `Claude Memory` 노트북에 쌓고, `CLAUDE.md` 규칙으로 다음 세션에서 먼저 검색하게 하는 5단계.
 

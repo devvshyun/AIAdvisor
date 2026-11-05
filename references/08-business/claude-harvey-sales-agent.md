@@ -1,5 +1,4 @@
 # 고객 유치만을 위한 클로드 에이전트(하비/Harvey) 세팅하는 법
-- 원문: https://lazyowen.com/guides/claude-harvey-sales-agent
 - 도구·주제: Harvey (ethanplusai/harvey) + Claude Code · 영업 이메일 자동화 / 리드 발굴 (비즈니스, 자동화, 16분 읽기, STEP 5개, 약 28분 실습, 2026-10-23 공개)
 - 한 줄 요약: 오픈소스 Harvey를 설치해 내 제품 홈페이지로 학습시키고, 조건에 맞는 업체를 찾아 사이트에서 본 사실로 콜드메일 초안을 쓰고, 내 승인 후 발송·회신 처리를 이어 가게 한다. 영어 메일 기준이라 해외 업체 영업에 적합.
 

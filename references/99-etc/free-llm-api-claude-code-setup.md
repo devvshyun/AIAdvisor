@@ -1,5 +1,4 @@
 # 클로드 코드 돈 안 내고 쓰는 프리 LLM API 세팅법
-- 원문: https://lazyowen.com/guides/free-llm-api-claude-code-setup
 - 도구·주제: Claude Code · Manifest(LLM 라우터) · awesome-free-llm-apis · 무료 모델로 Claude Code 돌리기
 - 한 줄 요약: 계속 무료로 쓸 수 있는 LLM API 공급자 16곳 목록(+키 설정을 돕는 `free-llm-apis` 스킬)을 내려받고, 무료 키를 Manifest 라우터에 연결한 뒤, 테스트 폴더 하나의 `.claude/settings.json`에서만 Claude Code가 무료 모델을 쓰게 하고 되돌리는 4단계. (2026-10-08 갱신, 읽는 데 11분, 따라 하면 약 18분)
 

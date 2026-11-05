@@ -1,5 +1,4 @@
 # Claude Code에 에이전트 팀 붙이는 Ruflo 입문 가이드
-- 원문: https://lazyowen.com/guides/ruflo
 - 도구·주제: Ruflo + Claude Code · 자동화 / 멀티 에이전트 (코딩, 8분 읽기, STEP 9개, 2026-08-06 갱신)
 - 한 줄 요약: Claude Code 바깥에 에이전트 조율·메모리·작업 라우팅을 얹는 오픈소스 Ruflo를 연습 폴더에서 작은 팀(최대 8 에이전트)부터 단계적으로 써 보는 입문.
 

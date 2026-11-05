@@ -1,5 +1,4 @@
 # 무료 AI 에이전트 일곱 자리
-- 원문: https://lazyowen.com/guides/agency-agents-7seats
 - 도구·주제: agency-agents(Claude Code 서브에이전트 등) · 에이전트 팀 구성
 - 한 줄 요약: 279개 에이전트 명단에서 필수 7명만 골라 설치하고 총괄(orchestrator)에게만 목표를 주는 방식. (2026-09-13 공개, 읽는 데 13분, 6단계 약 20분)
 

@@ -1,5 +1,4 @@
 # ChatGPT 공부 명령어 4개 (요약 → 퀴즈)
-- 원문: https://lazyowen.com/guides/chagpt-4commands-study
 - 도구·주제: ChatGPT (+ Study Mode, Anki, mermaid.live) · 학습 / 복습
 - 한 줄 요약: Cheat Sheet → Blueprint → Flashcards → Mind Map 4개 명령어를 같은 채팅에서 주제만 바꿔 보내 요약부터 퀴즈까지 이어간다. (2026-08-19 공개, 읽는 데 10분 / 따라 하면 약 40분, 7단계. 제목의 "25분"은 핵심 4단계 기준)
 

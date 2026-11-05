@@ -1,5 +1,4 @@
 # 클로드로 업체 연락처 수천 개를 무료로 모으는 법
-- 원문: https://lazyowen.com/guides/scrapegraphai
 - 도구·주제: ScrapeGraphAI + Ollama + Claude Code · 공개 연락처 수집 / 영업 리스트
 - 한 줄 요약: 무료 오픈소스 ScrapeGraphAI와 내 컴퓨터에서 도는 무료 로컬 모델(Ollama)로 웹페이지의 공개 업체 연락처만 골라 CSV로 모으고, 매일 아침 자동 실행되게 한다. (2026-08-19 공개, 읽는 데 10분, 따라 하면 약 58분, STEP 7개)
 

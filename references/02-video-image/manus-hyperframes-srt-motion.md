@@ -1,5 +1,4 @@
 # 마누스 AI로 모션 그래픽 누구나 만드는 법, 1분 세팅
-- 원문: https://lazyowen.com/guides/manus-hyperframes-srt-motion
 - 도구·주제: Manus AI · HyperFrames(HeyGen) 스킬 · SRT 자막 기반 모션 그래픽 MP4 생성
 - 한 줄 요약: Manus에 HyperFrames 스킬("HTML 비디오 제작")을 한 번 추가해 두면, 자막(.srt)과 프롬프트만으로 문장 시간에 맞춰 장면이 바뀌는 1080×1920 세로 모션 그래픽 MP4를 받는다. (4단계, 약 11분, 2026-10-05 갱신)
 

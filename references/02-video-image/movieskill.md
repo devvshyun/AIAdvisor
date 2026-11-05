@@ -1,5 +1,4 @@
 # AI 냄새 줄이는 영상 만들기: Banana Pro Director 2.0 + Cinema Worldbuilder Pro 2.0
-- 원문: https://lazyowen.com/guides/movieskill
 - 도구·주제: Claude Skills + Higgsfield(Seedance 2.0, Nano Banana Pro) · AI 영상 제작 파이프라인 (영상·이미지, 16분 읽기, STEP 9개, 2026-08-06 갱신)
 - 한 줄 요약: 두 스킬은 영상을 직접 만들지 않고 Claude가 이미지·영상 프롬프트를 제작 규칙대로 쓰게 하는 지침. 얼굴 잠금 → 의상 → 6패널 시트 → 장면 플레이트 → 움직임 설계 → Seedance 생성 → 부분 수정 → 편집.
 

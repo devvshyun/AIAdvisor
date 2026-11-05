@@ -1,5 +1,4 @@
 # Graphify 가이드
-- 원문: https://lazyowen.com/guides/graphify
 - 도구·주제: Graphify + Claude Code · 비용 절약 / 코드 지식 그래프 (원문 제목: 클로드 코드가 파일부터 뒤지지 않게 만드는 Graphify 가이드)
 - 한 줄 요약: 함수·클래스·호출 관계를 그래프로 만들어 Claude Code가 파일을 뒤지기 전에 그래프부터 조회하게 하는 11단계. (갱신 2026-08-06, 읽는 데 14분)
 
