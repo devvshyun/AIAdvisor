@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AIAdvisor: Claude Code 사용자를 위한 도구 추천 스킬</title>
-<meta name="description" content="프로젝트와 설치된 도구를 먼저 읽고, 가이드 82편 중 지금 필요한 것만 골라 우선순위와 실행 계획으로 정리하는 Claude Code 스킬.">
+<meta name="description" content="프로젝트와 설치된 도구를 먼저 읽고, 직접 확인한 도구 카탈로그와 레시피, 가이드 82편 중 지금 필요한 것만 골라 우선순위와 실행 계획으로 정리하는 Claude Code 스킬.">
 <meta name="site-kind" content="software">
 <meta name="page-type" content="software">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23161c1a'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%239fc7b8' stroke-width='3'/%3E%3C/svg%3E">
@@ -163,6 +163,23 @@
   .guide b::after { content: " ↗"; color: var(--muted); font-weight: 400; opacity: 0; transition: opacity 140ms var(--m-ease, ease); }
   @media (hover: hover) and (pointer: fine) { .guide:hover { background: var(--bg); } .guide:hover b::after { opacity: 1; } }
   .guide:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+  /* catalog and recipes: recipe steps on the left of the pane, the area's tools on the right */
+  .kitp { height: 100%; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .recipe { padding: var(--s-5); border-right: 1px solid var(--line); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .recipe__title { display: block; font-weight: 500; font-size: var(--t-lead); line-height: 1.35; color: var(--ink); text-decoration: none; margin-bottom: var(--s-4); }
+  .recipe__title::after { content: " ↗"; color: var(--muted); font-weight: 400; }
+  @media (hover: hover) and (pointer: fine) { .recipe__title:hover { color: var(--action); } }
+  .recipe__title:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; }
+  .recipe__group { margin: var(--s-4) 0 var(--s-2); font-size: 13px; color: var(--action); }
+  .recipe__steps { counter-reset: st; display: grid; gap: 2px; }
+  .recipe__steps > div { counter-increment: st; display: grid; grid-template-columns: 28px 1fr; gap: 10px; padding: 8px 0; font-size: 15px; line-height: 1.45; border-top: 1px solid var(--line); }
+  .recipe__steps > div::before { content: counter(st); font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 2px; }
+  .tools { padding: var(--s-2) var(--s-2) var(--s-8); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; display: grid; align-content: start; gap: 2px; }
+  .tool { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px var(--s-3); border-radius: var(--r-md); }
+  .tool b { font-weight: 500; font-size: 15px; line-height: 1.4; }
+  .tool i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .tool span { grid-column: 1 / -1; font-size: 14px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tool--off b { color: var(--muted); text-decoration: line-through; }
   @media (max-width: 1023px) {
     .lib, .steps-ui { align-content: start; grid-auto-rows: auto; }
     .topics { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; scrollbar-width: none; }
@@ -171,6 +188,8 @@
   }
   @media (max-width: 639px) {
     .guides ul { grid-template-columns: 1fr; }
+    .kitp { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+    .recipe { border-right: 0; border-bottom: 1px solid var(--line); max-height: 300px; }
     .lib__panes { height: 680px; }
     .steps__panes { min-height: 280px; }
   }
@@ -181,7 +200,7 @@
      deal: hero centred, nav nav-mega, close close-type, footer footer-statement, rhythm space,
            buttons arrow, mark ring, effect prism-dispersion (hero frame), grounds none
      moments: none (the dealt pinned-chapters moment was replaced by click-through steps at the owner's request)
-     plan: hero 1 · demo (app-frame) 1 · how (click steps) 1 · modes 1 · library (guide browser) 1 · install 1 · faq 1 · footer.closing 1 -->
+     plan: hero 1 · demo (app-frame) 1 · how (click steps) 1 · modes 1 · kit (catalog + recipes) 1 · library (guide browser) 1 · install 1 · faq 1 · footer.closing 1 -->
 
 <header class="nav">
   <div class="wrap nav__bar">
@@ -201,12 +220,14 @@
               <p class="t-label">살펴보기</p>
               <a href="#demo">상황별 추천 결과<span>다섯 가지 예시 출력</span></a>
               <a href="#how">동작 순서<span>읽고, 고르고, 기다립니다</span></a>
+              <a href="#kit">검증한 도구 46개<span>카탈로그와 레시피</span></a>
               <a href="#library">가이드 82편<span>주제 열한 갈래</span></a>
             </div>
           </div>
         </div>
       </div>
       <div class="nav__item"><a class="nav__link" href="#how">동작</a></div>
+      <div class="nav__item"><a class="nav__link" href="#kit">카탈로그</a></div>
       <div class="nav__item"><a class="nav__link" href="#library">가이드</a></div>
       <div class="nav__item"><a class="nav__link" href="#faq">질문</a></div>
     </nav>
@@ -222,9 +243,9 @@
   <section class="hero hero--centred" aria-labelledby="hero-h">
     <div class="wrap"><div class="hero-text">
       <div class="hero__c">
-        <a class="pill" href="#library"><span>가이드 82편</span><span class="muted">2026-11-05 기준</span></a>
+        <a class="pill" href="#kit"><span>검증한 도구 46개 · 레시피 3개</span><span class="muted">2026-11-06 확인</span></a>
         <h1 id="hero-h" aria-label="AIAdvisor, Claude Code 도구 추천 스킬"><span class="ly-mark" aria-hidden="true"></span> Claude Code 도구 추천 스킬</h1>
-        <p class="hero__lead">프로젝트와 깔린 도구를 먼저 읽고, 가이드 82편 중 필요한 것만 골라 줍니다.</p>
+        <p class="hero__lead">프로젝트와 깔린 도구를 먼저 읽고, 검증한 도구 중 필요한 것만 골라 줍니다.</p>
         <div class="btn-row"><a class="btn btn--primary" href="#install">스킬 설치하기<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></div>
       </div>
       <div class="hero__window" data-fx="prism-dispersion" data-fx-seed="11" role="img" aria-label="Claude Code에서 AIAdvisor가 토큰 문제를 진단하고 추천을 내는 대화">
@@ -328,12 +349,12 @@
       <div class="grid fill steps-ui">
         <div class="span-5 steps" role="tablist" aria-label="추천 단계" aria-orientation="vertical">
           <button class="step" role="tab" type="button" id="st-t1" aria-controls="st-p1" aria-selected="true"><i>1</i><b>프로젝트와 환경을 읽습니다</b><span>CLAUDE.md, README, 의존성 파일, 최근 git log, 이미 깔린 MCP·스킬·플러그인을 확인합니다. 읽기만 합니다.</span></button>
-          <button class="step" role="tab" type="button" id="st-t2" aria-controls="st-p2" aria-selected="false" tabindex="-1"><i>2</i><b>필요한 가이드만 엽니다</b><span>상황별 색인에서 후보를 고르고, 이미 있는 도구와 역할이 겹치는 도구는 뺍니다.</span></button>
+          <button class="step" role="tab" type="button" id="st-t2" aria-controls="st-p2" aria-selected="false" tabindex="-1"><i>2</i><b>레시피와 카탈로그부터 봅니다</b><span>작은 색인에서 맞는 레시피와 도구를 고르고, 이미 있는 도구와 역할이 겹치는 도구, 관리가 멈춘 도구는 뺍니다. 그 밖의 주제는 가이드를 엽니다.</span></button>
           <button class="step" role="tab" type="button" id="st-t3" aria-controls="st-p3" aria-selected="false" tabindex="-1"><i>3</i><b>정리하고 번호를 기다립니다</b><span>추천 표와 실행 계획을 내고 멈춥니다. API 키나 유료 플랜이 필요한 항목은 따로 표시합니다.</span></button>
         </div>
         <div class="span-6 start-7 steps__panes">
           <div class="win step-win" role="tabpanel" id="st-p1" aria-labelledby="st-t1"><div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>읽는 중</span><span class="sp"></span><span>1 / 3</span></div><div class="lines" role="img" aria-label="스킬이 읽은 파일과 설치된 도구 목록"><span><b>CLAUDE.md</b> 규칙 14줄</span><span><b>package.json</b> next 15, prisma</span><span><b>git log</b> 최근 커밋 30개</span><span><b>claude mcp list</b> playwright</span><span><b>~/.claude/skills</b> 3개</span><span class="ok">확인 끝 · 수정한 파일 0개</span></div></div>
-          <div class="win step-win" role="tabpanel" id="st-p2" aria-labelledby="st-t2" hidden><div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>가이드 82편 중</span><span class="sp"></span><span>2 / 3</span></div><div class="lines" role="img" aria-label="후보 가이드 중 겹치는 것을 걸러낸 목록"><span class="ok">열기 · 토큰 절약 도구 3개</span><span class="ok">열기 · MarkItDown 변환</span><span class="ok">열기 · 세션 명령어 5개</span><span class="ok">열기 · 9Router 폴백</span><span class="off">OmniRoute · 9Router와 역할 겹침</span><span class="off">Graphify 단독 · 1번에 포함</span><span class="off">Playwright MCP · 이미 설치됨</span></div></div>
+          <div class="win step-win" role="tabpanel" id="st-p2" aria-labelledby="st-t2" hidden><div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>색인에서 고르는 중</span><span class="sp"></span><span>2 / 3</span></div><div class="lines" role="img" aria-label="후보 가이드 중 겹치는 것을 걸러낸 목록"><span class="ok">열기 · 토큰 절약 도구 3개</span><span class="ok">열기 · MarkItDown 변환</span><span class="ok">열기 · 세션 명령어 5개</span><span class="ok">열기 · 9Router 폴백</span><span class="off">OmniRoute · 9Router와 역할 겹침</span><span class="off">Graphify 단독 · 1번에 포함</span><span class="off">Playwright MCP · 이미 설치됨</span></div></div>
           <div class="win step-win" role="tabpanel" id="st-p3" aria-labelledby="st-t3" hidden><div class="win__bar"><span class="win__dots" aria-hidden="true"><i></i><i></i><i></i></span><span>결과</span><span class="sp"></span><span>3 / 3</span></div><div class="lines" role="img" aria-label="정리된 추천과 선택을 기다리는 화면"><span><b>A</b> 진단 요약</span><span><b>B</b> 추천 4건</span><span><b>C</b> 상위 3개 실행 계획</span><span><b>D</b> 보류 2건</span><span><b>E</b> 질문 2개</span><span class="ok">진행할 번호를 골라 주세요</span></div></div>
         </div>
       </div>
@@ -358,6 +379,85 @@
           <div class="panel"><div class="win" role="img" aria-label="신규 모드 결과의 다섯 부분"><div class="win__bar"><span class="win__dots"><i></i><i></i><i></i></span><span>신규 모드</span></div>
             <ol class="outline"><li><i>A</i>요약과 가정</li><li><i>B</i>단계별 시작 도구</li><li><i>C</i>첫 주 세팅 계획</li><li><i>D</i>아직 이른 것</li><li><i>E</i>다음 질문</li></ol></div></div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kit" style="--hm: 2" aria-labelledby="kit-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-5" id="kit-h">직접 확인한 도구 46개와 레시피</h2>
+        <p class="span-6 start-7 muted">자동화·코딩·웹 디자인은 공식 문서와 GitHub로 확인한 카탈로그로 추천하고, 도구를 엮는 순서는 레시피로 정해 둡니다. 번호를 고르면 레시피를 한 단계씩, 확인 기준을 보여 주며 진행합니다. <a class="link" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/catalog/CHANGELOG.md">변경 기록 보기</a></p>
+      </div>
+      <div class="grid fill lib">
+        <div class="span-4 topics" role="tablist" aria-label="분야" aria-orientation="vertical">
+            <button class="topic" role="tab" type="button" id="kt-web-design" aria-controls="kp-web-design" aria-selected="true">웹 디자인<span>15개</span></button>
+            <button class="topic" role="tab" type="button" id="kt-coding" aria-controls="kp-coding" aria-selected="false" tabindex="-1">코딩<span>19개</span></button>
+            <button class="topic" role="tab" type="button" id="kt-automation" aria-controls="kp-automation" aria-selected="false" tabindex="-1">자동화<span>12개</span></button>
+        </div>
+        <div class="span-8 start-5 lib__panes">
+          <div class="kitp" role="tabpanel" id="kp-web-design" aria-labelledby="kt-web-design">
+            <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md">AI 티 안 나는 랜딩·소개 페이지</a><div class="recipe__steps" role="list"><div role="listitem">제품 맥락과 디자인 기준부터 (impeccable)</div><div role="listitem">팔레트·서체·구성은 뽑기로 정한다 (taste-skill)</div><div role="listitem">키트로 짓는다</div><div role="listitem">모션과 호버 (emil-design-eng)</div><div role="listitem">화면으로 확인한다 (브라우저)</div><div role="listitem">접근성·성능과 AI 티 검사</div><div role="listitem">배포 (GitHub Pages)</div></div></div>
+            <div class="tools" role="list">
+              <div role="listitem" class="tool"><b>Impeccable</b><i>스킬</i><span>디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.</span></div>
+              <div role="listitem" class="tool"><b>Taste Skill (design-taste-frontend)</b><i>스킬</i><span>페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.</span></div>
+              <div role="listitem" class="tool"><b>emil-design-eng (Emil Kowalski skills)</b><i>스킬</i><span>애니메이션 이징·지속 시간·속성 선택 같은 세부 규칙을 중심으로, 에이전트가 자주 틀리는 UI 디테일을 바로잡게 하는 스킬 묶음이다.</span></div>
+              <div role="listitem" class="tool"><b>Vercel web-design-guidelines</b><i>스킬</i><span>Vercel의 웹 인터페이스 가이드라인(접근성, 포커스, 폼, 타이포그래피, 다크 모드 등 100개 이상 규칙)으로 UI 코드를 검토해 file:line 형식으로 지적해 주는 리뷰 스킬이다.</span></div>
+              <div role="listitem" class="tool"><b>frontend-design (Anthropic official)</b><i>플러그인</i><span>브리프 주제에 맞춘 뚜렷한 색·타이포그래피·레이아웃을 고르도록 Claude를 유도하는 Anthropic 공식 프런트엔드 디자인 스킬(플러그인)이다.</span></div>
+              <div role="listitem" class="tool"><b>awesome-design-md (VoltAgent)</b><i>서비스</i><span>실제 서비스들의 디자인 언어를 분석해 DESIGN.md(토큰·규칙을 담은 마크다운) 파일로 정리한 모음집으로, 프로젝트에 복사해 에이전트의 디자인 기준으로 쓴다.</span></div>
+              <div role="listitem" class="tool"><b>shadcn MCP server (+ shadcn skill)</b><i>MCP</i><span>shadcn/ui 레지스트리의 컴포넌트를 검색·조회·설치하게 해 주는 MCP 서버로, 별도 skill은 프로젝트 설정(components.json)을 읽어 shadcn CLI·테마 지식을 준다.</span></div>
+              <div role="listitem" class="tool"><b>agent-browser (Vercel Labs)</b><i>CLI</i><span>에이전트용 브라우저 자동화 CLI로, 페이지 열기·클릭·스냅샷·스크린샷을 짧은 명령으로 처리해 MCP보다 적은 컨텍스트로 화면을 확인하게 해 준다.</span></div>
+              <div role="listitem" class="tool"><b>Playwright MCP (Microsoft)</b><i>MCP</i><span>Playwright로 브라우저를 열고 접근성 트리 기반으로 조작하는 MCP 서버로, 상태를 유지한 채 탐색·폼 입력·스크린샷을 할 수 있다.</span></div>
+              <div role="listitem" class="tool"><b>Playwright CLI with Skills (Microsoft)</b><i>CLI</i><span>Playwright 브라우저 조작을 짧은 셸 명령과 스킬로 제공해, MCP보다 적은 토큰으로 스냅샷·스크린샷·흐름 테스트를 하게 하는 공식 CLI다.</span></div>
+              <div role="listitem" class="tool"><b>Chrome DevTools MCP</b><i>MCP</i><span>실제 Chrome을 DevTools 수준으로 다루는 공식 MCP 서버로, 성능 트레이스·네트워크·콘솔·CSS 조회와 Lighthouse 감사(접근성·SEO·모범 사례)를 에이전트가 직접 돌릴 수 있다.</span></div>
+              <div role="listitem" class="tool"><b>Figma MCP server (remote)</b><i>MCP</i><span>Figma 파일의 프레임·변수(토큰)·컴포넌트 정보를 읽어 코드로 옮기고, 원격 서버에서는 캔버스에 직접 쓰기도 하는 Figma 공식 MCP 서버다.</span></div>
+              <div role="listitem" class="tool"><b>Lighthouse CLI</b><i>CLI</i><span>Google의 Lighthouse를 셸에서 돌려 성능·접근성·SEO·모범 사례 점수를 HTML/JSON 리포트로 뽑는 CLI로, Claude Code가 Bash로 바로 실행할 수 있다.</span></div>
+              <div role="listitem" class="tool"><b>axe CLI (@axe-core/cli)</b><i>CLI</i><span>Deque의 axe-core 엔진으로 URL을 검사해 WCAG 접근성 위반을 출력하는 CLI로, --exit 옵션으로 위반 시 실패 코드를 돌려준다.</span></div>
+              <div role="listitem" class="tool"><b>Superdesign skill</b><i>플러그인</i><span>코드베이스를 읽어 디자인 방향과 시안을 외부 무한 캔버스(superdesign.dev)에서 만들고 반복하게 해 주는 상용 서비스 연동 스킬이다.</span></div>
+            </div>
+          </div>
+          <div class="kitp" role="tabpanel" id="kp-coding" aria-labelledby="kt-coding" hidden>
+            <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/coding.md">기능 하나를 계획부터 병합까지</a><div class="recipe__steps" role="list"><div role="listitem">브랜치를 나눈다</div><div role="listitem">요구사항을 좁힌다</div><div role="listitem">계획을 쓴다</div><div role="listitem">테스트부터 구현한다</div><div role="listitem">끝났다고 말하기 전에 검증한다</div><div role="listitem">코드 리뷰</div><div role="listitem">보안 리뷰</div><div role="listitem">커밋</div><div role="listitem">PR과 CI</div><div role="listitem">병합과 정리</div></div></div>
+            <div class="tools" role="list">
+              <div role="listitem" class="tool"><b>Superpowers</b><i>플러그인</i><span>브레인스토밍, 계획 작성, 레드-그린 TDD, 체계적 디버깅, 완료 전 검증 같은 개발 절차를 스킬로 묶어 Claude가 작업마다 따르게 만드는 플러그인이다.</span></div>
+              <div role="listitem" class="tool"><b>Context7</b><i>MCP</i><span>라이브러리 이름과 질문을 주면 해당 버전의 최신 공식 문서와 코드 예시를 찾아 Claude에게 넘겨 주는 문서 조회 서비스로, CLI+스킬 방식과 MCP 방식 둘 다 지원한다.</span></div>
+              <div role="listitem" class="tool"><b>Everything Claude Code (ECC)</b><i>플러그인</i><span>에이전트 71개, 스킬 314개, 레거시 명령 98개와 훅·규칙·메모리·보안 스캔(AgentShield)을 한 번에 깔아 주는 대형 하네스 설정 모음이다.</span></div>
+              <div role="listitem" class="tool"><b>graphify</b><i>스킬</i><span>코드(tree-sitter AST)와 문서·PDF·이미지를 지식 그래프로 만들고, Claude가 파일을 통째로 읽는 대신 그래프 질의로 구조를 찾게 하는 CLI 겸 스킬이다.</span></div>
+              <div role="listitem" class="tool"><b>Serena</b><i>MCP</i><span>언어 서버(또는 JetBrains 플러그인)를 이용해 심볼 단위 검색·참조 추적·심볼 본문 교체 같은 의미 기반 탐색과 편집 도구를 MCP로 제공한다.</span></div>
+              <div role="listitem" class="tool"><b>Claude Code /code-review (내장 스킬)</b><i>내장</i><span>현재 브랜치 diff나 지정한 PR·브랜치·경로를 정확성 버그 위주로 리뷰하고, 노력 단계를 고르거나 --fix로 바로 고치거나 --comment로 PR에 남기는 내장 명령이다.</span></div>
+              <div role="listitem" class="tool"><b>Claude Code /security-review (내장)</b><i>내장</i><span>현재 브랜치와 origin 기본 브랜치의 차이를 읽고 인젝션, 인증 문제, 데이터 노출 같은 보안 위험을 찾아 주는 내장 명령이다.</span></div>
+              <div role="listitem" class="tool"><b>security-guidance (Anthropic 공식 플러그인)</b><i>플러그인</i><span>Claude가 편집할 때 위험 패턴 정규식 경고를 띄우고, 턴이 끝날 때 diff를 LLM으로 보안 리뷰하며, git commit 때는 에이전트가 파일을 따라가며 다중 파일 취약점까지 보는 3단 보안 가드이다.</span></div>
+              <div role="listitem" class="tool"><b>claude-security (Anthropic 공식 플러그인)</b><i>플러그인</i><span>여러 에이전트가 위협 모델을 세우고 저장소나 diff를 훑은 뒤, 다른 에이전트가 반증을 시도해 살아남은 취약점만 보고서(MD·JSONL·SARIF)로 남기고 패치 파일까지 제안하는 심층 보안 스캔이다.</span></div>
+              <div role="listitem" class="tool"><b>feature-dev (Anthropic 공식 플러그인)</b><i>플러그인</i><span>코드베이스 탐색, 아키텍처 설계, 품질 리뷰를 맡는 전문 에이전트로 기능 개발을 단계별로 진행하게 해 주는 공식 워크플로 플러그인이다.</span></div>
+              <div role="listitem" class="tool"><b>pr-review-toolkit (Anthropic 공식 플러그인)</b><i>플러그인</i><span>주석, 테스트 커버리지, 오류 처리, 타입 설계, 코드 품질, 단순화를 각각 따로 보는 전문 리뷰 에이전트 묶음이다.</span></div>
+              <div role="listitem" class="tool"><b>commit-commands (Anthropic 공식 플러그인)</b><i>플러그인</i><span>커밋, 푸시, PR 생성을 정해진 명령으로 처리해 git 작업을 일관된 절차로 하게 해 주는 공식 플러그인이다.</span></div>
+              <div role="listitem" class="tool"><b>공식 LSP 플러그인 (pyright-lsp, typescript-lsp, gopls-lsp, rust-analyzer-lsp 등)</b><i>플러그인</i><span>언어 서버를 Claude Code에 연결해 정의 이동, 참조 찾기, 타입 오류 확인 같은 코드 인텔리전스를 쓰게 해 주는 언어별 공식 플러그인 묶음이다.</span></div>
+              <div role="listitem" class="tool"><b>Semgrep Guardian (Semgrep 플러그인)</b><i>플러그인</i><span>Semgrep MCP 서버와 파일 쓰기 훅을 묶어 Claude가 쓴 코드를 Semgrep Code·Supply Chain·Secrets로 바로 스캔하고, 문제가 나오면 깨끗해질 때까지 다시 고치게 하는 보안 플러그인이다.</span></div>
+              <div role="listitem" class="tool tool--off"><b>Claude Code Security Reviewer (GitHub Action)</b><i>Actions · 관리 중단</i><span>PR이 열리면 Claude가 변경 diff를 보안 관점에서 분석하고 오탐을 걸러 PR에 줄 단위 코멘트를 남기는 GitHub Action이다.</span></div>
+              <div role="listitem" class="tool"><b>Gitleaks (후속: Betterleaks)</b><i>CLI</i><span>git 기록, 디렉터리, 표준입력에서 비밀번호·API 키·토큰 같은 비밀값을 정규식과 엔트로피 규칙으로 찾아내는 결정적 스캐너이다.</span></div>
+              <div role="listitem" class="tool"><b>claude-mem</b><i>플러그인</i><span>훅으로 세션 중 작업 내용을 관찰·압축해 저장하고, 다음 세션 시작 때 관련 맥락을 자동으로 넣어 주며 검색용 MCP 도구를 제공하는 세션 간 기억 플러그인이다.</span></div>
+              <div role="listitem" class="tool"><b>caveman</b><i>플러그인</i><span>에이전트 답변을 짧게 압축하고, 로그·JSON·테스트 출력을 모델이 읽기 전에 줄여 입출력 토큰을 아끼게 해 주는 스킬 겸 플러그인이다.</span></div>
+              <div role="listitem" class="tool"><b>Understand Anything</b><i>플러그인</i><span>멀티 에이전트 파이프라인으로 프로젝트의 파일·함수·클래스·의존성을 지식 그래프로 만들고 대화형 대시보드와 온보딩 가이드, diff 영향 분석을 제공하는 플러그인이다.</span></div>
+            </div>
+          </div>
+          <div class="kitp" role="tabpanel" id="kp-automation" aria-labelledby="kt-automation" hidden>
+            <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/automation.md">저장소 자동화 두 가지</a><p class="recipe__group">배포와 월간 건강 검사</p><div class="recipe__steps" role="list"><div role="listitem">Pages 소스를 GitHub Actions로</div><div role="listitem">배포 워크플로</div><div role="listitem">월간 건강 검사</div></div><p class="recipe__group">매주 리뷰하고 보고하는 Claude</p><div class="recipe__steps" role="list"><div role="listitem">보고서 범위를 정한다</div><div role="listitem">고른 방식으로 만든다</div><div role="listitem">한 번 돌려 본다</div><div role="listitem">알림 (선택)</div><div role="listitem">2~3주 운영 후 비용 확인</div></div></div>
+            <div class="tools" role="list">
+              <div role="listitem" class="tool"><b>Claude Code GitHub Action (anthropics/claude-code-action)</b><i>Actions</i><span>GitHub 워크플로 안에서 Claude Code를 돌려 @claude 멘션에 답하거나 정해진 프롬프트로 PR 리뷰·리포트 같은 작업을 자동 실행한다.</span></div>
+              <div role="listitem" class="tool"><b>Claude Code hooks</b><i>내장</i><span>Claude Code 수명주기(도구 사용 전후, 알림, 세션 시작, 종료 등)의 정해진 시점에 셸 명령·프롬프트·MCP 도구를 결정적으로 실행시키는 내장 기능이다.</span></div>
+              <div role="listitem" class="tool"><b>Claude Code cloud scheduled tasks (구 routines, /schedule)</b><i>내장</i><span>프롬프트·저장소·커넥터를 묶어 Anthropic 클라우드에서 일정, API 호출, GitHub 이벤트에 맞춰 자동 실행하는 Claude Code 예약 작업이다.</span></div>
+              <div role="listitem" class="tool"><b>Claude Code Desktop 로컬 예약 작업 + /loop</b><i>내장</i><span>내 PC에서 Desktop 앱이 정해진 일정에 새 세션을 띄우거나(/loop은 열린 세션 안에서) 프롬프트를 반복 실행하는 로컬 스케줄 기능이다.</span></div>
+              <div role="listitem" class="tool"><b>GitHub Pages 배포 (actions/upload-pages-artifact + actions/deploy-pages)</b><i>Actions</i><span>빌드한 정적 파일을 아티팩트로 올린 뒤 OIDC 인증으로 GitHub Pages에 배포하는 GitHub 공식 액션 조합이다.</span></div>
+              <div role="listitem" class="tool"><b>lychee-action (+ peter-evans/create-issue-from-file)</b><i>Actions</i><span>문서·사이트의 링크를 검사하고, 깨진 링크가 있으면 결과 마크다운으로 이슈를 자동 생성하는 정기 헬스체크 조합이다.</span></div>
+              <div role="listitem" class="tool"><b>n8n (instance-level MCP server)</b><i>서비스</i><span>노드 기반 워크플로 자동화 도구 n8n의 인스턴스 MCP 서버로, Claude Code가 허용된 n8n 워크플로를 검색·실행·편집할 수 있게 한다.</span></div>
+              <div role="listitem" class="tool"><b>Zapier MCP</b><i>MCP</i><span>Zapier에 연결된 수천 개 앱의 액션을 Claude Code에서 원격 MCP 도구로 호출하게 해 주는 호스팅 서비스다.</span></div>
+              <div role="listitem" class="tool"><b>Make MCP server (cloud)</b><i>MCP</i><span>Make(구 Integromat)가 호스팅하는 MCP 서버로, 활성화된 온디맨드 시나리오를 Claude의 도구로 실행하고 유료 플랜에선 시나리오·연결을 관리하게 한다.</span></div>
+              <div role="listitem" class="tool"><b>Inbox Zero</b><i>서비스</i><span>Gmail·Outlook 메일을 AI 규칙으로 분류하고 답장 초안·첨부 정리까지 해 주는 오픈소스 메일 비서로, 호스팅 버전과 자체 호스팅을 모두 제공한다.</span></div>
+              <div role="listitem" class="tool"><b>GitHub MCP Server</b><i>MCP</i><span>GitHub 공식 MCP 서버로, Claude Code가 이슈·PR·저장소·Actions 정보를 API로 읽고 쓰게 한다.</span></div>
+              <div role="listitem" class="tool"><b>ntfy</b><i>서비스</i><span>HTTP POST 한 번으로 휴대폰·데스크톱에 푸시 알림을 보내는 오픈소스 pub-sub 알림 서비스로, 공개 서버(ntfy.sh)나 자체 호스팅으로 쓴다.</span></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -572,7 +672,7 @@
         </div>
         <div class="faq span-6 start-7">
           <div class="faq__item"><h3>스킬이 마음대로 뭔가를 설치하나요?</h3><p>아니요. 추천 단계에서는 읽기만 합니다. "2번이랑 3번 진행해줘"처럼 고른 다음에 설치를 시작합니다.</p></div>
-          <div class="faq__item"><h3>가이드 내용은 최신인가요?</h3><p>2026-11-05 기준입니다. 버전, 무료 한도, 가격은 바뀔 수 있어서 실행 전에 공식 문서를 확인하라고 안내합니다.</p></div>
+          <div class="faq__item"><h3>추천 근거는 최신인가요?</h3><p>카탈로그는 항목마다 확인한 날짜가 있고, 30일이 넘은 항목은 바뀌었을 수 있다고 표시합니다. 매달 1일 저장소 상태를 자동으로 점검하고, "카탈로그 갱신해줘"라고 하면 그날 기준으로 다시 조사합니다. 가이드 82편은 2026-11-05 기준입니다.</p></div>
           <div class="faq__item"><h3>Windows에서도 되나요?</h3><p>됩니다. 현재 OS를 확인하고 명령을 PowerShell이나 Git Bash에 맞게 바꿔 보여 줍니다.</p></div>
           <div class="faq__item"><h3>클라우드 세션에서도 쓸 수 있나요?</h3><p>클라우드 환경의 설정 스크립트에 설치 한 줄을 넣으면 됩니다.</p></div>
           <div class="faq__item"><h3>새 프로젝트에도 쓸 수 있나요?</h3><p>네. 빈 폴더에서 만들고 싶은 것을 말하면 신규 모드로 시작 도구와 첫 주 계획을 짭니다.</p></div>
@@ -598,7 +698,7 @@
           <a class="nav__logo" href="#top"><span class="mark" data-mark="ring" aria-hidden="true"></span>AIAdvisor</a>
           <p class="footer__lede">프로젝트를 먼저 읽고 필요한 AI 도구만 골라 주는 Claude Code 스킬.</p>
         </div>
-        <div class="span-3 start-7 footer__col"><h4>살펴보기</h4><ul><li><a href="#demo">추천 결과</a></li><li><a href="#how">동작 순서</a></li><li><a href="#modes">두 가지 모드</a></li></ul></div>
+        <div class="span-3 start-7 footer__col"><h4>살펴보기</h4><ul><li><a href="#demo">추천 결과</a></li><li><a href="#how">동작 순서</a></li><li><a href="#modes">두 가지 모드</a></li><li><a href="#kit">카탈로그와 레시피</a></li></ul></div>
         <div class="span-3 footer__col"><h4>저장소</h4><ul><li><a href="https://github.com/devvshyun/AIAdvisor">GitHub</a></li><li><a href="https://github.com/devvshyun/AIAdvisor/blob/main/docs/DESIGN.md">디자인 기준</a></li><li><a href="#faq">질문</a></li></ul></div>
       </div>
       <div class="footer__legal"><span>&copy; 2026 AIAdvisor</span></div>

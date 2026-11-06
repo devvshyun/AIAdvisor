@@ -80,6 +80,80 @@ def library(data, total):
 '''
 
 
+AREAS = [("web-design", "웹 디자인"), ("coding", "코딩"), ("automation", "자동화")]
+NOTAB = ' tabindex="-1"'
+KIND = {"skill": "스킬", "plugin": "플러그인", "mcp": "MCP", "cli": "CLI", "built-in": "내장",
+        "github-action": "Actions", "service": "서비스"}
+
+
+def catalog_items(area):
+    """name, kind, what, maintained per entry, read with regexes (the Pages build has no PyYAML)."""
+    text = open(os.path.join(ROOT, "references", "catalog", f"{area}.yaml"), encoding="utf-8").read()
+    out = []
+    for chunk in re.split(r"^- id: ", text, flags=re.M)[1:]:
+        field = lambda k: (re.search(rf"^  {k}: (.*)$", chunk, re.M) or [None, ""])[1].strip().strip("'\"")
+        out.append((field("name"), KIND.get(field("kind"), field("kind")), field("what"), field("maintained") != "false"))
+    return out
+
+
+def recipe_steps(area):
+    """Title and step headings; '## 레시피 N.' lines start a group (the automation file has two)."""
+    lines = open(os.path.join(ROOT, "references", "recipes", f"{area}.md"), encoding="utf-8").read().split("\n")
+    title = lines[0].lstrip("# ").removeprefix("레시피:").strip()
+    groups, current = [], None
+    for l in lines:
+        if l.startswith("## 레시피"):
+            current = (re.sub(r"^## 레시피 \d+\.\s*", "", l).strip(), []); groups.append(current)
+        elif l.startswith("### "):
+            if current is None:
+                current = ("", []); groups.append(current)
+            current[1].append(re.sub(r"^### \d+\.\s*", "", l).strip())
+    return title, groups
+
+
+def kit(total_tools):
+    tabs, panes = [], []
+    for i, (area, label) in enumerate(AREAS):
+        items = catalog_items(area)
+        title, groups = recipe_steps(area)
+        first = i == 0
+        tabs.append(
+            f'            <button class="topic" role="tab" type="button" id="kt-{area}" aria-controls="kp-{area}" '
+            f'aria-selected="{"true" if first else "false"}"{"" if first else NOTAB}>{e(label)}<span>{len(items)}개</span></button>')
+        recipe = []
+        for name, steps in groups:
+            head = f'<p class="recipe__group">{e(name)}</p>' if name else ""
+            # div lists, not ul/ol: the kit's layout check treats a page-level list as a column that must
+            # start on a grid line, and these sit inside the pane
+            recipe.append(head + '<div class="recipe__steps" role="list">'
+                          + "".join(f'<div role="listitem">{e(s)}</div>' for s in steps) + "</div>")
+        tools = "\n".join(
+            f'              <div role="listitem" class="tool{"" if ok else " tool--off"}"><b>{e(n)}</b><i>{e(k)}{"" if ok else " · 관리 중단"}</i><span>{e(w)}</span></div>'
+            for n, k, w, ok in items)
+        panes.append(
+            f'          <div class="kitp" role="tabpanel" id="kp-{area}" aria-labelledby="kt-{area}"{"" if first else " hidden"}>\n'
+            f'            <div class="recipe"><a class="recipe__title" href="{REPO}recipes/{area}.md">{e(title)}</a>{"".join(recipe)}</div>\n'
+            f'            <div class="tools" role="list">\n{tools}\n            </div>\n          </div>')
+    nl = "\n"
+    return f'''  <section class="section" id="kit" style="--hm: 2" aria-labelledby="kit-h">
+    <div class="wrap">
+      <div class="grid">
+        <h2 class="span-5" id="kit-h">직접 확인한 도구 {total_tools}개와 레시피</h2>
+        <p class="span-6 start-7 muted">자동화·코딩·웹 디자인은 공식 문서와 GitHub로 확인한 카탈로그로 추천하고, 도구를 엮는 순서는 레시피로 정해 둡니다. 번호를 고르면 레시피를 한 단계씩, 확인 기준을 보여 주며 진행합니다. <a class="link" href="{REPO}catalog/CHANGELOG.md">변경 기록 보기</a></p>
+      </div>
+      <div class="grid fill lib">
+        <div class="span-4 topics" role="tablist" aria-label="분야" aria-orientation="vertical">
+{nl.join(tabs)}
+        </div>
+        <div class="span-8 start-5 lib__panes">
+{nl.join(panes)}
+        </div>
+      </div>
+    </div>
+  </section>
+'''
+
+
 def build(page):
     folders = sorted(d for d in os.listdir(os.path.join(ROOT, "references"))
                      if os.path.isdir(os.path.join(ROOT, "references", d)) and d not in ("catalog", "recipes"))
@@ -92,6 +166,16 @@ def build(page):
     end = page.index("</section>\n", start) + len("</section>\n")
     page = page[:start] + library(data, total) + page[end:]
     page = re.sub(r"가이드 \d+편", f"가이드 {total}편", page)
+    tools = sum(len(catalog_items(a)) for a, _ in AREAS)
+    section = kit(tools)
+    if 'id="kit"' in page:
+        start = page.index('  <section class="section" id="kit"')
+        end = page.index("</section>\n", start) + len("</section>\n")
+        page = page[:start] + section + page[end:]
+    else:  # first run: the catalog goes right before the guide library
+        at = page.index('  <section class="section" id="library"')
+        page = page[:at] + section + "\n" + page[at:]
+    page = re.sub(r"검증한 도구 \d+개", f"검증한 도구 {tools}개", page)  # hero pill and nav only
     return page, total
 
 
