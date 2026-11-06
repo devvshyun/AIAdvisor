@@ -39,6 +39,8 @@ def guides(folder):
         title = lines[0].lstrip("# ").strip()
         summary = next((l.split(":", 1)[1].strip() for l in lines[:8] if "한 줄 요약" in l), "")
         summary = re.sub(r"`([^`]*)`", r"\1", summary)
+        # a literal "[ ]" reads as a leftover placeholder to the kit's guard (system.js); full-width brackets say the same
+        summary = re.sub(r"\[(\s*)\]", r"［\1］", summary)
         summary = re.sub(r"\s*\((?:\d{4}-\d{2}-\d{2}|갱신|읽는 데)[^)]*\)\s*$", "", summary)
         out.append((title, summary, f"{folder}/{os.path.basename(path)}"))
     return out

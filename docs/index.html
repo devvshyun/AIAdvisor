@@ -163,6 +163,10 @@
   .guide b::after { content: " ↗"; color: var(--muted); font-weight: 400; opacity: 0; transition: opacity 140ms var(--m-ease, ease); }
   @media (hover: hover) and (pointer: fine) { .guide:hover { background: var(--bg); } .guide:hover b::after { opacity: 1; } }
   .guide:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+  /* guestbook: giscus frame in a fixed-height panel so the section stays one screen as comments grow */
+  .gb { margin: 0; height: 560px; overflow-y: auto; box-sizing: border-box; padding: var(--s-4); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .gb .giscus, .gb .giscus-frame { width: 100%; }
+  @media (max-width: 639px) { .gb { height: 440px; padding: var(--s-2); } }
   /* catalog and recipes: recipe steps on the left of the pane, the area's tools on the right */
   .kitp { height: 100%; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
   .recipe { padding: var(--s-5); border-right: 1px solid var(--line); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
@@ -200,7 +204,7 @@
      deal: hero centred, nav nav-mega, close close-type, footer footer-statement, rhythm space,
            buttons arrow, mark ring, effect prism-dispersion (hero frame), grounds none
      moments: none (the dealt pinned-chapters moment was replaced by click-through steps at the owner's request)
-     plan: hero 1 · demo (app-frame) 1 · how (click steps) 1 · modes 1 · kit (catalog + recipes) 1 · library (guide browser) 1 · install 1 · faq 1 · footer.closing 1 -->
+     plan: hero 1 · demo (app-frame) 1 · how (click steps) 1 · modes 1 · kit (catalog + recipes) 1 · library (guide browser) 1 · install 1 · faq 1 · guestbook (giscus) 1 · footer.closing 1 -->
 
 <header class="nav">
   <div class="wrap nav__bar">
@@ -230,6 +234,7 @@
       <div class="nav__item"><a class="nav__link" href="#kit">카탈로그</a></div>
       <div class="nav__item"><a class="nav__link" href="#library">가이드</a></div>
       <div class="nav__item"><a class="nav__link" href="#faq">질문</a></div>
+      <div class="nav__item"><a class="nav__link" href="#guestbook">방명록</a></div>
     </nav>
     <div class="nav__actions">
       <a class="nav__link" href="https://github.com/devvshyun/AIAdvisor">GitHub</a>
@@ -544,7 +549,7 @@
               <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/chatgpt-prompt-codes-100.md"><b>챗GPT 쓸 때 모르면 손해인 코드 100개</b><span>질문 앞에 ELI5, TLDR 같은 영어 코드 한 단어와 그 뜻 한 줄을 붙여 ChatGPT 답의 길이·난이도·말투를 바꾸는 방법과 코드 100개 목록(아래는 뜻을 요약한 것).</span></a></li>
               <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/chatgpt-truth-prompt-honest-mode.md"><b>반박하면 57% 맞장구치는 ChatGPT, 바른말 하게 만드는 법</b><span>솔직 모드 프롬프트를 ChatGPT 사용자 지정 지침에 저장해 맞장구 대신 근거로 답하게 만들고, 틀린 계산으로 반박 테스트해 확인하며, 상황별 후속 프롬프트(계획·글·해석·사실 확인 등)를 꺼내 쓴다.</span></a></li>
               <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/claude-presentation-prompts-6.md"><b>발표 자료 뽑는 클로드 프롬프트 6개</b><span>한 대화 안에서 설계도→슬라이드 구조→스토리→디자인→내용→다듬기 6개 프롬프트를 순서대로 보낸 뒤 .pptx 파일을 요청한다.</span></a></li>
-              <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/claude-private-tutor-prompts.md"><b>클로드를 개인 과외 선생님으로 바꾸는 프롬프트 6개</b><span>새 대화에 프롬프트 하나를 통째로 붙여넣고 대괄호 [ ]만 내 주제로 바꾸면, 클로드가 질문하고 내 답을 기다리며 가르치는 6가지 과외 모드(학습 곡선 가이드, 실수 시뮬레이터, 난해한 글 번역기, 7일 경로 설계, 숨은 구멍 탐지, 파인만 기법)로 바뀐다.</span></a></li>
+              <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/claude-private-tutor-prompts.md"><b>클로드를 개인 과외 선생님으로 바꾸는 프롬프트 6개</b><span>새 대화에 프롬프트 하나를 통째로 붙여넣고 대괄호 ［ ］만 내 주제로 바꾸면, 클로드가 질문하고 내 답을 기다리며 가르치는 6가지 과외 모드(학습 곡선 가이드, 실수 시뮬레이터, 난해한 글 번역기, 7일 경로 설계, 숨은 구멍 탐지, 파인만 기법)로 바뀐다.</span></a></li>
               <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/hani-prompt.md"><b>클로드 코드에 무료 프롬프트 라이브러리 연결하는 법</b><span>prompts.chat(2,300개+ 공개 프롬프트)을 플러그인으로 연결해, 요청 문장에 검색 지시를 넣으면 클로드가 필요한 프롬프트를 찾아 적용하게 한다.</span></a></li>
               <li><a class="guide" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/04-prompts/pt-prompts.md"><b>PT비 내기 전에 봐야할 ChatGPT 프롬프트 4개</b><span>개인 트레이너 모드, 신체 변화 계획, 주간 식단, 개인 영양사, 진행 상황 추적기까지 프롬프트 5개(제목은 4개지만 페이지에는 5개 섹션)를 ChatGPT에 붙여넣어 맞춤 운동·영양 계획을 받는다.</span></a></li>
             </ul>
@@ -663,7 +668,7 @@
     </div>
   </section>
 
-  <section class="section" id="faq" aria-labelledby="faq-h">
+  <section class="section" id="faq" style="--hm: 2" aria-labelledby="faq-h">
     <div class="wrap">
       <div class="grid grid--top">
         <div class="span-5 stack-4">
@@ -678,6 +683,40 @@
           <div class="faq__item"><h3>새 프로젝트에도 쓸 수 있나요?</h3><p>네. 빈 폴더에서 만들고 싶은 것을 말하면 신규 모드로 시작 도구와 첫 주 계획을 짭니다.</p></div>
           <div class="faq__item"><h3>스킬을 지우려면 어떻게 하나요?</h3><p>스킬 폴더 <code>~/.claude/skills/project-upgrade-advisor</code>를 지우면 됩니다. 다른 설정은 건드리지 않습니다.</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guestbook" aria-labelledby="guestbook-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5 stack-4">
+          <h2 id="guestbook-h">방명록</h2>
+          <p class="muted">써 본 소감, 추천받고 싶었던 상황, 고쳤으면 하는 점을 남겨 주세요. GitHub 계정으로 남기고 글은 이 저장소의 Discussions에 공개됩니다.</p>
+          <p><a class="link" href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 보기</a></p>
+        </div>
+        <figure class="gb span-6 start-7" aria-label="방명록 글">
+          <div class="giscus"></div>
+          <noscript><p class="muted">방명록은 스크립트가 필요합니다. <a class="link" href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 직접 남길 수 있습니다.</a></p></noscript>
+          <!-- giscus: comments live in the GuestPage discussion category; setup in docs/SETUP-DISCUSSIONS.md -->
+          <script src="https://giscus.app/client.js"
+                  data-repo="devvshyun/AIAdvisor"
+                  data-repo-id="R_kgDOVjk56g"
+                  data-category="GuestPage"
+                  data-category-id="DIC_kwDOVjk56s4DKfyK"
+                  data-mapping="specific"
+                  data-term="GuestPage"
+                  data-strict="1"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="top"
+                  data-theme="https://devvshyun.github.io/AIAdvisor/giscus-theme.css"
+                  data-lang="ko"
+                  data-loading="lazy"
+                  crossorigin="anonymous"
+                  async>
+          </script>
+        </figure>
       </div>
     </div>
   </section>
@@ -699,7 +738,7 @@
           <p class="footer__lede">프로젝트를 먼저 읽고 필요한 AI 도구만 골라 주는 Claude Code 스킬.</p>
         </div>
         <div class="span-3 start-7 footer__col"><h4>살펴보기</h4><ul><li><a href="#demo">추천 결과</a></li><li><a href="#how">동작 순서</a></li><li><a href="#modes">두 가지 모드</a></li><li><a href="#kit">카탈로그와 레시피</a></li></ul></div>
-        <div class="span-3 footer__col"><h4>저장소</h4><ul><li><a href="https://github.com/devvshyun/AIAdvisor">GitHub</a></li><li><a href="https://github.com/devvshyun/AIAdvisor/blob/main/docs/DESIGN.md">디자인 기준</a></li><li><a href="#faq">질문</a></li></ul></div>
+        <div class="span-3 footer__col"><h4>저장소</h4><ul><li><a href="https://github.com/devvshyun/AIAdvisor">GitHub</a></li><li><a href="https://github.com/devvshyun/AIAdvisor/blob/main/docs/DESIGN.md">디자인 기준</a></li><li><a href="#faq">질문</a></li><li><a href="#guestbook">방명록</a></li></ul></div>
       </div>
       <div class="footer__legal"><span>&copy; 2026 AIAdvisor</span></div>
     </div>
