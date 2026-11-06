@@ -21,7 +21,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CATALOG = os.path.join(ROOT, "references", "catalog")
 REQUIRED = ["id", "name", "kind", "area", "what", "when", "not_when", "install", "verify", "docs",
             "maintained", "cost", "risks", "source_checked", "sources"]
-OPTIONAL = ["repo", "license", "stars", "last_push", "needs", "overlaps", "also", "always_on_tokens"]
+OPTIONAL = ["repo", "license", "stars", "last_push", "needs", "overlaps", "also", "always_on_tokens", "hands_on"]
 KINDS = {"skill", "plugin", "mcp", "cli", "built-in", "github-action", "service"}
 AREAS = {"web-design", "coding", "automation"}
 STALE_DAYS = 180
@@ -59,6 +59,9 @@ def validate(items):
         if it.get("id") in ids:
             errors.append(f"{where}: duplicate id (also in {ids[it['id']]})")
         ids[it.get("id")] = it.get("_file")
+        ho = it.get("hands_on")
+        if ho is not None and not re.fullmatch(r"\d{4}-\d{2}-\d{2}: .+", str(ho)):
+            errors.append(f"{where}: hands_on must read 'YYYY-MM-DD: what was tried and what happened'")
         for d in ("last_push", "source_checked"):
             v = it.get(d)
             if v and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(v)):

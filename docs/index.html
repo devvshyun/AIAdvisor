@@ -184,6 +184,7 @@
   .tool i { font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
   .tool span { grid-column: 1 / -1; font-size: 14px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .tool--off b { color: var(--muted); text-decoration: line-through; }
+  .tool--tried i { color: var(--action); }
   @media (max-width: 1023px) {
     .lib, .steps-ui { align-content: start; grid-auto-rows: auto; }
     .topics { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; scrollbar-width: none; }
@@ -404,9 +405,9 @@
           <div class="kitp" role="tabpanel" id="kp-web-design" aria-labelledby="kt-web-design">
             <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md">AI 티 안 나는 랜딩·소개 페이지</a><div class="recipe__steps" role="list"><div role="listitem">제품 맥락과 디자인 기준부터 (impeccable)</div><div role="listitem">팔레트·서체·구성은 뽑기로 정한다 (taste-skill)</div><div role="listitem">키트로 짓는다</div><div role="listitem">모션과 호버 (emil-design-eng)</div><div role="listitem">화면으로 확인한다 (브라우저)</div><div role="listitem">접근성·성능과 AI 티 검사</div><div role="listitem">배포 (GitHub Pages)</div></div></div>
             <div class="tools" role="list">
-              <div role="listitem" class="tool"><b>Impeccable</b><i>스킬</i><span>디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.</span></div>
-              <div role="listitem" class="tool"><b>Taste Skill (design-taste-frontend)</b><i>스킬</i><span>페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.</span></div>
-              <div role="listitem" class="tool"><b>emil-design-eng (Emil Kowalski skills)</b><i>스킬</i><span>애니메이션 이징·지속 시간·속성 선택 같은 세부 규칙을 중심으로, 에이전트가 자주 틀리는 UI 디테일을 바로잡게 하는 스킬 묶음이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Impeccable</b><i>스킬 · 써 봄</i><span>디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Taste Skill (design-taste-frontend)</b><i>스킬 · 써 봄</i><span>페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>emil-design-eng (Emil Kowalski skills)</b><i>스킬 · 써 봄</i><span>애니메이션 이징·지속 시간·속성 선택 같은 세부 규칙을 중심으로, 에이전트가 자주 틀리는 UI 디테일을 바로잡게 하는 스킬 묶음이다.</span></div>
               <div role="listitem" class="tool"><b>Vercel web-design-guidelines</b><i>스킬</i><span>Vercel의 웹 인터페이스 가이드라인(접근성, 포커스, 폼, 타이포그래피, 다크 모드 등 100개 이상 규칙)으로 UI 코드를 검토해 file:line 형식으로 지적해 주는 리뷰 스킬이다.</span></div>
               <div role="listitem" class="tool"><b>frontend-design (Anthropic official)</b><i>플러그인</i><span>브리프 주제에 맞춘 뚜렷한 색·타이포그래피·레이아웃을 고르도록 Claude를 유도하는 Anthropic 공식 프런트엔드 디자인 스킬(플러그인)이다.</span></div>
               <div role="listitem" class="tool"><b>awesome-design-md (VoltAgent)</b><i>서비스</i><span>실제 서비스들의 디자인 언어를 분석해 DESIGN.md(토큰·규칙을 담은 마크다운) 파일로 정리한 모음집으로, 프로젝트에 복사해 에이전트의 디자인 기준으로 쓴다.</span></div>
@@ -424,13 +425,13 @@
           <div class="kitp" role="tabpanel" id="kp-coding" aria-labelledby="kt-coding" hidden>
             <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/coding.md">기능 하나를 계획부터 병합까지</a><div class="recipe__steps" role="list"><div role="listitem">브랜치를 나눈다</div><div role="listitem">요구사항을 좁힌다</div><div role="listitem">계획을 쓴다</div><div role="listitem">테스트부터 구현한다</div><div role="listitem">끝났다고 말하기 전에 검증한다</div><div role="listitem">코드 리뷰</div><div role="listitem">보안 리뷰</div><div role="listitem">커밋</div><div role="listitem">PR과 CI</div><div role="listitem">병합과 정리</div></div></div>
             <div class="tools" role="list">
-              <div role="listitem" class="tool"><b>Superpowers</b><i>플러그인</i><span>브레인스토밍, 계획 작성, 레드-그린 TDD, 체계적 디버깅, 완료 전 검증 같은 개발 절차를 스킬로 묶어 Claude가 작업마다 따르게 만드는 플러그인이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Superpowers</b><i>플러그인 · 써 봄</i><span>브레인스토밍, 계획 작성, 레드-그린 TDD, 체계적 디버깅, 완료 전 검증 같은 개발 절차를 스킬로 묶어 Claude가 작업마다 따르게 만드는 플러그인이다.</span></div>
               <div role="listitem" class="tool"><b>Context7</b><i>MCP</i><span>라이브러리 이름과 질문을 주면 해당 버전의 최신 공식 문서와 코드 예시를 찾아 Claude에게 넘겨 주는 문서 조회 서비스로, CLI+스킬 방식과 MCP 방식 둘 다 지원한다.</span></div>
               <div role="listitem" class="tool"><b>Everything Claude Code (ECC)</b><i>플러그인</i><span>에이전트 71개, 스킬 314개, 레거시 명령 98개와 훅·규칙·메모리·보안 스캔(AgentShield)을 한 번에 깔아 주는 대형 하네스 설정 모음이다.</span></div>
               <div role="listitem" class="tool"><b>graphify</b><i>스킬</i><span>코드(tree-sitter AST)와 문서·PDF·이미지를 지식 그래프로 만들고, Claude가 파일을 통째로 읽는 대신 그래프 질의로 구조를 찾게 하는 CLI 겸 스킬이다.</span></div>
               <div role="listitem" class="tool"><b>Serena</b><i>MCP</i><span>언어 서버(또는 JetBrains 플러그인)를 이용해 심볼 단위 검색·참조 추적·심볼 본문 교체 같은 의미 기반 탐색과 편집 도구를 MCP로 제공한다.</span></div>
-              <div role="listitem" class="tool"><b>Claude Code /code-review (내장 스킬)</b><i>내장</i><span>현재 브랜치 diff나 지정한 PR·브랜치·경로를 정확성 버그 위주로 리뷰하고, 노력 단계를 고르거나 --fix로 바로 고치거나 --comment로 PR에 남기는 내장 명령이다.</span></div>
-              <div role="listitem" class="tool"><b>Claude Code /security-review (내장)</b><i>내장</i><span>현재 브랜치와 origin 기본 브랜치의 차이를 읽고 인젝션, 인증 문제, 데이터 노출 같은 보안 위험을 찾아 주는 내장 명령이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Claude Code /code-review (내장 스킬)</b><i>내장 · 써 봄</i><span>현재 브랜치 diff나 지정한 PR·브랜치·경로를 정확성 버그 위주로 리뷰하고, 노력 단계를 고르거나 --fix로 바로 고치거나 --comment로 PR에 남기는 내장 명령이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Claude Code /security-review (내장)</b><i>내장 · 써 봄</i><span>현재 브랜치와 origin 기본 브랜치의 차이를 읽고 인젝션, 인증 문제, 데이터 노출 같은 보안 위험을 찾아 주는 내장 명령이다.</span></div>
               <div role="listitem" class="tool"><b>security-guidance (Anthropic 공식 플러그인)</b><i>플러그인</i><span>Claude가 편집할 때 위험 패턴 정규식 경고를 띄우고, 턴이 끝날 때 diff를 LLM으로 보안 리뷰하며, git commit 때는 에이전트가 파일을 따라가며 다중 파일 취약점까지 보는 3단 보안 가드이다.</span></div>
               <div role="listitem" class="tool"><b>claude-security (Anthropic 공식 플러그인)</b><i>플러그인</i><span>여러 에이전트가 위협 모델을 세우고 저장소나 diff를 훑은 뒤, 다른 에이전트가 반증을 시도해 살아남은 취약점만 보고서(MD·JSONL·SARIF)로 남기고 패치 파일까지 제안하는 심층 보안 스캔이다.</span></div>
               <div role="listitem" class="tool"><b>feature-dev (Anthropic 공식 플러그인)</b><i>플러그인</i><span>코드베이스 탐색, 아키텍처 설계, 품질 리뷰를 맡는 전문 에이전트로 기능 개발을 단계별로 진행하게 해 주는 공식 워크플로 플러그인이다.</span></div>
@@ -439,7 +440,7 @@
               <div role="listitem" class="tool"><b>공식 LSP 플러그인 (pyright-lsp, typescript-lsp, gopls-lsp, rust-analyzer-lsp 등)</b><i>플러그인</i><span>언어 서버를 Claude Code에 연결해 정의 이동, 참조 찾기, 타입 오류 확인 같은 코드 인텔리전스를 쓰게 해 주는 언어별 공식 플러그인 묶음이다.</span></div>
               <div role="listitem" class="tool"><b>Semgrep Guardian (Semgrep 플러그인)</b><i>플러그인</i><span>Semgrep MCP 서버와 파일 쓰기 훅을 묶어 Claude가 쓴 코드를 Semgrep Code·Supply Chain·Secrets로 바로 스캔하고, 문제가 나오면 깨끗해질 때까지 다시 고치게 하는 보안 플러그인이다.</span></div>
               <div role="listitem" class="tool tool--off"><b>Claude Code Security Reviewer (GitHub Action)</b><i>Actions · 관리 중단</i><span>PR이 열리면 Claude가 변경 diff를 보안 관점에서 분석하고 오탐을 걸러 PR에 줄 단위 코멘트를 남기는 GitHub Action이다.</span></div>
-              <div role="listitem" class="tool"><b>Gitleaks (후속: Betterleaks)</b><i>CLI</i><span>git 기록, 디렉터리, 표준입력에서 비밀번호·API 키·토큰 같은 비밀값을 정규식과 엔트로피 규칙으로 찾아내는 결정적 스캐너이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>Gitleaks (후속: Betterleaks)</b><i>CLI · 써 봄</i><span>git 기록, 디렉터리, 표준입력에서 비밀번호·API 키·토큰 같은 비밀값을 정규식과 엔트로피 규칙으로 찾아내는 결정적 스캐너이다.</span></div>
               <div role="listitem" class="tool"><b>claude-mem</b><i>플러그인</i><span>훅으로 세션 중 작업 내용을 관찰·압축해 저장하고, 다음 세션 시작 때 관련 맥락을 자동으로 넣어 주며 검색용 MCP 도구를 제공하는 세션 간 기억 플러그인이다.</span></div>
               <div role="listitem" class="tool"><b>caveman</b><i>플러그인</i><span>에이전트 답변을 짧게 압축하고, 로그·JSON·테스트 출력을 모델이 읽기 전에 줄여 입출력 토큰을 아끼게 해 주는 스킬 겸 플러그인이다.</span></div>
               <div role="listitem" class="tool"><b>Understand Anything</b><i>플러그인</i><span>멀티 에이전트 파이프라인으로 프로젝트의 파일·함수·클래스·의존성을 지식 그래프로 만들고 대화형 대시보드와 온보딩 가이드, diff 영향 분석을 제공하는 플러그인이다.</span></div>
@@ -452,7 +453,7 @@
               <div role="listitem" class="tool"><b>Claude Code hooks</b><i>내장</i><span>Claude Code 수명주기(도구 사용 전후, 알림, 세션 시작, 종료 등)의 정해진 시점에 셸 명령·프롬프트·MCP 도구를 결정적으로 실행시키는 내장 기능이다.</span></div>
               <div role="listitem" class="tool"><b>Claude Code cloud scheduled tasks (구 routines, /schedule)</b><i>내장</i><span>프롬프트·저장소·커넥터를 묶어 Anthropic 클라우드에서 일정, API 호출, GitHub 이벤트에 맞춰 자동 실행하는 Claude Code 예약 작업이다.</span></div>
               <div role="listitem" class="tool"><b>Claude Code Desktop 로컬 예약 작업 + /loop</b><i>내장</i><span>내 PC에서 Desktop 앱이 정해진 일정에 새 세션을 띄우거나(/loop은 열린 세션 안에서) 프롬프트를 반복 실행하는 로컬 스케줄 기능이다.</span></div>
-              <div role="listitem" class="tool"><b>GitHub Pages 배포 (actions/upload-pages-artifact + actions/deploy-pages)</b><i>Actions</i><span>빌드한 정적 파일을 아티팩트로 올린 뒤 OIDC 인증으로 GitHub Pages에 배포하는 GitHub 공식 액션 조합이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>GitHub Pages 배포 (actions/upload-pages-artifact + actions/deploy-pages)</b><i>Actions · 써 봄</i><span>빌드한 정적 파일을 아티팩트로 올린 뒤 OIDC 인증으로 GitHub Pages에 배포하는 GitHub 공식 액션 조합이다.</span></div>
               <div role="listitem" class="tool"><b>lychee-action (+ peter-evans/create-issue-from-file)</b><i>Actions</i><span>문서·사이트의 링크를 검사하고, 깨진 링크가 있으면 결과 마크다운으로 이슈를 자동 생성하는 정기 헬스체크 조합이다.</span></div>
               <div role="listitem" class="tool"><b>n8n (instance-level MCP server)</b><i>서비스</i><span>노드 기반 워크플로 자동화 도구 n8n의 인스턴스 MCP 서버로, Claude Code가 허용된 n8n 워크플로를 검색·실행·편집할 수 있게 한다.</span></div>
               <div role="listitem" class="tool"><b>Zapier MCP</b><i>MCP</i><span>Zapier에 연결된 수천 개 앱의 액션을 Claude Code에서 원격 MCP 도구로 호출하게 해 주는 호스팅 서비스다.</span></div>

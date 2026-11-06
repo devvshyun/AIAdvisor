@@ -94,7 +94,8 @@ def catalog_items(area):
     out = []
     for chunk in re.split(r"^- id: ", text, flags=re.M)[1:]:
         field = lambda k: (re.search(rf"^  {k}: (.*)$", chunk, re.M) or [None, ""])[1].strip().strip("'\"")
-        out.append((field("name"), KIND.get(field("kind"), field("kind")), field("what"), field("maintained") != "false"))
+        out.append((field("name"), KIND.get(field("kind"), field("kind")), field("what"), field("maintained") != "false",
+                    bool(re.search(r"^  hands_on: ", chunk, re.M))))
     return out
 
 
@@ -130,8 +131,8 @@ def kit(total_tools):
             recipe.append(head + '<div class="recipe__steps" role="list">'
                           + "".join(f'<div role="listitem">{e(s)}</div>' for s in steps) + "</div>")
         tools = "\n".join(
-            f'              <div role="listitem" class="tool{"" if ok else " tool--off"}"><b>{e(n)}</b><i>{e(k)}{"" if ok else " · 관리 중단"}</i><span>{e(w)}</span></div>'
-            for n, k, w, ok in items)
+            f'              <div role="listitem" class="tool{"" if ok else " tool--off"}{" tool--tried" if tried else ""}"><b>{e(n)}</b><i>{e(k)}{"" if ok else " · 관리 중단"}{" · 써 봄" if tried else ""}</i><span>{e(w)}</span></div>'
+            for n, k, w, ok, tried in items)
         panes.append(
             f'          <div class="kitp" role="tabpanel" id="kp-{area}" aria-labelledby="kt-{area}"{"" if first else " hidden"}>\n'
             f'            <div class="recipe"><a class="recipe__title" href="{REPO}recipes/{area}.md">{e(title)}</a>{"".join(recipe)}</div>\n'
@@ -208,7 +209,7 @@ def catalog_section():
     for p in sorted(glob.glob(os.path.join(ROOT, "references", "recipes", "*.md"))):
         title = open(p, encoding="utf-8").readline().lstrip("# ").strip()
         out.append(f"- `recipes/{os.path.basename(p)}`: {title}")
-    out += ["", "## 도구 카탈로그", "", "id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`)입니다. 자세한 내용은 해당 yaml에서 id로 찾습니다.", ""]
+    out += ["", "## 도구 카탈로그", "", "id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`), \"써 봄\"은 이 저장소 작업에서 직접 써 본 도구(`hands_on`)입니다. 자세한 내용은 해당 yaml에서 id로 찾습니다.", ""]
     for p in sorted(glob.glob(os.path.join(ROOT, "references", "catalog", "*.yaml"))):
         entries = re.split(r"^- id: ", open(p, encoding="utf-8").read(), flags=re.M)[1:]
         names = []
@@ -217,7 +218,8 @@ def catalog_section():
             kind = re.search(r"^  kind: (\S+)", e, re.M).group(1)
             also = re.search(r"^  also: \[(.*)\]", e, re.M)
             stale = ", 관리 중단" if re.search(r"^  maintained: false", e, re.M) else ""
-            names.append(f"`{id_}` ({kind}{', +' + also.group(1) if also else ''}{stale})")
+            tried = ", 써 봄" if re.search(r"^  hands_on: ", e, re.M) else ""
+            names.append(f"`{id_}` ({kind}{', +' + also.group(1) if also else ''}{stale}{tried})")
         out.append(f"- `catalog/{os.path.basename(p)}` {len(names)}개: " + ", ".join(names))
     return out + [""]
 

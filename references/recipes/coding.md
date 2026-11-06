@@ -42,12 +42,14 @@
 - 할 일: superpowers `brainstorming`으로 무엇을 만들지, 무엇은 안 만들지 정한다. 낯선 코드베이스면 먼저 LSP(정의 이동·참조 찾기)로 관련 모듈을 좁힌다. 아주 크고 처음 보는 저장소일 때만 `graphify`나 `understand-anything`을 한 번 돌린다.
 - 넘길 것: 설계 요약(바꿀 파일, 바꾸지 않을 것)
 - 확인 기준: 사용자가 설계 요약을 승인했다.
+- 써 보니: superpowers 브레인스토밍은 질문을 한 번에 하나씩 객관식으로 이어 간다. 작은 기능인데도 질문이 세 번째에 이르자 사용자가 "묻지 말고 추천대로 진행"을 골랐다. 작은 작업이면 처음에 "추천대로 진행할지, 질문에 답할지"를 먼저 묻는 편이 낫다.
 
 ### 3. 계획을 쓴다
 - 도구: `superpowers`, `context7`
 - 할 일: plan 모드나 superpowers `writing-plans`로 작업 단위와 테스트 목록을 쓴다. 외부 라이브러리를 쓰면 Context7로 지금 쓰는 버전의 문서를 확인한다.
 - 넘길 것: 계획 파일
 - 확인 기준: 계획의 작업마다 "어떤 테스트가 실패하다가 통과해야 하는지"가 적혀 있다.
+- 써 보니: writing-plans는 작업마다 테스트와 구현 코드 전문을 계획에 적게 한다. 실행 중 코드가 바뀌면 계획과 어긋나서, 끝에 "계획 뒤에 바뀐 것"을 덧붙였다.
 
 ### 4. 테스트부터 구현한다
 - 도구: `superpowers`, `claude-code-hooks`
@@ -60,30 +62,35 @@
 - 할 일: superpowers `verification-before-completion`. 전체 테스트, 타입체크, 린트를 실제로 돌린다.
 - 넘길 것: 명령 출력
 - 확인 기준: 세 명령의 출력이 모두 통과다.
+- 써 보니: 테스트(capsys)는 모두 통과했는데, 실제로 `python -m`으로 돌리자 Windows에서 출력을 파이프로 넘길 때 한글이 cp949로 깨졌다. 출력·인코딩·경로처럼 환경에 기대는 부분은 실제 프로세스로 한 번 돌리는 테스트를 넣는다. ruff 0.17은 Markdown 속 Python 코드 블록까지 포맷 검사를 한다.
 
 ### 6. 코드 리뷰
 - 도구: `builtin-code-review`
 - 할 일: `/code-review high`. 정리할 게 많으면 `/simplify`를 먼저 돌린다. 지적을 반영한다.
 - 넘길 것: 반영한 수정
 - 확인 기준: 높은 신뢰도 지적이 0건이거나, 남긴 건마다 사유가 적혀 있다.
+- 써 보니: `/code-review high`가 30줄 남짓한 코드에서 8건을 냈다(전각 숫자 허용, 앞자리 0, 항목 이름 속 공백, 전역 표준 출력 변경, 실행 위치에 기대는 테스트, 중복 상태, 계획 문서 불일치). 모두 실제로 고칠 만한 것이었고, 고친 뒤 테스트가 23개에서 30개로 늘었다.
 
 ### 7. 보안 리뷰
 - 도구: `builtin-security-review`, `claude-security`
 - 할 일: `/security-review`(origin 원격이 있어야 한다). 인증·입력 처리·비밀값을 건드린 변경이면 `claude-security`로 변경분을 한 번 더 깊게 본다.
 - 넘길 것: 발견 목록과 조치
 - 확인 기준: 높음 이상 발견이 0건이다.
+- 써 보니: `/security-review`는 `git diff origin/HEAD...`로 시작해서 origin 원격이 없으면 바로 실패한다. 원격이 없는 저장소는 빈 로컬 저장소를 origin으로 붙이고(`git init --bare`, `git remote set-head origin main`) 돌렸다. 로컬 CLI라 발견은 0건이었다.
 
 ### 8. 커밋
 - 도구: `gitleaks`, `security-guidance`
 - 할 일: 커밋한다. gitleaks pre-commit과 security-guidance 커밋 점검이 자동으로 돈다.
 - 넘길 것: 커밋
 - 확인 기준: 훅이 통과했다. `SKIP=gitleaks`로 건너뛸 수 있으니 CI에서도 한 번 더 돌린다.
+- 써 보니: pre-commit의 `repo: local` 훅에 `.tools/gitleaks.exe`를 `language: system`으로 걸면 Windows에서 `WinError 2`로 실패했다. `language: script`로 바꾸자 저장소 기준 경로로 찾았다. 가짜 GitHub 토큰을 커밋하려 하자 gitleaks가 값을 가린 채 막았다. 바이너리는 릴리스의 체크섬 파일로 확인하고 받았다.
 
 ### 9. PR과 CI
 - 도구: `commit-commands`, `claude-code-security-review-action`
 - 할 일: `gh pr create`(또는 commit-commands). CI에서 테스트와, 쓰고 있다면 Semgrep이나 보안 리뷰 액션을 돌린다. `claude-code-security-review-action`은 `maintained: false`라 새로 붙이기 전에 저장소 상태를 확인한다.
 - 넘길 것: PR 주소
 - 확인 기준: CI가 초록이고 사람 리뷰어 1명이 승인했다.
+- 써 보니: 연습용 저장소는 GitHub 원격과 gh CLI가 없어 이 단계는 직접 확인하지 못했다.
 
 ### 10. 병합과 정리
 - 도구: `superpowers`

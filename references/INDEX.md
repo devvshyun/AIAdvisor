@@ -10,11 +10,11 @@
 
 ## 도구 카탈로그
 
-id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`)입니다. 자세한 내용은 해당 yaml에서 id로 찾습니다.
+id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`), "써 봄"은 이 저장소 작업에서 직접 써 본 도구(`hands_on`)입니다. 자세한 내용은 해당 yaml에서 id로 찾습니다.
 
-- `catalog/automation.yaml` 12개: `claude-code-action` (github-action), `claude-code-hooks` (built-in, +coding), `claude-cloud-scheduled-tasks` (built-in), `claude-local-scheduling` (built-in), `github-pages-deploy` (github-action), `lychee-action` (github-action), `n8n-mcp` (service), `zapier-mcp` (mcp), `make-mcp` (mcp), `inbox-zero` (service), `github-mcp` (mcp, +coding), `ntfy` (service)
-- `catalog/coding.yaml` 19개: `superpowers` (plugin), `context7` (mcp), `ecc` (plugin), `graphify` (skill), `serena` (mcp), `builtin-code-review` (built-in), `builtin-security-review` (built-in), `security-guidance` (plugin), `claude-security` (plugin), `feature-dev` (plugin), `pr-review-toolkit` (plugin), `commit-commands` (plugin), `lsp-plugins` (plugin), `semgrep-guardian` (plugin), `claude-code-security-review-action` (github-action, 관리 중단), `gitleaks` (cli, +automation), `claude-mem` (plugin), `caveman` (plugin), `understand-anything` (plugin)
-- `catalog/web-design.yaml` 15개: `impeccable` (skill), `taste-skill` (skill), `emil-design-eng` (skill), `web-design-guidelines` (skill), `frontend-design` (plugin), `awesome-design-md` (service), `shadcn-mcp` (mcp), `agent-browser` (cli), `playwright-mcp` (mcp, +coding, automation), `playwright-cli` (cli, +automation), `chrome-devtools-mcp` (mcp), `figma-mcp` (mcp), `lighthouse-cli` (cli), `axe-cli` (cli), `superdesign` (plugin)
+- `catalog/automation.yaml` 12개: `claude-code-action` (github-action), `claude-code-hooks` (built-in, +coding), `claude-cloud-scheduled-tasks` (built-in), `claude-local-scheduling` (built-in), `github-pages-deploy` (github-action, 써 봄), `lychee-action` (github-action), `n8n-mcp` (service), `zapier-mcp` (mcp), `make-mcp` (mcp), `inbox-zero` (service), `github-mcp` (mcp, +coding), `ntfy` (service)
+- `catalog/coding.yaml` 19개: `superpowers` (plugin, 써 봄), `context7` (mcp), `ecc` (plugin), `graphify` (skill), `serena` (mcp), `builtin-code-review` (built-in, 써 봄), `builtin-security-review` (built-in, 써 봄), `security-guidance` (plugin), `claude-security` (plugin), `feature-dev` (plugin), `pr-review-toolkit` (plugin), `commit-commands` (plugin), `lsp-plugins` (plugin), `semgrep-guardian` (plugin), `claude-code-security-review-action` (github-action, 관리 중단), `gitleaks` (cli, +automation, 써 봄), `claude-mem` (plugin), `caveman` (plugin), `understand-anything` (plugin)
+- `catalog/web-design.yaml` 15개: `impeccable` (skill, 써 봄), `taste-skill` (skill, 써 봄), `emil-design-eng` (skill, 써 봄), `web-design-guidelines` (skill), `frontend-design` (plugin), `awesome-design-md` (service), `shadcn-mcp` (mcp), `agent-browser` (cli), `playwright-mcp` (mcp, +coding, automation), `playwright-cli` (cli, +automation), `chrome-devtools-mcp` (mcp), `figma-mcp` (mcp), `lighthouse-cli` (cli), `axe-cli` (cli), `superdesign` (plugin)
 
 ## 상황별 빠른 찾기
 

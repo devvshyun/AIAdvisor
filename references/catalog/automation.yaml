@@ -155,6 +155,7 @@
   overlaps: []
   risks: deploy 잡에만 pages:write, id-token:write를 주고 워크플로 기본은 contents:read로 둔다. github-pages 환경에 배포 브랜치 보호를 걸지 않으면 다른 브랜치 워크플로가 사이트를 덮어쓸 수 있다. 아티팩트에 빌드 산출물 외 파일(.env 등)이 섞이면 그대로 공개된다. 심볼릭 링크가 있으면 업로드가 실패한다.
   always_on_tokens: null
+  hands_on: '2026-11-06: 이 저장소 데모를 Actions로 배포했다. Pages 소스만 켜고 워크플로가 없으면 아무것도 올라가지 않았다. configure-pages v6, upload-pages-artifact v5, deploy-pages v5로 배포에 성공했다'
   source_checked: 2026-11-06
   sources:
   - https://github.com/actions/deploy-pages

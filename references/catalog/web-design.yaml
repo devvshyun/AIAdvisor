@@ -27,6 +27,7 @@
   overlaps: [taste-skill, frontend-design, web-design-guidelines, superdesign]
   risks: 설치 시 에디트마다 UI 파일을 검사하는 훅이 추가된다(매 편집마다 실행). live 모드의 Apply는 채팅 세션이 응답이 없으면 codex/claude CLI를 승인·샌드박스를 끈 상태로 실행하므로 IMPECCABLE_LIVE_COPY_AGENT=chat 설정 권장. global 설치 시 모든 프로젝트에 적용됨. 엔진 바이너리를 외부에서 내려받음.
   always_on_tokens: null
+  hands_on: '2026-11-06: 데모 페이지에 critique 기준과 금지 목록(제목 위 라벨, 섹션 번호, 큰 숫자 강조)을 적용했다. npx impeccable detect는 권한 정책에 막혔고, 설치된 플러그인의 detect.mjs는 파서 모듈이 없어 축소 모드로 돌며 그라데이션을 놓쳤다'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/pbakaus/impeccable
@@ -57,6 +58,7 @@
   overlaps: [frontend-design, impeccable, superdesign]
   risks: 추가 사진·아이콘·Google Fonts를 받을 때 네트워크 접근. API 키는 필요 없음. 예전 스킬들은 별도 저장소(taste-skill-classics)로 옮겨졌으니 이름 혼동 주의.
   always_on_tokens: null
+  hands_on: '2026-11-06: 데모 페이지를 이 키트로 다시 지었다. deal.mjs와 start.mjs로 팔레트·서체·히어로를 뽑고 키트 CSS를 그대로 썼다. check.mjs·consistency.mjs는 헤드리스 Chrome이 멈춰서 layout-check.js를 브라우저 안에서 돌렸다'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/Leonxlnx/taste-skill
@@ -84,6 +86,7 @@
   overlaps: [impeccable]
   risks: 전체 설치 시 Swift, Expo 등 웹과 무관한 스킬도 함께 들어와 스킬 목록이 늘어난다. --skill로 골라 설치 권장.
   always_on_tokens: null
+  hands_on: '2026-11-06: 데모 페이지의 버튼 누름, 감속 곡선, 마우스 환경 한정 호버에 적용했다. 섹션마다 반복하던 페이드인은 빼고 클릭 탭으로 바꿨다'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/emilkowalski/skills
