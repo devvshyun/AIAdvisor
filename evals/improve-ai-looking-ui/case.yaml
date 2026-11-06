@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: improve-ai-looking-ui
+expected_outcome: |
+  보완 모드로 랜딩 페이지(Inter 글꼴, 보라→파랑 그라데이션, 같은 카드 세 장)를 근거로 짚고 웹 디자인 가이드를 추천한다. '진행할 번호를 골라 주세요'로 끝난다.
+context:
+  scaffold_script: place-files.sh

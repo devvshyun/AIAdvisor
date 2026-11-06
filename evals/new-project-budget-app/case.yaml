@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: new-project-budget-app
+expected_outcome: |
+  신규 모드로 진행한다. 이미 말한 조건(혼자, 소수 공유, 무료)은 다시 묻지 않고, 단계별 시작 도구를 '지금'과 '나중에'로 나누며, '진행할 항목을 골라 주세요'로 끝난다.
+context:
+  scaffold_script: place-files.sh

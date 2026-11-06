@@ -1,0 +1,42 @@
+name: Catalog health
+
+# Once a month: is every tool in references/catalog/ still maintained?
+# When something is archived, stale or gone, open (or update) one issue with the report.
+on:
+  schedule:
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate format
+        run: python scripts/check_catalog.py --validate
+      - name: Check repos
+        id: fresh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/check_catalog.py --freshness --report report.md
+        continue-on-error: true
+      - name: Open or update the issue
+        if: steps.fresh.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="Catalog needs a refresh"
+          num=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$num" ]; then
+            gh issue comment "$num" --body-file report.md
+          else
+            gh issue create --title "$title" --body-file report.md
+          fi

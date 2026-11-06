@@ -1,0 +1,383 @@
+# area: automation
+# 형식은 SCHEMA.md, 갱신 절차는 REFRESH.md. 기준일은 항목마다 source_checked.
+
+- id: claude-code-action
+  name: Claude Code GitHub Action (anthropics/claude-code-action)
+  kind: github-action
+  area: automation
+  what: GitHub 워크플로 안에서 Claude Code를 돌려 @claude 멘션에 답하거나 정해진 프롬프트로 PR 리뷰·리포트 같은 작업을 자동 실행한다.
+  when: 이슈/PR에서 바로 Claude에게 일을 시키고 싶을 때, 혹은 cron 스케줄로 주간 리포트·정기 점검을 YAML로 버전 관리하며 돌리고 싶을 때.
+  not_when: GitHub이 아닌 저장소(GitLab은 별도 문서), 워크플로 파일 관리 없이 PR 자동 리뷰만 원할 때(Code Review 기능이 더 단순), 저장소 관리자 권한이 없을 때.
+  install: |
+    빠른 설정(관리자 권한 + gh CLI 로그인 필요): claude 실행 후 /install-github-app
+      → Claude GitHub App 설치, ANTHROPIC_API_KEY 또는 CLAUDE_CODE_OAUTH_TOKEN 시크릿 저장, 워크플로 PR 생성.
+    수동 설정:
+      1) https://github.com/apps/claude 설치
+      2) 저장소 Secrets에 ANTHROPIC_API_KEY(Claude Console) 또는 CLAUDE_CODE_OAUTH_TOKEN(로컬에서 `claude setup-token`) 추가
+      3) examples/claude.yml을 .github/workflows/에 복사, `uses: anthropics/claude-code-action@v1`
+    스케줄 실행: on.schedule cron + `prompt:` 입력 + `claude_args: --allowedTools ... --max-turns N`.
+    Windows: 설정 자체는 OS 무관(러너는 ubuntu-latest). /install-github-app은 gh CLI가 설치·로그인돼 있어야 함.
+  verify: 워크플로 머지 후 이슈나 PR 코멘트에 "@claude hello"를 남겨 Claude 응답 코멘트가 달리는지 확인. 스케줄형은 workflow_dispatch로 1회 수동 실행 후 Actions 로그 확인.
+  repo: https://github.com/anthropics/claude-code-action
+  docs: https://code.claude.com/docs/en/github-actions
+  license: MIT
+  stars: 9798
+  last_push: 2026-11-04
+  maintained: true
+  cost: needs account (GitHub Actions 분 + Claude API 토큰 과금, 또는 구독 OAuth 토큰 사용)
+  needs: [저장소 admin 권한, ANTHROPIC_API_KEY 또는 CLAUDE_CODE_OAUTH_TOKEN 시크릿, Claude GitHub App 설치(또는 커스텀 앱)]
+  overlaps: [claude-cloud-scheduled-tasks, github-mcp]
+  risks: 공식 GitHub App은 Actions·Workflows 쓰기까지 포함한 권한 묶음 전체를 받는다(최소 권한이 필요하면 커스텀 앱). 실행마다 Actions 분과 토큰이 같이 나가므로 --max-turns, timeout-minutes, concurrency 없이 pull_request 트리거를 걸면 비용이 불어난다. 키는 Secrets에만 두고, 시크릿을 지워도 키는 살아 있으니 콘솔에서 폐기해야 한다. 기본 GITHUB_TOKEN 커밋은 CI를 트리거하지 않는다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://code.claude.com/docs/en/github-actions
+  - https://github.com/anthropics/claude-code-action
+  - https://api.github.com/repos/anthropics/claude-code-action
+
+- id: claude-code-hooks
+  name: Claude Code hooks
+  kind: built-in
+  area: automation
+  also: [coding]
+  what: Claude Code 수명주기(도구 사용 전후, 알림, 세션 시작, 종료 등)의 정해진 시점에 셸 명령·프롬프트·MCP 도구를 결정적으로 실행시키는 내장 기능이다.
+  when: 편집 후 자동 포맷, 위험 명령 차단, 보호 파일 수정 막기, 입력 대기 시 데스크톱 알림처럼 "매번 반드시" 일어나야 하는 규칙이 있을 때. 편집 후 항상 포매터, 커밋 전 테스트처럼 코딩 규칙을 강제할 때.
+  not_when: 판단이 필요한 일을 셸 스크립트로 억지로 표현하려 할 때(스킬·서브에이전트가 맞음), 출처를 모르는 저장소의 프로젝트 훅을 검토 없이 켤 때.
+  install: |
+    ~/.claude/settings.json(사용자), .claude/settings.json(프로젝트), .claude/settings.local.json(로컬)에 "hooks" 블록 추가.
+    예: "hooks": { "Notification": [ { "matcher": "", "hooks": [ { "type": "command", "command": "<알림 명령>" } ] } ] }
+    Windows 알림 예(공식 문서): "command": "powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""
+      (메시지 박스라 터미널 뒤에 뜰 수 있음. WSL이면 powershell.exe가 PATH에 있어야 함.)
+    Windows에서 파일 변경을 전부 잡으려면 matcher에 Bash|PowerShell을 같이 넣으라고 문서가 안내.
+    전체 끄기: "disableAllHooks": true
+  verify: Claude Code에서 /hooks 를 입력해 해당 이벤트 아래 훅이 보이는지 확인 → 실제 트리거 동작 수행. 오류 전문은 `claude --debug` 또는 세션 중 /debug.
+  repo: null
+  docs: https://code.claude.com/docs/en/hooks-guide
+  license: null
+  stars: null
+  last_push: null
+  maintained: true
+  cost: free
+  needs: [Claude Code]
+  overlaps: [ntfy, ecc, security-guidance, semgrep-guardian]
+  risks: 훅은 사용자 권한으로 임의 명령을 실행하므로 프로젝트 settings.json에 들어 있는 훅은 코드 실행과 같다. PermissionRequest 훅에 빈 matcher를 쓰면 모든 권한 프롬프트를 자동 승인한다. exit 0은 승인이 아니고 exit 2가 차단이라는 규칙을 헷갈리면 안전장치가 무력해진다. 훅 출력이 컨텍스트에 추가되는 이벤트(SessionStart 등)는 토큰을 쓴다. stdout이 컨텍스트에 붙으므로 출력이 길면 토큰을 먹는다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://code.claude.com/docs/en/hooks-guide
+  - https://code.claude.com/docs/en/hooks
+  - https://code.claude.com/docs/en/commands
+
+- id: claude-cloud-scheduled-tasks
+  name: Claude Code cloud scheduled tasks (구 routines, /schedule)
+  kind: built-in
+  area: automation
+  what: 프롬프트·저장소·커넥터를 묶어 Anthropic 클라우드에서 일정, API 호출, GitHub 이벤트에 맞춰 자동 실행하는 Claude Code 예약 작업이다.
+  when: 노트북이 꺼져 있어도 매일/매주 PR 요약, 백로그 정리, 의존성 점검 같은 일을 돌리고 결과를 Slack·이슈로 받고 싶을 때.
+  not_when: 로컬 파일이나 로컬 전용 MCP가 필요할 때(Desktop 예약 작업), 1시간보다 짧은 간격이 필요할 때, API 키/Bedrock 등으로만 인증하는 환경, 공유·팀 단위 소유가 필요할 때(개인 계정 소유).
+  install: |
+    요구: Pro/Max/Ultra/Team/Enterprise 구독 로그인(Console API 키, Bedrock/Vertex/Foundry 로그인에서는 /schedule이 숨겨짐; ANTHROPIC_API_KEY 환경 변수가 있으면 제거).
+    CLI: /schedule  (예: /schedule daily PR review at 9am, 별칭 /routines)
+    관리: /schedule list, /schedule update, /schedule run
+    웹: https://claude.ai/code/routines 에서 New → 저장소·환경·트리거·커넥터 설정 → Create.
+    연구 프리뷰 기능이라 동작·한도가 바뀔 수 있음.
+  verify: 작업 상세 페이지에서 Run now → 실행 기록 상태 확인 후 transcript를 직접 열어 차단된 네트워크 요청·누락 도구가 없는지 확인. CLI에서는 `/schedule why did my <task> do nothing` 으로 최근 실행 로그 요약을 요청할 수 있음.
+  repo: null
+  docs: https://code.claude.com/docs/en/routines
+  license: null
+  stars: null
+  last_push: null
+  maintained: true
+  cost: needs account (구독 사용량 차감, 사용 크레딧 켜면 초과분 과금)
+  needs: [claude.ai 유료 구독, GitHub 연결(저장소 클론용), 필요 시 claude.ai 커넥터]
+  overlaps: [claude-code-action, claude-local-scheduling]
+  risks: 실행은 기본 auto mode로 돌고 포함된 커넥터로 쓰기까지 한다(생성 시 연결된 커넥터가 전부 기본 포함). 커밋·Slack 메시지 등은 모두 내 계정 명의로 나간다. claude/ 브랜치에 push하지만 연결된 GitHub 계정이 우회 가능한 보호 규칙은 막지 못한다. API 트리거 토큰은 비밀값이다. 시간당 실행 한도는 있지만 구독 사용량은 계속 깎이고, 사용 크레딧을 켜면 초과 과금된다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://code.claude.com/docs/en/routines
+  - https://code.claude.com/docs/en/scheduled-tasks
+
+- id: claude-local-scheduling
+  name: Claude Code Desktop 로컬 예약 작업 + /loop
+  kind: built-in
+  area: automation
+  what: 내 PC에서 Desktop 앱이 정해진 일정에 새 세션을 띄우거나(/loop은 열린 세션 안에서) 프롬프트를 반복 실행하는 로컬 스케줄 기능이다.
+  when: 로컬 파일·로컬 MCP·미커밋 변경이 필요한 정기 작업(Desktop), 또는 세션 중 배포 완료·CI 상태를 몇 분 간격으로 확인할 때(/loop).
+  not_when: PC가 꺼지거나 잠드는 시간에도 돌아야 할 때, 7일 넘게 이어질 반복을 /loop으로 하려 할 때(자동 만료), 팀이 공유해야 하는 작업.
+  install: |
+    Desktop(1.1.5368 이상): Code 탭 → Scheduled → New task → Advanced settings에서 "Only on this computer" 켜기 → 폴더·일정·권한 모드 선택 → Create.
+      프롬프트 파일: ~/.claude/scheduled-tasks/<task-name>/SKILL.md
+    /loop(CLI 세션): /loop 5m check if the deployment finished  (간격 생략 시 Claude가 1분~1시간 사이로 조절)
+      목록/취소: "what scheduled tasks do I have?", "cancel the deploy check job" (CronList/CronDelete)
+      기본 프롬프트 교체: .claude/loop.md 또는 ~/.claude/loop.md
+      끄기: CLAUDE_CODE_DISABLE_CRON=1
+    Windows: Desktop 앱은 Windows 지원. 절전 방지는 Settings의 Keep computer awake.
+  verify: Desktop은 생성 직후 Run now → 권한 프롬프트마다 always allow → History에 실행 기록 확인. /loop은 생성 시 출력되는 job ID와 "next run" 시간을 확인하고 CronList로 재확인.
+  repo: null
+  docs: https://code.claude.com/docs/en/desktop-scheduled-tasks
+  license: null
+  stars: null
+  last_push: null
+  maintained: true
+  cost: needs account (Claude Code 사용량 차감)
+  needs: [Claude Desktop 앱 또는 Claude Code CLI 세션, PC가 켜져 있고 깨어 있을 것]
+  overlaps: [claude-cloud-scheduled-tasks]
+  risks: 기본적으로 작업 폴더의 현재 상태(미커밋 변경 포함)에서 돌아가므로 Worktree 옵션을 켜는 편이 안전하다. always allow로 승인한 도구는 이후 실행에서 묻지 않는다. /loop을 짧은 간격으로 두면 토큰을 빠르게 소모한다. PC가 잠들면 회차가 건너뛰어지고 깨어날 때 1회만 몰아서 실행되므로 시점 가드를 프롬프트에 넣어야 한다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://code.claude.com/docs/en/desktop-scheduled-tasks
+  - https://code.claude.com/docs/en/scheduled-tasks
+
+- id: github-pages-deploy
+  name: GitHub Pages 배포 (actions/upload-pages-artifact + actions/deploy-pages)
+  kind: github-action
+  area: automation
+  what: 빌드한 정적 파일을 아티팩트로 올린 뒤 OIDC 인증으로 GitHub Pages에 배포하는 GitHub 공식 액션 조합이다.
+  when: 문서 사이트·데모 페이지를 push마다 자동으로 다시 빌드해서 github.io에 올리고 싶을 때.
+  not_when: 서버가 필요한 앱, 1GB를 넘는 사이트, GitHub Enterprise Server(README 호환표상 v4 비호환, v5는 미확인), 이미 Vercel/Netlify/Cloudflare Pages로 배포 중일 때.
+  install: |
+    1) Settings → Pages → Source를 "GitHub Actions"로.
+    2) 워크플로: build 잡에서 빌드 후 `actions/upload-pages-artifact@v5` (with: path: <빌드 폴더>),
+       deploy 잡에서 `actions/deploy-pages@v5`
+       (최신 릴리스: deploy-pages v5.0.1 2026-09-01, upload-pages-artifact v5.0.0 2026-04-10. README 예시는 아직 v4/v3 표기) + permissions { pages: write, id-token: write } + environment: github-pages.
+    3) concurrency group: pages 권장. Windows 차이 없음(러너에서 실행).
+  verify: Actions 탭에서 deploy 잡 성공 + steps.deployment.outputs.page_url 출력 확인 → 해당 URL에 `curl -sI <page_url>` 로 200 응답 확인.
+  repo: https://github.com/actions/deploy-pages
+  docs: https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+  license: MIT
+  stars: 967
+  last_push: 2026-09-07
+  maintained: true
+  cost: free (공개 저장소; 비공개 저장소 Pages는 GitHub 유료 플랜 필요, Actions 분 소모)
+  needs: [GitHub 저장소, Pages 활성화]
+  overlaps: []
+  risks: deploy 잡에만 pages:write, id-token:write를 주고 워크플로 기본은 contents:read로 둔다. github-pages 환경에 배포 브랜치 보호를 걸지 않으면 다른 브랜치 워크플로가 사이트를 덮어쓸 수 있다. 아티팩트에 빌드 산출물 외 파일(.env 등)이 섞이면 그대로 공개된다. 심볼릭 링크가 있으면 업로드가 실패한다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://github.com/actions/deploy-pages
+  - https://github.com/actions/upload-pages-artifact
+  - https://api.github.com/repos/actions/deploy-pages
+  - https://api.github.com/repos/actions/upload-pages-artifact
+
+- id: lychee-action
+  name: lychee-action (+ peter-evans/create-issue-from-file)
+  kind: github-action
+  area: automation
+  what: 문서·사이트의 링크를 검사하고, 깨진 링크가 있으면 결과 마크다운으로 이슈를 자동 생성하는 정기 헬스체크 조합이다.
+  when: 문서·데모 사이트를 cron으로 주기 점검하고 문제를 이슈로 받고 싶을 때.
+  not_when: 페이지 렌더링·기능 동작까지 확인해야 할 때(Playwright 스모크 테스트가 맞음), 링크가 거의 없는 저장소.
+  install: |
+    .github/workflows/links.yml 예:
+      on: schedule(cron) + workflow_dispatch
+      permissions: issues: write
+      - uses: lycheeverse/lychee-action@v2   (with: fail: false, args: ...)
+      - if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v6  (content-filepath: ./lychee/out.md; README 예시는 v5, 최신 릴리스 v6.0.0)
+    Windows 차이 없음(러너에서 실행). 로컬 실행은 lychee CLI 별도 설치.
+  verify: workflow_dispatch로 수동 실행 → 정상 시 이슈 없음, 깨진 링크를 넣은 브랜치에서 실행 시 이슈 생성되는지 확인.
+  repo: https://github.com/lycheeverse/lychee-action
+  docs: https://github.com/lycheeverse/lychee-action#readme
+  license: Apache-2.0 OR MIT
+  stars: 526
+  last_push: 2026-07-09
+  maintained: true
+  cost: free
+  needs: [GitHub Actions, 'issues:write 권한']
+  overlaps: [playwright-cli, claude-code-action]
+  risks: 공개 저장소는 60일 무활동 시 schedule 워크플로가 꺼져 "이슈가 없다=건강"으로 오해할 수 있다. 매번 새 이슈를 만들면 중복 이슈가 쌓인다. 외부 사이트에 요청을 보내므로 rate limit·차단을 받을 수 있다(GITHUB_TOKEN 전달 시 GitHub 링크 한도 완화).
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://github.com/lycheeverse/lychee-action
+  - https://github.com/peter-evans/create-issue-from-file
+  - https://api.github.com/repos/lycheeverse/lychee-action
+  - https://api.github.com/repos/peter-evans/create-issue-from-file
+
+- id: n8n-mcp
+  name: n8n (instance-level MCP server)
+  kind: service
+  area: automation
+  what: 노드 기반 워크플로 자동화 도구 n8n의 인스턴스 MCP 서버로, Claude Code가 허용된 n8n 워크플로를 검색·실행·편집할 수 있게 한다.
+  when: 여러 SaaS를 잇는 반복 업무를 자체 호스팅으로 돌리고 싶고, 그 워크플로를 Claude에서 도구처럼 호출하고 싶을 때.
+  not_when: 단순한 알림 한두 개(ntfy·훅으로 충분), 서버 운영 부담을 지기 싫을 때(n8n Cloud는 유료), 클라이언트별로 접근 범위를 나눠야 할 때(클라이언트 단위 스코프 없음).
+  install: |
+    n8n 실행: Node.js 20.19~24.x 필요. `npx n8n` 또는 `npm install n8n -g` 후 `n8n` → http://localhost:5678
+      (npm 설치는 n8n 3.0부터 deprecated, 운영은 Docker 권장)
+    MCP 켜기: Settings → Instance-level MCP → Enable MCP access (owner/admin). 워크플로별로 "Available in MCP" 켜야 노출.
+    Claude Code 연결(OAuth): claude mcp add --transport http n8n https://<your-n8n-domain>/mcp-server/http  → Claude Code에서 /mcp 로 n8n 선택해 인증
+    API 키 방식: claude mcp add --transport http n8n-mcp https://<your-n8n-domain>/mcp-server/http --header "Authorization: Bearer <YOUR_N8N_MCP_TOKEN>"
+    Windows: n8n 문서는 Windows 전용 명령이 없고 Node.js 설치만 안내. 클라우드 MCP 클라이언트는 공개 접근 가능한 인스턴스 필요.
+  verify: '`claude mcp list` 에 n8n이 connected로 보이는지 → Claude에게 search_workflows 실행을 요청해 MCP 허용 워크플로가 보이는지 확인.'
+  repo: https://github.com/n8n-io/n8n
+  docs: https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server/
+  license: 'Sustainable Use License (API: NOASSERTION; 일부 .ee 파일은 n8n Enterprise License)'
+  stars: 209638
+  last_push: 2026-11-05
+  maintained: true
+  cost: free (자체 호스팅, Sustainable Use License) / paid (n8n Cloud)
+  needs: [n8n 인스턴스(2.x, MCP 기능별 최소 버전 상이), owner/admin 권한, 연결 대상 서비스 자격증명]
+  overlaps: [zapier-mcp, make-mcp]
+  risks: MCP에 연결된 모든 클라이언트가 허용된 워크플로 전부를 본다(클라이언트별 제한 없음). Auto-expose를 켜면 새 워크플로가 자동 노출된다. 2.13.0+에서는 MCP로 워크플로 생성·수정까지 가능해 쓰기 권한이 크다. API 토큰은 한 번만 보이고 재발급 시 이전 토큰이 폐기된다. n8n 안에 저장된 각 서비스 자격증명이 워크플로를 통해 간접 노출된다. 라이선스는 OSI 오픈소스가 아니다(상업 재판매 제한).
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server/
+  - https://docs.n8n.io/connect/connect-to-n8n-mcp-server/mcp-client-examples/
+  - https://docs.n8n.io/hosting/installation/npm/
+  - https://api.github.com/repos/n8n-io/n8n
+
+- id: zapier-mcp
+  name: Zapier MCP
+  kind: mcp
+  area: automation
+  what: Zapier에 연결된 수천 개 앱의 액션을 Claude Code에서 원격 MCP 도구로 호출하게 해 주는 호스팅 서비스다.
+  when: 이미 Zapier를 쓰고 있고, 코드 없이 Gmail·Slack·스프레드시트 등에 쓰기 작업을 Claude가 하게 하고 싶을 때.
+  not_when: 호출량이 많은 반복 작업(호출당 Zap 작업 2개 소모), 데이터를 외부 SaaS에 맡기기 어려울 때, 자체 호스팅이 필요할 때.
+  install: |
+    claude mcp add --transport http "Zapier-MCP" https://mcp.zapier.com/api/v1/connect
+    → Claude Code 재시작 → 브라우저에서 Zapier 로그인·Allow → 복사한 온보딩 프롬프트를 Claude Code에 붙여넣기.
+    Team/Enterprise는 Owner 승인이 필요할 수 있고, 조직 커넥터가 이미 있으면 추가하지 말 것.
+    Windows: WSL에서는 브라우저 콜백이 Claude Code에 닿지 않을 수 있어 네이티브 Windows 터미널에서 실행 권장(공식 문서).
+  verify: '`claude mcp list` 에서 Zapier-MCP 연결 확인 → 연결한 앱에서 목록 조회 같은 읽기 전용 액션 1회 실행 → Zapier MCP History에 기록 확인.'
+  repo: null
+  docs: https://docs.zapier.com/mcp/home
+  license: null
+  stars: null
+  last_push: null
+  maintained: true
+  cost: needs account (모든 Zapier 플랜 포함, 성공한 도구 호출당 작업 2개 차감)
+  needs: [Zapier 계정, 연결할 각 앱 계정]
+  overlaps: [n8n-mcp, make-mcp]
+  risks: 에이전트가 반복 호출하면 작업 한도가 빠르게 소진된다. 앱 자격증명은 Zapier에 보관되지만 허용한 액션 범위 안에서 메일 발송·데이터 삭제 같은 쓰기가 가능하므로 액션을 최소로 고른다. 연결 토큰/토큰 URL은 비밀값이다. 에이전트가 "맞는 액션이 없으면 코드를 작성해 실행"할 수 있다고 소개된다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://zapier.com/mcp
+  - https://docs.zapier.com/mcp/home
+  - https://docs.zapier.com/mcp/get-started/connect/claude-code.md
+
+- id: make-mcp
+  name: Make MCP server (cloud)
+  kind: mcp
+  area: automation
+  what: Make(구 Integromat)가 호스팅하는 MCP 서버로, 활성화된 온디맨드 시나리오를 Claude의 도구로 실행하고 유료 플랜에선 시나리오·연결을 관리하게 한다.
+  when: 이미 Make 시나리오로 업무를 자동화하고 있고, 그 시나리오를 Claude에서 호출하고 싶을 때.
+  not_when: Make를 쓰지 않는 상태에서 새로 고를 때(n8n·Zapier와 겹침), 40초 이상 걸리는 동기 작업 결과가 바로 필요할 때.
+  install: |
+    OAuth: 서버 URL https://mcp.make.com/v2
+      Claude Code: claude mcp add --transport http make https://mcp.make.com/v2  (URL은 공식 문서, 명령 형식은 Claude Code 표준 문법)
+    API 키: https://<MAKE_ZONE>/mcp/v2 + 헤더 Authorization: Bearer <API_KEY>  (MAKE_ZONE 예: eu2.make.com)
+    구 로컬 서버(integromat/make-mcp-server, npx @makehq/mcp-server)는 README가 legacy로 표기 → 사용 비권장.
+  verify: Claude Code에서 /mcp 로 Make 도구 목록이 보이는지 확인(공식 문서의 확인 방법) → 테스트용 온디맨드 시나리오 1개 실행.
+  repo: null
+  docs: https://developers.make.com/mcp-server
+  license: null
+  stars: null
+  last_push: null
+  maintained: true
+  cost: needs account (시나리오 실행 도구는 모든 플랜, 관리 도구는 유료 플랜, 실행은 Make 크레딧 소모)
+  needs: [Make 계정, OAuth 또는 MCP용 API 키, 활성화된 온디맨드 시나리오]
+  overlaps: [n8n-mcp, zapier-mcp]
+  risks: URL에 API 키를 넣는 방식은 URL 자체가 비밀이 되어 로그·설정 파일 유출에 취약하다. 관리 스코프를 주면 시나리오·웹훅·데이터 스토어를 수정할 수 있다. 도구 호출이 타임아웃돼도 시나리오는 최대 40분 계속 돌며 크레딧을 쓴다. API 키별 시나리오 접근 제한 옵션을 쓰는 게 좋다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://developers.make.com/mcp-server
+  - https://github.com/integromat/make-mcp-server
+  - https://api.github.com/repos/integromat/make-mcp-server
+
+- id: inbox-zero
+  name: Inbox Zero
+  kind: service
+  area: automation
+  what: Gmail·Outlook 메일을 AI 규칙으로 분류하고 답장 초안·첨부 정리까지 해 주는 오픈소스 메일 비서로, 호스팅 버전과 자체 호스팅을 모두 제공한다.
+  when: 프로젝트 관련 메일(문의, 알림, 뉴스레터)이 실제 병목이고 규칙 기반 자동 분류·초안 작성이 필요할 때.
+  not_when: 코드·CI 자동화가 목적일 때(범위 밖), 메일 계정 OAuth와 LLM 키를 외부 서비스나 자체 서버에 맡기기 어려울 때.
+  install: |
+    호스팅: https://www.getinboxzero.com 가입.
+    자체 호스팅(Docker + Node.js 24+): npx @inbox-zero/cli setup → npx @inbox-zero/cli start → http://localhost:3000
+    운영 배포·Google/Microsoft OAuth 설정은 self-hosting 문서 참조.
+    Windows: 로컬 개발 모드는 macOS/Linux 기준(Windows는 WSL). 자체 호스팅은 Docker Desktop 필요.
+  verify: http://localhost:3000 접속 → 메일 계정 연결 후 테스트 규칙 1개를 만들어 새 메일에 라벨이 붙는지 확인.
+  repo: https://github.com/elie222/inbox-zero
+  docs: https://docs.getinboxzero.com
+  license: 'AGPL-3.0 (API: NOASSERTION, LICENSE 파일 확인; 일부 디렉터리 별도 라이선스 가능)'
+  stars: 12923
+  last_push: 2026-11-05
+  maintained: true
+  cost: free (자체 호스팅, LLM API 비용 별도) / paid (호스팅 버전)
+  needs: [Gmail 또는 Outlook 계정, Google/Microsoft OAuth 앱(자체 호스팅), LLM API 키, Docker]
+  overlaps: [zapier-mcp, n8n-mcp]
+  risks: 메일함 읽기·쓰기 OAuth 권한을 주므로 잘못된 규칙이 메일을 보관·삭제하거나 초안을 쌓을 수 있다. 자체 호스팅 시 OAuth 클라이언트 시크릿·LLM 키를 서버에 보관해야 한다. 메일 본문이 LLM 제공자로 전송된다. 메일 내용이 프롬프트 인젝션 경로가 된다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://github.com/elie222/inbox-zero
+  - https://api.github.com/repos/elie222/inbox-zero
+
+- id: github-mcp
+  name: GitHub MCP Server
+  kind: mcp
+  area: automation
+  also: [coding]
+  what: GitHub 공식 MCP 서버로, Claude Code가 이슈·PR·저장소·Actions 정보를 API로 읽고 쓰게 한다.
+  when: 로컬 세션이나 예약 작업에서 이슈 생성, PR 목록 정리, 워크플로 실행 결과 확인을 Claude에게 맡길 때.
+  not_when: gh CLI로 충분한 단순 작업(컨텍스트 비용이 더 적음), 쓰기 권한이 필요 없는데 기본 툴셋을 그대로 켤 때(--read-only 사용). gh CLI가 깔려 있으면 Bash로 충분하다(도구 스키마만큼 컨텍스트를 덜 쓴다).
+  install: |
+    # 원격(PAT)
+    claude mcp add --transport http github https://api.githubcopilot.com/mcp -H "Authorization: Bearer YOUR_GITHUB_PAT"
+    # 로컬 Docker(OAuth): claude mcp add github -e GITHUB_OAUTH_CALLBACK_PORT=8085 -- docker run -i --rm -p 127.0.0.1:8085:8085 -e GITHUB_OAUTH_CALLBACK_PORT ghcr.io/github/github-mcp-server
+    # Windows: claude mcp add-json 이 HTTP 서버에서 Invalid input 을 낼 수 있어 위의 --transport http 형식을 쓰라고 공식 가이드가 안내
+    # 또는 /plugin install github@claude-plugins-official
+    # 툴셋 제한: --toolsets repos,issues,pull_requests / 읽기 전용: --read-only
+  verify: Claude Code 재시작 후 `claude mcp list` 와 `claude mcp get github` 로 연결 확인 → 읽기 전용 요청(내 저장소의 열린 이슈 목록) 1회.
+  repo: https://github.com/github/github-mcp-server
+  docs: https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-claude.md
+  license: MIT
+  stars: 34264
+  last_push: 2026-11-05
+  maintained: true
+  cost: needs account
+  needs: [GitHub 계정, PAT 또는 OAuth, Docker(로컬 방식)]
+  overlaps: [claude-code-action, commit-commands]
+  risks: PAT를 명령줄에 직접 넣으면 셸 기록·설정 파일(.claude.json)에 평문으로 남는다. 최소 스코프·저장소 한정 fine-grained 토큰을 쓰고 주기적으로 교체한다. 기본 툴셋에 쓰기 도구가 포함되므로 필요 없으면 --read-only. 도구 수가 많아 컨텍스트를 차지한다(--toolsets로 축소).
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://github.com/github/github-mcp-server
+  - https://github.com/github/github-mcp-server/blob/main/docs/installation-guides/install-claude.md
+  - https://api.github.com/repos/github/github-mcp-server
+
+- id: ntfy
+  name: ntfy
+  kind: service
+  area: automation
+  what: HTTP POST 한 번으로 휴대폰·데스크톱에 푸시 알림을 보내는 오픈소스 pub-sub 알림 서비스로, 공개 서버(ntfy.sh)나 자체 호스팅으로 쓴다.
+  when: 훅·예약 작업·CI가 끝났을 때 계정 연동 없이 휴대폰으로 짧은 알림을 받고 싶을 때.
+  not_when: 알림 내용에 민감 정보가 들어갈 때(공개 서버 토픽은 이름만 알면 구독 가능), 팀 채널에 기록이 남아야 할 때(Slack·이슈가 맞음).
+  install: |
+    휴대폰에 ntfy 앱 설치 후 추측하기 어려운 토픽 구독.
+    전송(bash): curl -d "작업 완료" ntfy.sh/<토픽>
+    전송(Windows PowerShell): Invoke-RestMethod -Method POST -Uri "https://ntfy.sh/<토픽>" -Body "작업 완료"
+    Claude Code 연동: Notification/Stop 훅의 command에 위 명령을 넣음. CI에서는 run 단계에서 curl.
+    자체 호스팅: docs.ntfy.sh 의 install 문서.
+  verify: 위 curl/Invoke-RestMethod를 한 번 실행해 휴대폰 알림 수신 확인.
+  repo: https://github.com/binwiederhier/ntfy
+  docs: https://docs.ntfy.sh/publish/
+  license: Apache-2.0
+  stars: 35319
+  last_push: 2026-11-04
+  maintained: true
+  cost: free (공개 서버 기본 사용; 유료 플랜·자체 호스팅 선택 가능)
+  needs: [ntfy 앱 또는 웹 구독, 자체 호스팅 시 서버]
+  overlaps: [claude-code-hooks]
+  risks: 공개 서버의 토픽 이름은 사실상 비밀번호다. 이름이 새면 누구나 알림을 읽거나 스팸을 보낼 수 있다. 접근 토큰을 쓰면 그 토큰을 CI Secrets에 보관해야 한다. 알림 본문엔 링크만 넣고 로그·비밀값을 넣지 않는다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://docs.ntfy.sh/publish/
+  - https://github.com/binwiederhier/ntfy
+  - https://api.github.com/repos/binwiederhier/ntfy

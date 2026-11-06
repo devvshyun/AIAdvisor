@@ -1,0 +1,2 @@
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+model Entry { id Int @id @default(autoincrement()) amount Int }

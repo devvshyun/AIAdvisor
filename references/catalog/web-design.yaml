@@ -1,0 +1,446 @@
+# area: web-design
+# 형식은 SCHEMA.md, 갱신 절차는 REFRESH.md. 기준일은 항목마다 source_checked.
+
+- id: impeccable
+  name: Impeccable
+  kind: skill
+  area: web-design
+  what: 디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.
+  when: 이미 돌아가는 페이지나 컴포넌트를 더 세련되게 고치거나, 커밋 전에 흔한 AI 디자인 패턴(뻔한 폰트, 낮은 대비 등)을 걸러내고 싶을 때.
+  not_when: 백엔드만 있는 프로젝트이거나, 팀이 이미 확정한 디자인 시스템을 한 치도 벗어나면 안 되는 경우. 다른 생성형 디자인 스킬과 같은 화면에 동시에 적용할 때.
+  install: |
+    npx impeccable install            # 도구 감지 후 project/global 범위와 디자인 훅 설치 여부를 묻는다
+    # Claude Code 플러그인 방식:
+    /plugin marketplace add pbakaus/impeccable
+    # 그다음 /plugin 에서 Impeccable 설치
+    # 스크립트용: npx impeccable install --providers=claude --scope=project
+    # Windows: npx 사용 가능. 엔진 바이너리는 ~/.impeccable/bin/ 에 한 번 내려받음
+  verify: Claude Code 재시작 후 `/impeccable` 입력 시 명령 목록이 뜨는지 확인. CLI는 `npx impeccable detect --list-rules`.
+  repo: https://github.com/pbakaus/impeccable
+  docs: https://impeccable.style/docs
+  license: Apache-2.0
+  stars: 103934
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node(npx용), detect URL 스캔에는 설치된 Chrome 또는 Edge
+  overlaps: [taste-skill, frontend-design, web-design-guidelines, superdesign]
+  risks: 설치 시 에디트마다 UI 파일을 검사하는 훅이 추가된다(매 편집마다 실행). live 모드의 Apply는 채팅 세션이 응답이 없으면 codex/claude CLI를 승인·샌드박스를 끈 상태로 실행하므로 IMPECCABLE_LIVE_COPY_AGENT=chat 설정 권장. global 설치 시 모든 프로젝트에 적용됨. 엔진 바이너리를 외부에서 내려받음.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/pbakaus/impeccable
+  - https://github.com/pbakaus/impeccable/blob/main/README.md
+
+- id: taste-skill
+  name: Taste Skill (design-taste-frontend)
+  kind: skill
+  area: web-design
+  what: 페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.
+  when: 랜딩이나 데모 페이지를 처음부터 만들 때, 무난한 템플릿 느낌을 피하고 아트 디렉션부터 잡고 싶을 때.
+  not_when: 기존 브랜드 가이드가 확정돼 있어 팔레트·폰트를 새로 고를 여지가 없을 때. Node 22 미만 환경. 한글 위주 페이지인데 폰트 조합을 그대로 쓰려 할 때(영문 Google Fonts 중심이라 한글 폰트를 따로 지정해야 함).
+  install: |
+    npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+    # Claude Code 플러그인 방식(네임스페이스 taste-skill:):
+    /plugin marketplace add Leonxlnx/taste-skill
+    /plugin install taste-skill@taste-skill
+    # Windows: 저장소 clone 후 ./install.sh 는 Git Bash에서 실행(심볼릭 링크 불가 시 디렉터리 정션 생성)
+  verify: '`npx skills list`에 design-taste-frontend가 보이는지, 또는 /plugin 목록에 taste-skill이 있는지 확인.'
+  repo: https://github.com/Leonxlnx/taste-skill
+  docs: https://tasteskill.dev
+  license: MIT
+  stars: 110667
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node 22+, Chrome/Edge/Chromium(CHROME_PATH), 선택 ffmpeg
+  overlaps: [frontend-design, impeccable, superdesign]
+  risks: 추가 사진·아이콘·Google Fonts를 받을 때 네트워크 접근. API 키는 필요 없음. 예전 스킬들은 별도 저장소(taste-skill-classics)로 옮겨졌으니 이름 혼동 주의.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/Leonxlnx/taste-skill
+  - https://github.com/Leonxlnx/taste-skill/blob/main/README.md
+
+- id: emil-design-eng
+  name: emil-design-eng (Emil Kowalski skills)
+  kind: skill
+  area: web-design
+  what: 애니메이션 이징·지속 시간·속성 선택 같은 세부 규칙을 중심으로, 에이전트가 자주 틀리는 UI 디테일을 바로잡게 하는 스킬 묶음이다.
+  when: 모션을 넣거나 기존 애니메이션을 점검할 때(review-animations, animation-performance), 경계선·그림자 같은 마감 디테일을 손볼 때.
+  not_when: 레이아웃이나 정보 구조 자체가 아직 정해지지 않은 초기 단계. 모션이 거의 없는 문서형 페이지.
+  install: |
+    npx skills@latest add emilkowalski/skills
+    # 메인 스킬만: npx skills add emilkowalski/skills --skill emil-design-eng -a claude-code
+  verify: '`npx skills list`에서 emil-design-eng 확인, Claude Code에서 /skills 목록에 보이는지 확인.'
+  repo: https://github.com/emilkowalski/skills
+  docs: https://skills.sh/emilkowalski/skills
+  license: MIT
+  stars: 53860
+  last_push: 2026-11-04
+  maintained: true
+  cost: free
+  needs: Node(npx skills)
+  overlaps: [impeccable]
+  risks: 전체 설치 시 Swift, Expo 등 웹과 무관한 스킬도 함께 들어와 스킬 목록이 늘어난다. --skill로 골라 설치 권장.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/emilkowalski/skills
+  - https://github.com/emilkowalski/skills/blob/main/README.md
+  - https://github.com/vercel-labs/skills/blob/main/README.md
+
+- id: web-design-guidelines
+  name: Vercel web-design-guidelines
+  kind: skill
+  area: web-design
+  what: Vercel의 웹 인터페이스 가이드라인(접근성, 포커스, 폼, 타이포그래피, 다크 모드 등 100개 이상 규칙)으로 UI 코드를 검토해 file:line 형식으로 지적해 주는 리뷰 스킬이다.
+  when: 페이지를 만든 뒤 출시 전 규칙 기반 점검이 필요할 때, PR 단위로 UI 코드 리뷰를 할 때.
+  not_when: 시각적 아름다움이나 아트 디렉션을 개선하고 싶을 때(규칙 점검이지 디자인 생성이 아님). 오프라인 환경(실행마다 규칙을 원격에서 가져옴).
+  install: |
+    npx skills add vercel-labs/agent-skills --skill web-design-guidelines -a claude-code
+    # 전체 묶음: npx skills add vercel-labs/agent-skills  (프로젝트 범위 기본, 전역은 -g)
+  verify: '`npx skills list`에 web-design-guidelines 확인 후, "review my UI"라고 요청해 file:line 형식 결과가 나오는지 확인.'
+  repo: https://github.com/vercel-labs/agent-skills
+  docs: https://github.com/vercel-labs/web-interface-guidelines
+  license: null (README states MIT)
+  stars: 33600
+  last_push: 2026-10-28
+  maintained: true
+  cost: free
+  needs: Node(npx skills), 네트워크(규칙 원문을 GitHub raw에서 매번 가져옴)
+  overlaps: [impeccable, axe-cli, chrome-devtools-mcp]
+  risks: 스킬이 실행 때마다 raw.githubusercontent.com의 command.md를 가져와 그 내용을 지시로 따르므로, 원격 내용이 바뀌면 동작도 바뀐다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/vercel-labs/agent-skills
+  - https://api.github.com/repos/vercel-labs/web-interface-guidelines
+  - https://github.com/vercel-labs/agent-skills/blob/main/README.md
+  - https://github.com/vercel-labs/agent-skills/blob/main/skills/web-design-guidelines/SKILL.md
+
+- id: frontend-design
+  name: frontend-design (Anthropic official)
+  kind: plugin
+  area: web-design
+  what: 브리프 주제에 맞춘 뚜렷한 색·타이포그래피·레이아웃을 고르도록 Claude를 유도하는 Anthropic 공식 프런트엔드 디자인 스킬(플러그인)이다.
+  when: 별도 도구 없이 가볍게 '템플릿 같지 않은' 첫 화면을 만들고 싶을 때, 공식 마켓플레이스만 쓰는 환경일 때.
+  not_when: 이미 taste-skill이나 impeccable로 방향을 잡았을 때(지시가 겹쳐 결과가 섞임). 보수적이고 정돈된 업무용 UI가 필요할 때(과감한 선택을 권하는 스킬임).
+  install: |
+    /plugin install frontend-design@claude-plugins-official
+    # 또는 /plugin > Discover 에서 frontend-design 검색
+    # 같은 스킬이 anthropics/skills 저장소(skills/frontend-design)에도 있음: /plugin marketplace add anthropics/skills
+  verify: /plugin 설치 목록에 frontend-design이 있고 /skills 목록에 frontend-design 스킬이 보이는지 확인.
+  repo: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/frontend-design
+  docs: https://github.com/anthropics/claude-plugins-official/blob/main/plugins/frontend-design/README.md
+  license: Apache-2.0 (marketplace repo); skill folder ships its own LICENSE.txt
+  stars: 46230
+  last_push: 2026-11-06
+  maintained: true
+  cost: free
+  needs: Claude Code 플러그인 기능
+  overlaps: [taste-skill, impeccable, superdesign]
+  risks: 낮음. 지시문만 있는 스킬로 외부 전송이나 스크립트 없음.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/anthropics/claude-plugins-official
+  - https://api.github.com/repos/anthropics/skills
+  - https://github.com/anthropics/claude-plugins-official/blob/main/.claude-plugin/marketplace.json
+  - https://github.com/anthropics/claude-plugins-official/blob/main/plugins/frontend-design/README.md
+  - https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md
+
+- id: awesome-design-md
+  name: awesome-design-md (VoltAgent)
+  kind: service
+  area: web-design
+  what: 실제 서비스들의 디자인 언어를 분석해 DESIGN.md(토큰·규칙을 담은 마크다운) 파일로 정리한 모음집으로, 프로젝트에 복사해 에이전트의 디자인 기준으로 쓴다.
+  when: 참고할 분위기(예 개발자 도구, AI 서비스 톤)가 있고 디자인 토큰을 처음부터 정하기 어려울 때 출발점으로.
+  not_when: 독자적인 브랜드가 필요한 포트폴리오·데모(남의 브랜드를 그대로 따라 하게 됨). 이미 자체 DESIGN.md가 있을 때.
+  install: |
+    # 설치형 도구가 아님. 저장소 목록에서 원하는 사이트의 DESIGN.md를 골라 프로젝트 루트에 복사
+    # 각 파일은 getdesign.md/<site>/design-md 링크로 제공됨
+  verify: 프로젝트 루트에 DESIGN.md가 있고, Claude에게 읽혀 생성한 화면이 그 토큰(색·폰트·간격)을 쓰는지 확인.
+  repo: https://github.com/VoltAgent/awesome-design-md
+  docs: https://getdesign.md
+  license: MIT
+  stars: 125777
+  last_push: 2026-10-28
+  maintained: true
+  cost: free (맞춤 DESIGN.md 요청은 별도 서비스)
+  needs: 없음
+  overlaps: [impeccable, figma-mcp]
+  risks: 실제 회사 브랜드를 모사하는 결과가 나올 수 있어 상표·브랜드 혼동 위험. 파일은 외부 사이트(getdesign.md)에서 받는 텍스트이므로 내용을 읽어 보고 쓸 것.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/VoltAgent/awesome-design-md
+  - https://github.com/VoltAgent/awesome-design-md/blob/main/README.md
+
+- id: shadcn-mcp
+  name: shadcn MCP server (+ shadcn skill)
+  kind: mcp
+  area: web-design
+  what: shadcn/ui 레지스트리의 컴포넌트를 검색·조회·설치하게 해 주는 MCP 서버로, 별도 skill은 프로젝트 설정(components.json)을 읽어 shadcn CLI·테마 지식을 준다.
+  when: shadcn/ui를 쓰는 React/Next 프로젝트에서 컴포넌트를 손으로 만들지 않고 레지스트리에서 가져오고 싶을 때.
+  not_when: shadcn/ui를 쓰지 않거나 components.json이 없는 프로젝트. 기본 shadcn 모양 그대로가 '흔한 AI 화면'으로 보일까 걱정될 때(테마 커스터마이즈 없이 쓰면 오히려 뻔해짐).
+  install: |
+    pnpm dlx shadcn@latest mcp init --client claude
+    # npm 사용 시 npx shadcn@latest mcp init --client claude
+    # 수동: .mcp.json 에 {"mcpServers":{"shadcn":{"command":"npx","args":["shadcn@latest","mcp"]}}}
+    # 스킬: pnpm dlx skills add shadcn/ui
+  verify: Claude Code 재시작 후 /mcp 에서 shadcn이 Connected인지 확인, "shadcn 레지스트리 컴포넌트 목록 보여줘"로 테스트.
+  repo: https://github.com/shadcn-ui/ui
+  docs: https://ui.shadcn.com/docs/mcp
+  license: MIT
+  stars: 127448
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node, 프로젝트에 components.json과 shadcn, 레지스트리 네트워크 접근, 사설 레지스트리는 토큰(.env.local)
+  overlaps: [figma-mcp]
+  risks: 레지스트리 코드를 프로젝트에 그대로 추가하므로 제3자 레지스트리는 내용 확인 필요. 사설 레지스트리 토큰 관리.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/shadcn-ui/ui
+  - https://ui.shadcn.com/docs/mcp
+  - https://ui.shadcn.com/docs/skills
+
+- id: agent-browser
+  name: agent-browser (Vercel Labs)
+  kind: cli
+  area: web-design
+  what: 에이전트용 브라우저 자동화 CLI로, 페이지 열기·클릭·스냅샷·스크린샷을 짧은 명령으로 처리해 MCP보다 적은 컨텍스트로 화면을 확인하게 해 준다.
+  when: 만든 페이지를 데스크톱·모바일 폭으로 찍어 Claude가 직접 보게 하고 싶을 때, 토큰을 아끼면서 브라우저 검증을 반복할 때.
+  not_when: 성능 트레이스나 Lighthouse 점수 같은 DevTools 수준 분석이 필요할 때(chrome-devtools-mcp가 적합). 이미 Playwright CLI를 쓰고 있을 때.
+  install: |
+    npm install -g agent-browser
+    agent-browser install          # 최초 1회 Chrome for Testing 다운로드
+    npx skills add vercel-labs/agent-browser   # Claude Code용 안내 스킬(스텁)
+    # 설치 없이: npx agent-browser open example.com
+    # Windows x64 네이티브 바이너리 제공
+  verify: '`agent-browser --help` 또는 `agent-browser doctor` 실행, `agent-browser skills get core` 출력 확인.'
+  repo: https://github.com/vercel-labs/agent-browser
+  docs: https://agent-browser.dev
+  license: Apache-2.0
+  stars: 45885
+  last_push: 2026-11-06
+  maintained: true
+  cost: free
+  needs: Node/npm, Chrome for Testing(자동 다운로드)
+  overlaps: [playwright-cli, playwright-mcp, chrome-devtools-mcp]
+  risks: 전역 npm 설치와 브라우저 바이너리 다운로드. 에이전트가 임의 사이트를 열 수 있으므로 로그인된 프로필 연결(connect) 시 주의.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/vercel-labs/agent-browser
+  - https://github.com/vercel-labs/agent-browser/blob/main/README.md
+
+- id: playwright-mcp
+  name: Playwright MCP (Microsoft)
+  kind: mcp
+  area: web-design
+  also: [coding, automation]
+  what: Playwright로 브라우저를 열고 접근성 트리 기반으로 조작하는 MCP 서버로, 상태를 유지한 채 탐색·폼 입력·스크린샷을 할 수 있다.
+  when: 여러 단계에 걸친 사용자 흐름을 계속 같은 브라우저 상태로 탐색해야 할 때, 공식 마켓플레이스 플러그인으로 간단히 붙이고 싶을 때. 웹 UI 변경을 실제 브라우저로 확인하며 E2E 시나리오를 탐색할 때, 반복 웹 작업을 자동화할 때.
+  not_when: 스크린샷 몇 장만 필요한 일반적인 화면 검증(Microsoft도 코딩 에이전트에는 CLI+스킬 방식이 토큰 효율이 좋다고 안내함). 토큰이 빠듯한 긴 세션.
+  install: |
+    claude mcp add playwright npx @playwright/mcp@latest
+    # 또는 공식 마켓플레이스 플러그인: /plugin install playwright@claude-plugins-official
+    # 추가 기능은 --caps=vision,pdf,devtools 등으로 선택
+    # 자동화용 옵션: --headless, --isolated, --storage-state <file>
+  verify: '`claude mcp list`에 playwright가 보이고, /mcp에서 연결 상태 확인 후 "example.com 열고 스크린샷" 요청.'
+  repo: https://github.com/microsoft/playwright-mcp
+  docs: https://github.com/microsoft/playwright-mcp#readme
+  license: Apache-2.0
+  stars: 39233
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node 18+
+  overlaps: [playwright-cli, agent-browser, chrome-devtools-mcp]
+  risks: 도구 스키마와 접근성 스냅샷이 컨텍스트를 많이 차지함. 브라우저가 임의 사이트에 접속하므로 민감한 URL 파라미터는 --redact-url-params 고려. README가 스스로 보안 경계가 아니라고 밝히며 --allowed-origins도 보안 장치가 아니다. 저장된 세션·쿠키(storage-state)는 비밀값이다. 방문한 페이지 텍스트가 프롬프트 인젝션 경로가 된다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/microsoft/playwright-mcp
+  - https://github.com/microsoft/playwright-mcp/blob/main/README.md
+  - https://github.com/anthropics/claude-plugins-official/blob/main/external_plugins/playwright/.mcp.json
+  - https://github.com/microsoft/playwright-mcp
+
+- id: playwright-cli
+  name: Playwright CLI with Skills (Microsoft)
+  kind: cli
+  area: web-design
+  also: [automation]
+  what: Playwright 브라우저 조작을 짧은 셸 명령과 스킬로 제공해, MCP보다 적은 토큰으로 스냅샷·스크린샷·흐름 테스트를 하게 하는 공식 CLI다.
+  when: 화면 확인과 간단한 E2E 시나리오를 토큰 부담 없이 반복할 때, 이미 Playwright 테스트를 쓰는 프로젝트일 때.
+  not_when: agent-browser를 이미 쓰고 있을 때(역할이 같음). 성능·Lighthouse 분석이 목적일 때.
+  install: |
+    npm install -g @playwright/cli@latest
+    playwright-cli install --skills
+  verify: '`playwright-cli --help` 실행, 이후 `playwright-cli screenshot` 등으로 파일이 생성되는지 확인.'
+  repo: https://github.com/microsoft/playwright-cli
+  docs: https://github.com/microsoft/playwright-cli#readme
+  license: Apache-2.0
+  stars: 14988
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node 18+
+  overlaps: [agent-browser, playwright-mcp, lychee-action]
+  risks: 전역 npm 설치. 브라우저 바이너리 다운로드. 셸 명령이므로 Bash 허용 목록으로 통제한다. 로그인 상태 파일·쿠키는 .gitignore에 넣는다. 웹페이지 내용은 프롬프트 인젝션 경로가 될 수 있다.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/microsoft/playwright-cli
+  - https://github.com/microsoft/playwright-cli/blob/main/README.md
+  - https://github.com/microsoft/playwright-cli
+  - https://github.com/microsoft/playwright-mcp
+
+- id: chrome-devtools-mcp
+  name: Chrome DevTools MCP
+  kind: mcp
+  area: web-design
+  what: 실제 Chrome을 DevTools 수준으로 다루는 공식 MCP 서버로, 성능 트레이스·네트워크·콘솔·CSS 조회와 Lighthouse 감사(접근성·SEO·모범 사례)를 에이전트가 직접 돌릴 수 있다.
+  when: LCP 같은 성능 지표나 Lighthouse 점수로 페이지 품질을 수치로 확인하고 싶을 때, 레이아웃 버그를 실제 계산된 스타일로 디버깅할 때.
+  not_when: 스크린샷만 필요한 단순 확인(agent-browser 등이 가벼움). Google으로 사용 통계·CrUX 조회가 나가면 안 되는 환경에서 옵트아웃 없이 쓸 때.
+  install: |
+    claude mcp add chrome-devtools --scope user npx chrome-devtools-mcp@latest
+    # 플러그인(MCP + 스킬):
+    /plugin marketplace add ChromeDevTools/chrome-devtools-mcp
+    /plugin install chrome-devtools-mcp@chrome-devtools-plugins
+    # 공식 마켓플레이스에도 chrome-devtools-mcp 로 등록돼 있음
+    # 통계 끄기: args에 --no-usage-statistics, CrUX 끄기: --no-performance-crux
+  verify: 재시작 후 /mcp 또는 /skills로 확인, "Check the performance of https://developers.chrome.com" 요청 시 트레이스가 기록되는지 확인.
+  repo: https://github.com/ChromeDevTools/chrome-devtools-mcp
+  docs: https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/main/docs/tool-reference.md
+  license: Apache-2.0
+  stars: 54853
+  last_push: 2026-11-05
+  maintained: true
+  cost: free
+  needs: Node LTS, npm, Chrome 최신 안정판
+  overlaps: [lighthouse-cli, playwright-mcp, agent-browser, axe-cli]
+  risks: 사용 통계가 기본으로 Google에 전송됨(--no-usage-statistics로 끔). 성능 도구가 트레이스 URL을 CrUX API로 보낼 수 있음. --scope user는 전역 등록. 로그인된 브라우저 상태를 에이전트가 볼 수 있음.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/ChromeDevTools/chrome-devtools-mcp
+  - https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/main/README.md
+  - https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/main/docs/client-configurations.md
+  - https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/main/docs/tool-reference.md
+
+- id: figma-mcp
+  name: Figma MCP server (remote)
+  kind: mcp
+  area: web-design
+  what: Figma 파일의 프레임·변수(토큰)·컴포넌트 정보를 읽어 코드로 옮기고, 원격 서버에서는 캔버스에 직접 쓰기도 하는 Figma 공식 MCP 서버다.
+  when: 디자이너가 만든 Figma 시안이 있고 그걸 코드로 정확히 옮기거나, 디자인 토큰을 Figma 변수에서 가져올 때.
+  not_when: Figma 시안이 없는 1인 개발. 무료(Starter) 플랜이거나 View/Collab 좌석이라 월 호출 한도가 매우 낮을 때.
+  install: |
+    claude plugin install figma@claude-plugins-official
+    # 수동(MCP만): claude mcp add --transport http figma https://mcp.figma.com/mcp
+    # 이후 브라우저에서 Figma OAuth 인증
+  verify: '`claude mcp list` / `claude mcp get figma`로 등록 확인, /mcp에서 인증·연결 상태 확인.'
+  repo: https://github.com/figma/mcp-server-guide
+  docs: https://help.figma.com/hc/en-us/articles/32132100833559
+  license: null (GitHub API에 라이선스 없음)
+  stars: 2153
+  last_push: 2026-11-03
+  maintained: true
+  cost: needs account (Starter·View·Collab 좌석은 월 6회 호출 제한, Dev/Full 좌석 유료 플랜 권장)
+  needs: Figma 계정과 OAuth, 실사용에는 유료 플랜 Dev/Full 좌석
+  overlaps: [shadcn-mcp, awesome-design-md]
+  risks: Figma 계정 OAuth 권한 부여. 원격 서버는 Figma 파일에 쓰기 가능. generate_image는 Figma AI 크레딧 사용. 디자인 데이터가 Figma 서버를 거침.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/figma/mcp-server-guide
+  - https://github.com/figma/mcp-server-guide/blob/main/README.md
+
+- id: lighthouse-cli
+  name: Lighthouse CLI
+  kind: cli
+  area: web-design
+  what: Google의 Lighthouse를 셸에서 돌려 성능·접근성·SEO·모범 사례 점수를 HTML/JSON 리포트로 뽑는 CLI로, Claude Code가 Bash로 바로 실행할 수 있다.
+  when: MCP 없이 수치 리포트를 남기고 싶을 때, CI나 README에 점수를 기록할 때.
+  not_when: chrome-devtools-mcp의 lighthouse_audit를 이미 쓰고 있을 때. 개발 서버 응답이 불안정해 측정값이 매번 크게 흔들릴 때(프로덕션 빌드로 측정 권장).
+  install: |
+    npm install -g lighthouse
+    # 전역 설치 없이: npx lighthouse <url>
+  verify: '`lighthouse --version`, `lighthouse http://localhost:3000 --output=json --output-path=./report.json` 실행 후 파일 생성 확인.'
+  repo: https://github.com/GoogleChrome/lighthouse
+  docs: https://github.com/GoogleChrome/lighthouse#using-the-node-cli
+  license: Apache-2.0
+  stars: 31022
+  last_push: 2026-11-06
+  maintained: true
+  cost: free
+  needs: Node 22 LTS 이상, Chrome/Chromium(CHROME_PATH)
+  overlaps: [chrome-devtools-mcp, axe-cli]
+  risks: 전역 npm 설치. 리포트 JSON이 커서 통째로 Claude에 읽히면 토큰을 많이 씀(필요한 카테고리만 추출 권장).
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/GoogleChrome/lighthouse
+  - https://github.com/GoogleChrome/lighthouse/blob/main/readme.md
+
+- id: axe-cli
+  name: axe CLI (@axe-core/cli)
+  kind: cli
+  area: web-design
+  what: Deque의 axe-core 엔진으로 URL을 검사해 WCAG 접근성 위반을 출력하는 CLI로, --exit 옵션으로 위반 시 실패 코드를 돌려준다.
+  when: 접근성 위반을 0건으로 만드는 걸 완료 조건으로 삼고 싶을 때, CI에서 접근성 회귀를 막을 때.
+  not_when: 디자인 감각이나 시각적 품질 개선이 목적일 때(규칙 위반만 잡음). ChromeDriver 버전 관리가 번거로운 환경이라면 chrome-devtools-mcp의 Lighthouse 접근성 감사로 대체.
+  install: |
+    npm install @axe-core/cli -g
+    # ChromeDriver 필요 시: npm install -g browser-driver-manager && npx browser-driver-manager install chrome
+  verify: '`axe http://localhost:3000 --exit` 실행 후 종료 코드(0 통과, 1 위반) 확인.'
+  repo: https://github.com/dequelabs/axe-core-npm
+  docs: https://github.com/dequelabs/axe-core-npm/tree/develop/packages/cli
+  license: MPL-2.0
+  stars: 731
+  last_push: 2026-11-01
+  maintained: true
+  cost: free
+  needs: Node, Chrome과 맞는 ChromeDriver
+  overlaps: [web-design-guidelines, lighthouse-cli, chrome-devtools-mcp]
+  risks: 전역 npm 설치, ChromeDriver 다운로드. 자동 검사로는 접근성 문제 일부만 잡힘.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/dequelabs/axe-core-npm
+  - https://github.com/dequelabs/axe-core-npm/blob/develop/packages/cli/README.md
+
+- id: superdesign
+  name: Superdesign skill
+  kind: plugin
+  area: web-design
+  what: 코드베이스를 읽어 디자인 방향과 시안을 외부 무한 캔버스(superdesign.dev)에서 만들고 반복하게 해 주는 상용 서비스 연동 스킬이다.
+  when: 여러 시안을 캔버스에서 비교하며 고르고 싶고, 외부 서비스 계정 사용에 거부감이 없을 때.
+  not_when: 코드나 제품 정보를 외부로 보내면 안 되는 프로젝트. 개인 토이 프로젝트에서 무료 로컬 스킬(impeccable, taste-skill)로 충분할 때.
+  install: |
+    /plugin marketplace add superdesigndev/superdesign-skill
+    /plugin install superdesign@superdesign
+    npm install -g @superdesign/cli@latest
+    superdesign login
+    # 공식 마켓플레이스에도 superdesign 으로 등록돼 있음. npx skills add 와 중복 설치하지 말 것
+  verify: /plugin 목록에 superdesign 확인, `/superdesign:superdesign` 호출 가능 여부와 `superdesign login` 상태 확인.
+  repo: https://github.com/superdesigndev/superdesign-skill
+  docs: https://superdesign.dev
+  license: MIT
+  stars: 949
+  last_push: 2026-08-21
+  maintained: true
+  cost: needs account (서비스 요금제는 superdesign.dev 기준, 미확인)
+  needs: superdesign 계정 로그인, Node(전역 CLI)
+  overlaps: [taste-skill, frontend-design, impeccable]
+  risks: 코드베이스 맥락이 외부 서비스로 전송됨. 계정 로그인 필요. 전역 CLI 설치. 예전 오픈소스 VS Code 확장(superdesigndev/superdesign)은 아카이브된 별개 프로젝트이니 혼동 주의.
+  always_on_tokens: null
+  source_checked: 2026-11-06
+  sources:
+  - https://api.github.com/repos/superdesigndev/superdesign-skill
+  - https://github.com/superdesigndev/superdesign-skill/blob/main/README.md
+  - https://github.com/anthropics/claude-plugins-official/blob/main/.claude-plugin/marketplace.json

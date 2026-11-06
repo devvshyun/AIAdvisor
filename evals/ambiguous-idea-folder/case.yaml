@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: ambiguous-idea-folder
+expected_outcome: |
+  코드는 없고 아이디어 메모만 있는 폴더라 모드가 애매하다. 어느 모드로 진행할지 한 문장으로 밝히고 그 모드의 형식대로 답한다.
+context:
+  scaffold_script: place-files.sh
