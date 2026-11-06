@@ -119,7 +119,7 @@ docs/             데모 페이지 (GitHub Pages)
 
 ## 데모 페이지
 
-[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)는 이 스킬이 추천하는 웹 디자인 가이드대로 만들었습니다. AIAdvisor에게 먼저 조언을 받고, 추천된 taste-skill 키트의 스크립트로 팔레트, 서체 조합, 히어로 구성, 스크롤 연출을 뽑았습니다. 무엇을 어떻게 뽑았는지는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다.
+[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)는 이 스킬이 추천하는 웹 디자인 가이드대로 만들었습니다. AIAdvisor에게 먼저 조언을 받고, 추천된 taste-skill 키트의 스크립트로 팔레트, 서체 조합, 히어로 구성을 뽑았습니다. 무엇을 어떻게 뽑았는지는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다.
 
 로컬에서 보려면 저장소 폴더에서 아래 명령을 실행하고 `http://localhost:8000`을 엽니다.
 
