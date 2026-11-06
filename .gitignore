@@ -1,5 +1,43 @@
+# 개인 작업 공간 (조사 중간 결과, 평가 결과, 초안)
+.work/
+
+# 이 PC에만 있는 Claude Code·디자인 도구 설정과 캐시
 .claude/
 .impeccable/
-skills-lock.json
 .taste-skill/
-.work/
+skills-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# 쇼케이스: 결과 문서(README.md, runs/summary.md, 캡처)만 올리고 실행 중 생기는 것은 올리지 않는다
+showcase/*/runs/*.json
+showcase/*/work/
+graphify-out/
+.playwright-cli/
+*.report.json
+*.report.html
+
+# 비밀값
+.env
+.env.*
+*.pem
+*.key
+
+# 운영체제·편집기
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.log
