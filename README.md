@@ -132,7 +132,27 @@ git clone --depth 1 https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/
 
 ## 데모 페이지
 
-[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)는 처음에 여러 디자인 스킬을 차례로 엮어 만들었습니다. 그 경험으로 웹 디자인 레시피를 "생성 스킬은 하나만" 방식으로 바꿨고, 같은 페이지를 스킬마다 따로 고친 비교는 [showcase/web-generators](showcase/web-generators/README.md)에 있습니다. 페이지 왼쪽 아래 "컨셉" 버튼으로 같은 내용을 레퍼런스 하나씩만 따라 지은 [컨셉 A](https://devvshyun.github.io/AIAdvisor/concept-a/)와 [컨셉 B](https://devvshyun.github.io/AIAdvisor/concept-b/)로 바꿔 볼 수 있습니다. 팔레트와 서체 조합, 히어로 구성은 taste-skill 키트의 스크립트로 뽑았고, 무엇이 나왔는지는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다. 카탈로그와 가이드 목록은 `scripts/build_demo.py`가 `references/`에서 만들어서, 배포할 때마다 저장소 내용과 맞춰집니다.
+[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)에서 상황별 추천 결과, 동작 방식, 카탈로그를 직접 눌러 볼 수 있습니다. 같은 내용을 디자인만 달리해 세 벌로 만들었고, 페이지 아래쪽 "컨셉" 버튼을 누르면 보던 섹션 그대로 다른 컨셉으로 넘어갑니다.
+
+<table>
+  <tr>
+    <th width="33%">기본</th>
+    <th width="33%">컨셉 A</th>
+    <th width="33%">컨셉 B</th>
+  </tr>
+  <tr>
+    <td><a href="https://devvshyun.github.io/AIAdvisor/"><img src="docs/readme/hero.jpg" alt="기본 컨셉 첫 화면: 녹흑 바탕 가운데 정렬 제목과 대화 창" /></a></td>
+    <td><a href="https://devvshyun.github.io/AIAdvisor/concept-a/"><img src="docs/readme/concept-a.jpg" alt="컨셉 A 첫 화면: 검은 바탕에 앰버 강조가 들어간 큰 두 톤 제목과 설치 명령" /></a></td>
+    <td><a href="https://devvshyun.github.io/AIAdvisor/concept-b/"><img src="docs/readme/concept-b.jpg" alt="컨셉 B 첫 화면: 흰 바탕 왼쪽에 제목과 설치 명령, 오른쪽에 추천 4건을 준비 시간 막대로 보여 주는 패널" /></a></td>
+  </tr>
+  <tr>
+    <td>녹흑 팔레트, 한 섹션에 한 화면. 팔레트·서체·히어로 구성은 taste-skill 키트 스크립트로 뽑았습니다.</td>
+    <td>어두운 면 세 단계와 앰버 강조 하나, 큰 두 톤 제목. 제품 화면을 크게 보여 줍니다.</td>
+    <td>흰 바탕의 문서형 구성. 추천을 가로 막대로 보여 주고, 도구·가이드 검색이 있습니다.</td>
+  </tr>
+</table>
+
+기본 페이지는 처음에 여러 디자인 스킬을 차례로 엮어 만들었습니다. 그 경험으로 웹 디자인 레시피를 "생성 스킬은 하나만" 방식으로 바꿨습니다. A와 B는 각각 레퍼런스 하나만 따라 다시 지은 컨셉입니다. 같은 페이지를 스킬마다 따로 고친 비교는 [showcase/web-generators](showcase/web-generators/README.md)에, 컨셉별 디자인 기준과 확인 결과는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다. 카탈로그와 가이드 목록은 `scripts/build_demo.py`가 `references/`에서 만들기 때문에, 배포할 때마다 세 페이지가 저장소 내용과 맞춰집니다.
 
 ```bash
 python -m http.server 8000 --directory docs   # http://localhost:8000
@@ -152,8 +172,11 @@ scripts/
   build_demo.py       INDEX.md와 데모 페이지의 목록 생성 (--check: 어긋남만 확인)
   check_catalog.py    카탈로그 형식 검사, 저장소 관리 상태 확인
 evals/                skill-creator 형식의 평가 케이스
+showcase/             카탈로그 도구를 직접 돌려 본 비포·애프터
 .github/workflows/    데모 배포, 월간 카탈로그 점검
 docs/                 데모 페이지 (GitHub Pages)
+  concept-a/, concept-b/   같은 내용의 다른 디자인 컨셉
+  data/               컨셉 페이지가 읽는 카탈로그·예시 JSON
 ```
 
 </details>
