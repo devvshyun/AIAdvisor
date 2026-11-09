@@ -7,7 +7,7 @@
   area: web-design
   what: 디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.
   when: 이미 돌아가는 페이지나 컴포넌트를 더 세련되게 고치거나, 커밋 전에 흔한 AI 디자인 패턴(뻔한 폰트, 낮은 대비 등)을 걸러내고 싶을 때.
-  not_when: 백엔드만 있는 프로젝트이거나, 팀이 이미 확정한 디자인 시스템을 한 치도 벗어나면 안 되는 경우. 다른 생성형 디자인 스킬과 같은 화면에 동시에 적용할 때.
+  not_when: 백엔드만 있는 프로젝트이거나, 팀이 이미 확정한 디자인 시스템을 한 치도 벗어나면 안 되는 경우. 다른 생성형 디자인 스킬과 같은 화면에 동시에 적용할 때. 다른 생성 스킬(taste-skill, frontend-design)을 이미 골랐을 때는 critique·polish 같은 방향 바꾸는 명령은 쓰지 않고 detect만 쓴다.
   install: |
     npx impeccable install            # 도구 감지 후 project/global 범위와 디자인 훅 설치 여부를 묻는다
     # Claude Code 플러그인 방식:
@@ -27,7 +27,7 @@
   overlaps: [taste-skill, frontend-design, web-design-guidelines, superdesign]
   risks: 설치 시 에디트마다 UI 파일을 검사하는 훅이 추가된다(매 편집마다 실행). live 모드의 Apply는 채팅 세션이 응답이 없으면 codex/claude CLI를 승인·샌드박스를 끈 상태로 실행하므로 IMPECCABLE_LIVE_COPY_AGENT=chat 설정 권장. global 설치 시 모든 프로젝트에 적용됨. 엔진 바이너리를 외부에서 내려받음.
   always_on_tokens: null
-  hands_on: '2026-11-06: 데모 페이지에 critique 기준과 금지 목록(제목 위 라벨, 섹션 번호, 큰 숫자 강조)을 적용했다. npx impeccable detect는 권한 정책에 막혔고, 설치된 플러그인의 detect.mjs는 파서 모듈이 없어 축소 모드로 돌며 그라데이션을 놓쳤다'
+  hands_on: '2026-11-06: 데모 페이지에 critique 기준과 금지 목록(제목 위 라벨, 섹션 번호, 큰 숫자 강조)을 적용했다. npx impeccable detect는 권한 정책에 막혔고, 설치된 플러그인의 detect.mjs는 파서 모듈이 없어 축소 모드로 돌며 그라데이션을 놓쳤다 2026-11-09: 같은 페이지를 혼자 고치게 했더니 PRODUCT.md·DESIGN.md를 만들고 원색 포스터풍으로 바꿨으며 원래 문구를 지켰다(25턴, 입력 약 155만 토큰).'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/pbakaus/impeccable
@@ -39,7 +39,7 @@
   area: web-design
   what: 페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.
   when: 랜딩이나 데모 페이지를 처음부터 만들 때, 무난한 템플릿 느낌을 피하고 아트 디렉션부터 잡고 싶을 때.
-  not_when: 기존 브랜드 가이드가 확정돼 있어 팔레트·폰트를 새로 고를 여지가 없을 때. Node 22 미만 환경. 한글 위주 페이지인데 폰트 조합을 그대로 쓰려 할 때(영문 Google Fonts 중심이라 한글 폰트를 따로 지정해야 함).
+  not_when: 기존 브랜드 가이드가 확정돼 있어 팔레트·폰트를 새로 고를 여지가 없을 때. Node 22 미만 환경. 한글 위주 페이지인데 폰트 조합을 그대로 쓰려 할 때(영문 Google Fonts 중심이라 한글 폰트를 따로 지정해야 함). impeccable·frontend-design 같은 다른 생성 스킬과 같이 켤 때(방향이 섞인다. 레시피 2단계로 하나만 남긴다).
   install: |
     npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
     # Claude Code 플러그인 방식(네임스페이스 taste-skill:):
@@ -58,7 +58,7 @@
   overlaps: [frontend-design, impeccable, superdesign]
   risks: 추가 사진·아이콘·Google Fonts를 받을 때 네트워크 접근. API 키는 필요 없음. 예전 스킬들은 별도 저장소(taste-skill-classics)로 옮겨졌으니 이름 혼동 주의.
   always_on_tokens: null
-  hands_on: '2026-11-06: 데모 페이지를 이 키트로 다시 지었다. deal.mjs와 start.mjs로 팔레트·서체·히어로를 뽑고 키트 CSS를 그대로 썼다. check.mjs·consistency.mjs는 헤드리스 Chrome이 멈춰서 layout-check.js를 브라우저 안에서 돌렸다'
+  hands_on: '2026-11-06: 데모 페이지를 이 키트로 다시 지었다. deal.mjs와 start.mjs로 팔레트·서체·히어로를 뽑고 키트 CSS를 그대로 썼다. check.mjs·consistency.mjs는 헤드리스 Chrome이 멈춰서 layout-check.js를 브라우저 안에서 돌렸다 2026-11-09: 비대화 실행에서는 키트 복사가 승인 대기로 막혀 규칙만 손으로 따랐고, 답변과 달리 제목과 기능 이름을 지우고 브랜드 이름을 지어냈다.'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/Leonxlnx/taste-skill
@@ -145,6 +145,7 @@
   overlaps: [taste-skill, impeccable, superdesign]
   risks: 낮음. 지시문만 있는 스킬로 외부 전송이나 스크립트 없음.
   always_on_tokens: null
+  hands_on: '2026-11-09: AI 티 나는 랜딩 페이지를 혼자(다른 생성 스킬 끔) 고치게 했다. 큰 활자, 왼쪽 정렬, 포인트 색 하나의 편집풍으로 바꾸고 원래 문구를 지켰다. 5턴, 36초, 입력 약 14만 토큰으로 셋 중 가장 가벼웠다'
   source_checked: 2026-11-06
   sources:
   - https://api.github.com/repos/anthropics/claude-plugins-official

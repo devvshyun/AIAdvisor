@@ -1,0 +1,149 @@
+{
+ "scenarios": [
+  {
+   "id": "tokens",
+   "label": "토큰이 빨리 닳아요",
+   "mode": "보완",
+   "prompt": "토큰이 너무 빨리 닳는데 뭐 깔면 좋을까",
+   "parts": [
+    {
+     "letter": "A",
+     "title": "진단 요약",
+     "html": "<p>작업할 때마다 파일을 넓게 훑고, 기획 PDF를 그대로 첨부합니다. 한도에 걸리면 작업이 멈춥니다.</p>"
+    },
+    {
+     "letter": "B",
+     "title": "추천 작업 표",
+     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>가이드</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>읽는 파일·보내는 양</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/tokensave.md\">토큰 절약 도구 3개</a></td><td>탐색량·전송량을 줄이고 <code>headroom savings</code>로 확인</td><td>중 · 30분</td><td>무료</td></tr><tr><td>2</td><td>PDF 첨부</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/markitdown-pdf-token-saver.md\">MarkItDown</a></td><td>PDF를 마크다운으로 바꿔 첨부</td><td>하 · 10분</td><td>무료</td></tr><tr><td>3</td><td>긴 세션 재시작</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/claude-code-session-commands-5.md\">세션 명령어 5개</a></td><td>되감기·요약으로 처음부터 다시 하는 일 줄이기</td><td>하 · 10분</td><td>없음</td></tr><tr><td>4</td><td>한도 초과 시 중단</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/9router.md\">9Router 폴백</a></td><td>한도에 걸리면 백업 모델로 전환</td><td>중 · 30분</td><td>백업 키 필요</td></tr></tbody></table>"
+    },
+    {
+     "letter": "D",
+     "title": "하지 말 것",
+     "html": "<ul><li>9Router와 OmniRoute 함께 설치: 하나면 충분합니다.</li><li>Graphify 단독 설치: 1번에 이미 포함됩니다.</li></ul>"
+    },
+    {
+     "letter": "E",
+     "title": "다음 질문",
+     "html": "<ul><li>첨부하는 PDF가 매번 같은 문서인가요?</li></ul>"
+    }
+   ],
+   "end": "진행할 번호를 골라 주세요"
+  },
+  {
+   "id": "design",
+   "label": "UI가 AI 티 나요",
+   "mode": "보완",
+   "prompt": "UI가 너무 AI 같은데 보완할 방법 추천해줘",
+   "parts": [
+    {
+     "letter": "A",
+     "title": "진단 요약",
+     "html": "<p>Inter 글꼴, 보라→파랑 그라데이션, 같은 카드 세 장이 반복됩니다. 색과 글꼴을 정한 기준 파일이 없습니다.</p>"
+    },
+    {
+     "letter": "B",
+     "title": "추천 작업 표",
+     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>가이드</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기준 파일 없음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/designskill.md\">AI 티 안 나는 웹사이트</a></td><td><code>/impeccable init</code>으로 DESIGN.md 만들기</td><td>하 · 15분</td><td>무료</td></tr><tr><td>2</td><td>모션·호버가 밋밋함</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/claude-designer-kill.md\">디자인 스킬 + 확인 도구</a></td><td>emil-design-eng 기준, Playwright로 캡처 확인</td><td>하 · 10분</td><td>무료</td></tr><tr><td>3</td><td>배치가 템플릿 같음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/claude-design-top-5-skill.md\">디자인 스킬 5개</a></td><td>taste-skill로 레이아웃·서체 조합 뽑기</td><td>하 · 10분</td><td>무료</td></tr></tbody></table>"
+    },
+    {
+     "letter": "D",
+     "title": "하지 말 것",
+     "html": "<ul><li>taste-skill 저장소를 <code>--skill</code> 없이 통째로 설치하기</li><li>참고 사이트 없이 스킬만 믿기</li></ul>"
+    },
+    {
+     "letter": "E",
+     "title": "다음 질문",
+     "html": "<ul><li>참고하고 싶은 사이트가 있나요?</li></ul>"
+    }
+   ],
+   "end": "진행할 번호를 골라 주세요"
+  },
+  {
+   "id": "new",
+   "label": "새 웹앱을 시작해요",
+   "mode": "신규",
+   "prompt": "가계부 웹앱 새로 만들 건데 뭐 세팅하면 좋아?",
+   "parts": [
+    {
+     "letter": "A",
+     "title": "요약과 가정",
+     "html": "<p>가정: 혼자 만들고 지인 몇 명과 공유, 무료 위주, 주말 프로젝트. 검증과 기본 환경에 집중합니다.</p>"
+    },
+    {
+     "letter": "B",
+     "title": "단계별 시작 도구",
+     "html": "<table><thead><tr><th>#</th><th>단계</th><th>가이드</th><th>왜 필요한가</th><th>시점</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기획·검증</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/08-business/claude-idea-council-4-agents.md\">아이디어 검토 에이전트 4개</a></td><td>만든다, 고친다, 접는다 중 판결</td><td>지금</td><td>무료</td></tr><tr><td>2</td><td>개발 환경</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/vibecoding3.md\">바이브 코딩 필수 3개</a></td><td>작업 방식, 최신 문서, 보안 점검</td><td>지금</td><td>무료</td></tr><tr><td>3</td><td>디자인</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/designskill.md\">AI 티 안 나는 웹사이트</a></td><td>첫 화면 전에 DESIGN.md 고정</td><td>지금</td><td>무료</td></tr><tr><td>4</td><td>배포</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/oracle-cloud-free-server-12gb.md\">오라클 무료 서버</a></td><td>공개할 때 상시 서버</td><td>나중에</td><td>카드 등록</td></tr></tbody></table>"
+    },
+    {
+     "letter": "D",
+     "title": "아직 이른 것",
+     "html": "<ul><li>Ruflo 같은 에이전트 팀: 주말 프로젝트에는 이릅니다.</li></ul>"
+    },
+    {
+     "letter": "E",
+     "title": "다음 질문",
+     "html": "<ul><li>은행 거래 내역을 자동으로 가져와야 하나요?</li></ul>"
+    }
+   ],
+   "end": "진행할 항목을 골라 주세요"
+  },
+  {
+   "id": "auto",
+   "label": "반복 업무를 줄이고 싶어요",
+   "mode": "보완",
+   "prompt": "이 프로젝트에서 자동화할 만한 부분 찾아줘",
+   "parts": [
+    {
+     "letter": "A",
+     "title": "진단 요약",
+     "html": "<p>고객 문의 답장과 주간 리포트가 매주 반복되고, 업무 절차가 문서로 남아 있지 않습니다.</p>"
+    },
+    {
+     "letter": "B",
+     "title": "추천 작업 표",
+     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>가이드</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>문의 메일 답장</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/03-automation/inbox-zero-claude-email-setup.md\">메일 답장 위임</a></td><td>분류와 초안을 맡기고 보내기 전 승인</td><td>중 · 40분</td><td>API 키</td></tr><tr><td>2</td><td>업무 절차 없음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/03-automation/business-jobs-to-agent-files.md\">업무를 파일로 옮기기</a></td><td>업무 하나를 md 파일 하나로</td><td>하 · 1시간</td><td>무료</td></tr><tr><td>3</td><td>주간 리포트</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/03-automation/claude-and-n8n.md\">n8n 첫 에이전트</a></td><td>말로 적은 흐름을 워크플로 JSON으로</td><td>중 · 40분</td><td>호스팅 따라 다름</td></tr></tbody></table>"
+    },
+    {
+     "letter": "D",
+     "title": "하지 말 것",
+     "html": "<ul><li>답장 자동 발송을 처음부터 켜기: 초안과 승인부터.</li></ul>"
+    },
+    {
+     "letter": "E",
+     "title": "다음 질문",
+     "html": "<ul><li>메일은 Gmail인가요, Outlook인가요?</li></ul>"
+    }
+   ],
+   "end": "진행할 번호를 골라 주세요"
+  },
+  {
+   "id": "repo",
+   "label": "낯선 레포를 받았어요",
+   "mode": "보완",
+   "prompt": "인수받은 레포인데 구조 파악부터 도와줄 도구 있어?",
+   "parts": [
+    {
+     "letter": "A",
+     "title": "진단 요약",
+     "html": "<p>README와 CLAUDE.md가 없고 모듈 사이 호출 관계를 알 수 없습니다. 질문마다 파일을 처음부터 찾습니다.</p>"
+    },
+    {
+     "letter": "B",
+     "title": "추천 작업 표",
+     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>가이드</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>전체 구조를 모름</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/github-repo-diagram-ingest-cheats.md\">레포 읽는 사이트 2곳</a></td><td>주소의 <code>hub</code>만 바꿔 구조도 얻기</td><td>하 · 5분</td><td>무료</td></tr><tr><td>2</td><td>매번 파일을 다시 찾음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/graphify.md\">Graphify</a></td><td>호출 그래프를 먼저 조회</td><td>중 · 20분</td><td>무료</td></tr><tr><td>3</td><td>탐색하다 대화가 꼬임</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/claude-code-session-commands-5.md\">세션 명령어 5개</a></td><td>갈림길로 탐색 기록 나누기</td><td>하 · 10분</td><td>없음</td></tr></tbody></table>"
+    },
+    {
+     "letter": "D",
+     "title": "하지 말 것",
+     "html": "<ul><li>레포 전체를 매번 대화에 붙여넣기</li></ul>"
+    },
+    {
+     "letter": "E",
+     "title": "다음 질문",
+     "html": "<ul><li>레포가 공개인가요, 비공개인가요?</li></ul>"
+    }
+   ],
+   "end": "진행할 번호를 골라 주세요"
+  }
+ ]
+}

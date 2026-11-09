@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: improve-admin-dashboard
+expected_outcome: |
+  보완 모드. 이미 있는 업무용 대시보드(React, 보라 그라데이션, 큰 숫자 카드)를 근거로 짚고, 생성 스킬로 impeccable 하나를 추천한다(frontend-design은 과감한 시안용이라 업무 화면에는 맞지 않음). 다른 생성 스킬은 끄라고 안내한다. '진행할 번호를 골라 주세요'로 끝난다.
+context:
+  scaffold_script: place-files.sh

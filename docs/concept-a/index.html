@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIAdvisor · 컨셉 A</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Crect width='20' height='20' fill='%2308090a'/%3E%3Ccircle cx='10' cy='10' r='7' fill='none' stroke='%23f7f8f8' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='10' r='2.5' fill='%23f7f8f8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root {
+  --bg: #08090a;
+  --bg-raise: #0f1011;
+  --panel: #121314;
+  --panel-2: #17181a;
+  --line: rgb(255 255 255 / .08);
+  --line-strong: rgb(255 255 255 / .14);
+  --text: #f7f8f8;
+  --text-2: #b4b6ba;
+  --muted: #8a8f98;
+  --faint: #5c6066;
+  --accent: #e2b93b;      /* 진행 중 표시에만 쓰는 노란 점 하나 */
+  --ok: #8fb996;
+  --sans: "Inter", "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --wrap: 1280px;
+  --gutter: 80px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+html { background: var(--bg); color-scheme: dark; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 15px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word;
+}
+h1, h2, h3, h4, p, li { word-break: keep-all; }
+a { color: inherit; text-decoration: none; }
+code, .mono { font-family: var(--mono); }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.wrap { max-width: calc(var(--wrap) + var(--gutter) * 2); margin: 0 auto; padding: 0 var(--gutter); }
+.rule { border-top: 1px solid var(--line); }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 10; background: rgb(8 9 10 / .85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .wrap { height: 72px; display: flex; align-items: center; gap: 24px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 18px; letter-spacing: -.01em; }
+.logo svg { width: 20px; height: 20px; }
+.nav__links { margin-left: auto; display: flex; gap: 24px; font-size: 13.5px; color: var(--muted); }
+.nav__links a:hover { color: var(--text); }
+.nav__sep { width: 1px; height: 16px; background: var(--line-strong); }
+.pill { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 14px; border-radius: 999px; font-size: 13.5px; font-weight: 500; white-space: nowrap; }
+.pill--light { background: var(--text); color: #08090a; }
+.pill--light:hover { background: #fff; }
+.pill--ghost { border: 1px solid var(--line-strong); color: var(--text); }
+.pill--ghost:hover { background: rgb(255 255 255 / .04); }
+.pill--lg { height: 40px; padding: 0 18px; font-size: 14.5px; }
+
+/* type scale */
+h1 { font-size: clamp(38px, 5.2vw, 68px); line-height: 1.06; font-weight: 600; letter-spacing: -.035em; }
+h2 { font-size: clamp(30px, 3.6vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -.03em; }
+h3 { font-size: 15px; font-weight: 500; letter-spacing: -.01em; }
+.lead { font-size: 17px; color: var(--muted); }
+.muted { color: var(--muted); }
+.fig { font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--faint); text-transform: uppercase; }
+
+/* hero */
+.hero { padding: 160px 0 0; }
+.hero h1 { max-width: 15em; }
+.hero__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: 36px; }
+.hero__row .lead { max-width: 34em; }
+.newlink { font-size: 15px; color: var(--muted); white-space: nowrap; }
+.newlink b { color: var(--text); font-weight: 500; margin-right: 10px; }
+.newlink:hover { color: var(--text); }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 40px; }
+.cmd { display: flex; align-items: center; gap: 12px; margin-top: 20px; max-width: 760px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-raise); padding: 10px 10px 10px 16px; }
+.cmd code { flex: 1; min-width: 0; font-size: 13px; color: var(--text-2); white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+.cmd code::before { content: "$ "; color: var(--faint); }
+.cmd button { font-size: 12px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; white-space: nowrap; }
+.cmd button:hover { color: var(--text); border-color: var(--line-strong); }
+
+/* app frame (product UI shown large) */
+.frame { margin: 72px calc(var(--gutter) * -0.25) 0; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(180deg, #111214 0%, #0b0c0d 100%); padding: 8px; box-shadow: 0 40px 120px rgb(0 0 0 / .6); }
+.app { display: grid; grid-template-columns: 236px 1fr; min-height: 520px; }
+.side { padding: 10px 8px; font-size: 13.5px; }
+.side__top { display: flex; align-items: center; gap: 8px; padding: 6px 10px 14px; font-weight: 500; }
+.side__top .dot { width: 14px; height: 14px; border-radius: 4px; border: 1px solid var(--line-strong); }
+.side__label { font-size: 12px; color: var(--faint); padding: 14px 10px 6px; }
+.side__item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 6px; color: var(--text-2); }
+.side__item svg { width: 14px; height: 14px; flex: none; stroke: var(--muted); fill: none; stroke-width: 1.4; }
+.side__item.is-on { background: rgb(255 255 255 / .06); color: var(--text); }
+.side__item time { margin-left: auto; font-size: 11.5px; color: var(--faint); }
+.main { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); display: flex; flex-direction: column; min-width: 0; }
+.main__bar { display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 500; }
+.main__bar .id { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.main__bar .sp { margin-left: auto; color: var(--faint); font-weight: 400; font-size: 12px; }
+.status { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid var(--accent); position: relative; flex: none; }
+.status::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; background: conic-gradient(var(--accent) 0 50%, transparent 0); }
+.main__body { display: grid; grid-template-columns: 1fr 220px; flex: 1; }
+.thread { padding: 40px 48px 32px 72px; }
+.thread h3 { font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+.thread .q { margin-top: 8px; color: var(--text-2); }
+.thread h4 { font-size: 16px; font-weight: 600; margin: 32px 0 14px; letter-spacing: -.01em; }
+.act { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); padding: 5px 0; }
+.act b { color: var(--text-2); font-weight: 500; }
+.act .ic { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--line-strong); flex: none; }
+.reply { margin-top: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); padding: 14px 16px; }
+.reply__who { font-size: 13px; color: var(--muted); }
+.reply__who b { color: var(--text); font-weight: 500; }
+.reply p { margin-top: 6px; font-size: 14px; }
+.reply__acts { display: flex; gap: 8px; margin-top: 12px; }
+.chip { font-size: 12px; border: 1px solid var(--line-strong); border-radius: 6px; padding: 3px 10px; color: var(--text-2); }
+.props { border-left: 1px solid var(--line); padding: 32px 20px; font-size: 13px; }
+.props dt { font-size: 12px; color: var(--faint); margin: 0 0 8px; }
+.props dt:not(:first-child) { margin-top: 24px; }
+.props dd { display: flex; align-items: center; gap: 8px; padding: 4px 0; color: var(--text-2); }
+.props dd code { font-size: 12px; }
+
+/* section */
+.section { padding: 128px 0; }
+.head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
+.head p { color: var(--muted); font-size: 16px; max-width: 32em; }
+
+/* demo */
+.demo { display: grid; grid-template-columns: 300px 1fr; }
+.scen { padding: 8px; border-right: 1px solid var(--line); }
+.scen__lab { font-size: 12px; color: var(--faint); padding: 10px 12px 8px; }
+.scen button { display: block; width: 100%; text-align: left; padding: 10px 12px; border-radius: 8px; }
+.scen button b { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; color: var(--text-2); }
+.scen button em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--faint); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; font-weight: 400; }
+.scen button span { display: block; font-size: 12.5px; color: var(--faint); margin-top: 2px; }
+.scen button[aria-selected="true"] { background: rgb(255 255 255 / .05); }
+.scen button[aria-selected="true"] b { color: var(--text); }
+.scen button:not([aria-selected="true"]):hover { background: rgb(255 255 255 / .025); }
+.rep { padding: 28px 36px 32px; min-width: 0; }
+.rep__q { font-family: var(--mono); font-size: 12.5px; color: var(--muted); padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.rep__q b { color: var(--text); font-weight: 500; }
+.rep h4 { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin: 26px 0 10px; }
+.rep h4 i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--muted); width: 20px; height: 20px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 5px; }
+.rep p, .rep li { font-size: 14px; color: var(--text-2); }
+.rep ul { list-style: none; }
+.rep li { padding-left: 16px; position: relative; }
+.rep li::before { content: ""; position: absolute; left: 2px; top: .75em; width: 6px; height: 1px; background: var(--muted); }
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+th { text-align: left; font-weight: 500; color: var(--faint); font-size: 12px; padding: 9px 12px; border-bottom: 1px solid var(--line); background: rgb(255 255 255 / .015); }
+td { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--text-2); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td:first-child { font-family: var(--mono); color: var(--muted); width: 32px; }
+td a { color: var(--text); border-bottom: 1px solid var(--line-strong); }
+td code { font-size: 12px; color: var(--text); }
+.rep__end { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.rep__end::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* how: FIG columns */
+.figs { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.figs > div { padding: 12px 32px 48px; border-left: 1px solid var(--line); }
+.figs > div:first-child { border-left: 0; padding-left: 0; }
+.figs svg { display: block; width: 100%; max-width: 260px; height: 230px; margin: 28px auto 36px; stroke: #3b3e43; fill: none; stroke-width: 1; }
+.figs h3 { color: var(--text); }
+.figs p { margin-top: 10px; color: var(--muted); font-size: 15px; max-width: 26em; }
+.modes { display: grid; grid-template-columns: 1fr 1fr; margin-top: 96px; gap: 24px; }
+.mode { border: 1px solid var(--line); border-radius: 12px; background: var(--bg-raise); padding: 28px; }
+.mode .fig { display: block; margin-bottom: 18px; }
+.mode h3 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.mode p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+.outline { list-style: none; margin-top: 24px; border-top: 1px solid var(--line); }
+.outline li { display: flex; gap: 14px; align-items: center; font-size: 14px; color: var(--text-2); padding: 10px 0; border-bottom: 1px solid var(--line); }
+.outline i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--faint); width: 14px; }
+
+/* kit */
+.tabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 32px; max-width: 100%; }
+.tabs button { padding: 7px 14px; border-radius: 7px; font-size: 13.5px; color: var(--muted); white-space: nowrap; }
+.tabs button[aria-selected="true"] { background: rgb(255 255 255 / .07); color: var(--text); }
+.kit { display: grid; grid-template-columns: 260px 1fr; border-top: 1px solid var(--line); }
+.topics { padding: 24px 24px 0 0; border-right: 1px solid var(--line); }
+.topic { display: flex; width: 100%; justify-content: space-between; align-items: baseline; padding: 10px 12px; border-radius: 8px; font-size: 15px; color: var(--muted); }
+.topic span { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+.topic[aria-selected="true"] { background: rgb(255 255 255 / .05); color: var(--text); }
+.kit__pane { padding: 24px 0 0 40px; min-width: 0; }
+.recipe { border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; background: var(--bg-raise); }
+.recipe .fig { display: block; }
+.recipe a { display: inline-block; margin-top: 6px; font-weight: 500; font-size: 15px; }
+.recipe ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: 14px; counter-reset: s; }
+.recipe ol li { counter-increment: s; font-size: 12.5px; color: var(--muted); display: flex; align-items: center; }
+.recipe ol li::before { content: counter(s); font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-right: 6px; }
+.recipe ol li:not(:last-child)::after { content: ""; width: 18px; height: 1px; background: var(--line-strong); margin: 0 10px; }
+.tools { margin-top: 24px; border-top: 1px solid var(--line); }
+.tool { display: grid; grid-template-columns: minmax(0, 1fr) 96px 64px; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.tool b { font-weight: 500; font-size: 14.5px; }
+.tool b + span { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+.tool .kind { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.tool .tried { font-size: 11.5px; color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; justify-self: end; }
+.tool .tried::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.more { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+.more:hover { color: var(--text); }
+.tool .tried.stale { color: var(--muted); }
+.tool .tried.stale::before { background: var(--faint); }
+.recipe .grp { display: block; margin-top: 16px; }
+.guides { border-top: 1px solid var(--line); margin-top: 16px; }
+.guides li { list-style: none; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.guides li a { font-weight: 500; font-size: 14.5px; color: var(--text); }
+.guides li a::after { content: " ↗"; color: var(--faint); font-weight: 400; }
+.guides li a:hover { color: #fff; }
+.guides li span { display: block; font-size: 13px; color: var(--muted); margin-top: 3px; }
+.fail { font-size: 14px; color: var(--muted); padding: 24px 0; }
+.fail a { color: var(--text); border-bottom: 1px solid var(--line-strong); }
+.rep .tbl { margin-top: 4px; }
+
+/* faq */
+.faq { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.faq__list { border-top: 1px solid var(--line); }
+.faq__item { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.faq__item h3 { font-size: 16px; color: var(--text); }
+.faq__item p { margin-top: 8px; color: var(--muted); font-size: 15px; }
+.gb { height: 560px; overflow-y: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-raise); padding: 16px; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.gb .giscus, .gb .giscus-frame { width: 100%; }
+.gb__note { margin-top: 16px; font-size: 14px; }
+.gb__note a, .gb a { color: var(--text); border-bottom: 1px solid var(--line-strong); }
+
+/* close + footer */
+.close { padding: 160px 0 128px; text-align: left; }
+.close h2 { font-size: clamp(34px, 4.4vw, 60px); max-width: 12em; }
+.close p { margin-top: 20px; }
+.close .hero__actions { margin-top: 36px; }
+.foot { border-top: 1px solid var(--line); padding: 48px 0 64px; font-size: 13px; color: var(--muted); }
+.foot .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 32px; }
+.foot .logo { font-size: 15px; color: var(--text); }
+.foot nav { display: flex; gap: 24px; margin-left: auto; }
+.foot a:hover { color: var(--text); }
+
+/* responsive */
+@media (max-width: 1100px) {
+  :root { --gutter: 40px; }
+  .main__body { grid-template-columns: 1fr; }
+  .props { display: none; }
+  .thread { padding: 32px 32px; }
+}
+@media (max-width: 860px) {
+  :root { --gutter: 16px; }
+  .nav__links a:not(.keep), .nav__sep { display: none; }
+  .hero { padding-top: 88px; }
+  .hero__row { flex-direction: column; align-items: flex-start; }
+  .frame { margin: 48px 0 0; padding: 6px; border-radius: 12px; }
+  .app { grid-template-columns: 1fr; min-height: 0; }
+  .side { display: none; }
+  .main__bar { white-space: nowrap; overflow: hidden; }
+  .main__bar .sp { display: none; }
+  .thread { padding: 24px 20px; }
+  .section { padding: 88px 0; }
+  .head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+  .demo { grid-template-columns: 1fr; }
+  .scen { border-right: 0; border-bottom: 1px solid var(--line); display: flex; overflow-x: auto; gap: 4px; scrollbar-width: none; }
+  .scen__lab { display: none; }
+  .scen button { flex: none; width: auto; }
+  .scen button span { display: none; }
+  .scen button em { margin-left: 6px; }
+  .rep { padding: 20px 16px 24px; }
+  .figs { grid-template-columns: 1fr; border-bottom: 0; }
+  .figs > div { border-left: 0; padding: 12px 0 40px; border-bottom: 1px solid var(--line); }
+  .figs svg { height: 180px; margin: 16px auto 24px; }
+  .modes { grid-template-columns: 1fr; margin-top: 64px; }
+  .mode { padding: 22px 18px; }
+  .kit { grid-template-columns: 1fr; }
+  .topics { border-right: 0; padding: 16px 0; display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line); }
+  .topic { width: auto; flex: none; gap: 8px; }
+  .kit__pane { padding: 20px 0 0; }
+  .tool { grid-template-columns: minmax(0, 1fr) auto; }
+  .tool .kind { grid-column: 1; grid-row: 2; }
+  .tool .tried { grid-column: 2; grid-row: 1; }
+  .faq { grid-template-columns: 1fr; gap: 24px; }
+  .gb { height: 440px; padding: 8px; }
+  .close { padding: 112px 0 88px; }
+  .foot nav { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="AIAdvisor">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="#f7f8f8" stroke-width="1.5"/><circle cx="10" cy="10" r="3" fill="#f7f8f8"/></svg>
+      AIAdvisor
+    </a>
+    <nav class="nav__links" aria-label="주요 메뉴">
+      <a href="#demo">추천 결과</a>
+      <a href="#how">동작 방식</a>
+      <a href="#kit">추천 근거</a>
+      <a href="#faq">질문</a>
+      <a href="#guestbook">방명록</a>
+      <span class="nav__sep" aria-hidden="true"></span>
+      <a class="keep" href="https://github.com/devvshyun/AIAdvisor">GitHub</a>
+    </nav>
+    <a class="pill pill--light" href="#install">설치</a>
+  </div>
+</header>
+
+<main>
+  <!-- 1. 히어로 -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <h1>프로젝트를 먼저 읽고, 지금 깔 만한 Claude Code 도구만 골라 주는 스킬</h1>
+      <div class="hero__row">
+        <p class="lead">프로젝트와 깔린 도구를 먼저 읽고, 검증한 도구 중 필요한 것만 골라 줍니다.</p>
+        <a class="newlink" href="#kit"><b>2026-11-06 확인</b><span data-bind="kitlabel">검증한 도구와 레시피</span> →</a>
+      </div>
+      <div class="hero__actions" id="install">
+        <a class="pill pill--light pill--lg" href="#install">스킬 설치하기</a>
+        <a class="pill pill--ghost pill--lg" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a>
+      </div>
+      <div class="cmd">
+        <code id="c1">git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
+        <button type="button" data-copy="c1">명령 복사</button>
+      </div>
+
+      <div class="frame" role="img" aria-label="Claude Code에서 AIAdvisor가 토큰 문제를 진단하고 추천을 내는 대화">
+        <div class="app" aria-hidden="true">
+          <div class="side">
+            <div class="side__top"><span class="dot"></span>claude</div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><circle cx="6" cy="6" r="4"/><path d="M9 9l3 3"/></svg>세션 검색</div>
+            <div class="side__label">최근 세션</div>
+            <div class="side__item is-on"><span class="status"></span>ledger-app<time>10:42</time></div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5"/></svg>landing-v2<time>어제</time></div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5"/></svg>ops-bot<time>월</time></div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5"/></svg>budget-web<time>11월 2일</time></div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="5"/></svg>legacy-api<time>10월 28일</time></div>
+            <div class="side__label">스킬</div>
+            <div class="side__item"><svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2"/></svg>project-upgrade-advisor</div>
+          </div>
+          <div class="main">
+            <div class="main__bar"><span class="status"></span><span class="id">ledger-app</span>토큰이 너무 빨리 닳는데…<span class="sp">project-upgrade-advisor</span></div>
+            <div class="main__body">
+              <div class="thread">
+                <h3>토큰이 너무 빨리 닳는데 뭐 깔면 좋을까</h3>
+                <p class="q">보완 모드 · 추천 단계에서는 읽기만 합니다.</p>
+                <h4>읽은 것</h4>
+                <div class="act"><span class="ic"></span><b>CLAUDE.md</b> · <b>package.json</b> · <b>claude mcp list</b> 읽는 중</div>
+                <div class="act"><span class="ic"></span>확인 끝 · 수정한 파일 0개</div>
+                <div class="reply">
+                  <div class="reply__who"><b>project-upgrade-advisor</b> · 방금</div>
+                  <p>추천 4건이에요. 토큰 절약 도구 3개와 MarkItDown부터 권합니다.</p>
+                  <div class="reply__acts"><span class="chip">1번 진행</span><span class="chip">다른 추천</span></div>
+                </div>
+              </div>
+              <dl class="props">
+                <dt>모드</dt><dd><span class="status"></span>보완</dd>
+                <dt>읽은 파일</dt><dd><code>CLAUDE.md</code></dd><dd><code>package.json</code></dd><dd><code>claude mcp list</code></dd>
+                <dt>결과</dt><dd>추천 4건</dd><dd>보류 2건</dd><dd>질문 2개</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 상황별 추천 결과 -->
+  <section class="section" id="demo">
+    <div class="wrap">
+      <div class="head">
+        <h2>상황별 추천 결과</h2>
+        <p>왼쪽에서 상황을 고르면 스킬이 내놓는 형식 그대로 보여 줍니다. 진단, 추천 표, 실행 계획, 보류할 것, 다음 질문 순서입니다.</p>
+      </div>
+      <div class="frame" style="margin-top:0">
+        <div class="main demo">
+          <div class="scen" role="tablist" aria-label="예시 상황" id="scen">
+            <div class="scen__lab">예시 상황</div>
+          </div>
+          <div class="rep" role="tabpanel" id="rep" aria-live="polite">
+            <noscript><p class="fail">목록을 불러오지 못했습니다. <a href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></p></noscript>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 동작 방식 -->
+  <section class="section rule" id="how">
+    <div class="wrap">
+      <div class="head">
+        <h2>추천이 나오기까지 세 단계</h2>
+        <p>말한 내용과 폴더 상태를 보고 보완 모드와 신규 모드 중 하나를 고릅니다.</p>
+      </div>
+      <div class="figs">
+        <div>
+          <span class="fig">Fig 0.1</span>
+          <svg viewBox="0 0 260 230" aria-hidden="true">
+            <!-- stacked sheets: reading files -->
+            <g><path d="M130 30 L230 80 L130 130 L30 80 Z"/><path d="M30 80 v14 L130 144 L230 94 v-14"/><path d="M30 100 v14 L130 164 L230 114 v-14"/><path d="M30 120 v14 L130 184 L230 134 v-14"/><path d="M30 140 v14 L130 204 L230 154 v-14"/>
+              <path d="M130 130 v74" stroke-dasharray="2 3"/>
+              <path d="M90 72 L150 102 M100 64 L170 99 M112 58 L180 92 M124 52 L176 78"/></g>
+          </svg>
+          <h3>프로젝트와 환경을 읽습니다</h3>
+          <p>CLAUDE.md, README, 의존성 파일, 최근 git log, 이미 깔린 MCP·스킬·플러그인을 확인합니다. 읽기만 합니다.</p>
+        </div>
+        <div>
+          <span class="fig">Fig 0.2</span>
+          <svg viewBox="0 0 260 230" aria-hidden="true">
+            <!-- cubes: catalog index -->
+            <g>
+              <path d="M70 70 L110 50 L150 70 L110 90 Z"/><path d="M70 70 v50 L110 140 v-50"/><path d="M150 70 v50 L110 140"/>
+              <path d="M130 100 L170 80 L210 100 L170 120 Z"/><path d="M130 100 v50 L170 170 v-50"/><path d="M210 100 v50 L170 170"/>
+              <path d="M50 140 L90 120 L130 140 L90 160 Z"/><path d="M50 140 v40 L90 200 v-40"/><path d="M130 140 v40 L90 200"/>
+              <path d="M100 66 h20 M98 70 h24 M102 74 h16"/>
+            </g>
+          </svg>
+          <h3>레시피와 카탈로그부터 봅니다</h3>
+          <p>작은 색인에서 맞는 레시피와 도구를 고르고, 이미 있는 도구와 역할이 겹치는 도구, 관리가 멈춘 도구는 뺍니다. 그 밖의 주제는 가이드를 엽니다.</p>
+        </div>
+        <div>
+          <span class="fig">Fig 0.3</span>
+          <svg viewBox="0 0 260 230" aria-hidden="true">
+            <!-- descending plates: narrowed list -->
+            <g>
+              <path d="M150 30 L200 55 V165 L150 140 Z"/>
+              <path d="M130 50 L180 75 V170 L130 145"/>
+              <path d="M110 70 L160 95 V175 L110 150"/>
+              <path d="M90 92 L140 117 V180 L90 155"/>
+              <path d="M70 115 L120 140 V185 L70 160"/>
+              <path d="M50 140 L100 165 V190 L50 165"/>
+              <path d="M50 165 L100 190 L200 165"/>
+            </g>
+          </svg>
+          <h3>정리하고 번호를 기다립니다</h3>
+          <p>추천 표와 실행 계획을 내고 멈춥니다. API 키나 유료 플랜이 필요한 항목은 따로 표시합니다.</p>
+        </div>
+      </div>
+
+      <div class="modes">
+        <article class="mode">
+          <span class="fig">Mode · 보완</span>
+          <h3>있던 프로젝트의 약점을 찾습니다</h3>
+          <p>"프로젝트에서 보완할 부분 추천해줘"라고 하면 코드와 설정을 읽고 근거와 함께 우선순위를 매깁니다.</p>
+          <ol class="outline"><li><i>A</i>진단 요약</li><li><i>B</i>추천 작업 표</li><li><i>C</i>상위 3개 실행 계획</li><li><i>D</i>하지 말 것</li><li><i>E</i>다음 질문</li></ol>
+        </article>
+        <article class="mode">
+          <span class="fig">Mode · 신규</span>
+          <h3>새 프로젝트의 시작 세트를 짭니다</h3>
+          <p>"가계부 웹앱 새로 만들 건데"처럼 말하면 빠진 것만 묻고 단계별 도구와 첫 주 계획을 짭니다.</p>
+          <ol class="outline"><li><i>A</i>요약과 가정</li><li><i>B</i>단계별 시작 도구</li><li><i>C</i>첫 주 세팅 계획</li><li><i>D</i>아직 이른 것</li><li><i>E</i>다음 질문</li></ol>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 추천 근거 -->
+  <section class="section rule" id="kit">
+    <div class="wrap">
+      <div class="head">
+        <h2>직접 확인한 도구<span data-bind="toolsN"></span>와 레시피</h2>
+        <p>자동화·코딩·웹 디자인은 공식 문서와 GitHub로 확인한 카탈로그로 추천하고, 도구를 엮는 순서는 레시피로 정해 둡니다.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="추천 근거">
+        <button role="tab" type="button" aria-selected="true" data-tab="p-kit" aria-controls="p-kit"><span data-bind="kitlabel">검증한 도구와 레시피</span></button>
+        <button role="tab" type="button" aria-selected="false" data-tab="p-lib" aria-controls="p-lib"><span data-bind="liblabel">가이드</span></button>
+      </div>
+
+      <div id="p-kit" role="tabpanel" class="kit">
+        <div class="topics" role="tablist" aria-label="분야" id="areas"></div>
+        <div class="kit__pane" id="area-pane">
+          <noscript><p class="fail">목록을 불러오지 못했습니다. <a href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></p></noscript>
+        </div>
+      </div>
+
+      <div id="p-lib" role="tabpanel" class="kit" hidden>
+        <div class="topics" role="tablist" aria-label="가이드 주제" id="gtopics"></div>
+        <div class="kit__pane">
+          <p class="muted" style="font-size:14px">주제를 누르면 가이드마다 한 줄 요약이 나옵니다.</p>
+          <ul class="guides" id="guides"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FAQ + 방명록 -->
+  <section class="section rule" id="faq">
+    <div class="wrap">
+      <div class="faq">
+        <div>
+          <h2>자주 묻는 질문</h2>
+          <p class="muted" style="margin-top:16px">더 궁금한 점은 저장소에 남겨 주세요.</p>
+        </div>
+        <div class="faq__list">
+          <div class="faq__item"><h3>스킬이 마음대로 뭔가를 설치하나요?</h3><p>아니요. 추천 단계에서는 읽기만 합니다. "2번이랑 3번 진행해줘"처럼 고른 다음에 설치를 시작합니다.</p></div>
+          <div class="faq__item"><h3>추천 근거는 최신인가요?</h3><p>카탈로그는 항목마다 확인한 날짜가 있고, 30일이 넘은 항목은 바뀌었을 수 있다고 표시합니다. "카탈로그 갱신해줘"라고 하면 그날 기준으로 다시 조사합니다.</p></div>
+          <div class="faq__item"><h3>Windows에서도 되나요?</h3><p>됩니다. 현재 OS를 확인하고 명령을 PowerShell이나 Git Bash에 맞게 바꿔 보여 줍니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-1. 방명록 -->
+  <section class="section rule" id="guestbook">
+    <div class="wrap">
+      <div class="head">
+        <h2>방명록</h2>
+        <div>
+          <p>써 본 소감, 추천받고 싶었던 상황, 고쳤으면 하는 점을 남겨 주세요. GitHub 계정으로 남기고 글은 이 저장소의 Discussions에 공개됩니다.</p>
+          <p class="gb__note"><a href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 보기</a></p>
+        </div>
+      </div>
+      <div class="gb" aria-label="방명록 글">
+        <div class="giscus"></div>
+        <noscript><p class="muted">방명록은 스크립트가 필요합니다. <a href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 직접 남길 수 있습니다.</a></p></noscript>
+        <script src="https://giscus.app/client.js" data-repo="devvshyun/AIAdvisor" data-repo-id="R_kgDOVjk56g" data-category="GuestPage" data-category-id="DIC_kwDOVjk56s4DKfyK" data-mapping="specific" data-term="GuestPage" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="dark_dimmed" data-lang="ko" data-loading="lazy" crossorigin="anonymous" async></script>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. 마무리 -->
+  <section class="close rule">
+    <div class="wrap">
+      <h2>다음 세션부터 바로 쓰는 추천 스킬</h2>
+      <p class="muted">무료 · 공개 저장소 · git pull로 업데이트</p>
+      <div class="hero__actions">
+        <a class="pill pill--light pill--lg" href="#install">스킬 설치하기</a>
+        <a class="pill pill--ghost pill--lg" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span class="logo"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="none" stroke="#f7f8f8" stroke-width="1.5"/><circle cx="10" cy="10" r="3" fill="#f7f8f8"/></svg>AIAdvisor</span>
+    <span>&copy; 2026 AIAdvisor</span>
+    <nav aria-label="꼬리말">
+      <a href="https://github.com/devvshyun/AIAdvisor">GitHub</a>
+      <a href="https://github.com/devvshyun/AIAdvisor/blob/main/docs/DESIGN.md">디자인 기준</a>
+      <a href="#guestbook">방명록</a>
+      <a href="../">기본 페이지</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  const REPO = 'https://github.com/devvshyun/AIAdvisor';
+  const h = (tag, attrs = {}, text) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    if (text != null) n.textContent = text;
+    return n;
+  };
+  const failMsg = () => {
+    const p = h('p', { class: 'fail' }, '목록을 불러오지 못했습니다. ');
+    p.append(h('a', { href: REPO }, 'GitHub에서 보기'));
+    return p;
+  };
+  // one tablist: click or arrow keys select a tab and call show(index)
+  function tablist(list, buttons, show) {
+    const pick = i => {
+      buttons.forEach((b, j) => { b.setAttribute('aria-selected', i === j); b.tabIndex = i === j ? 0 : -1; });
+      show(i);
+    };
+    buttons.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+    list.addEventListener('keydown', e => {
+      const i = buttons.indexOf(document.activeElement);
+      if (i < 0 || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+      e.preventDefault();
+      const n = (i + (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+      buttons[n].focus(); pick(n);
+    });
+    pick(0);
+  }
+
+  // big tabs (catalog / guides)
+  const bigTabs = [...document.querySelectorAll('[data-tab]')];
+  tablist(bigTabs[0].parentElement, bigTabs, i => bigTabs.forEach((o, j) => document.getElementById(o.dataset.tab).hidden = i !== j));
+
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent); b.textContent = '복사됨'; }
+    catch (_) { b.textContent = '선택해서 복사'; }
+    setTimeout(() => b.textContent = '명령 복사', 1600);
+  }));
+
+  const getJSON = url => fetch(url).then(r => { if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); });
+
+  // 상황별 결과: ../data/demo.json
+  getJSON('../data/demo.json').then(d => {
+    const list = document.getElementById('scen'), rep = document.getElementById('rep');
+    const buttons = d.scenarios.map(s => {
+      const b = h('button', { role: 'tab', type: 'button', 'aria-controls': 'rep' });
+      const t = h('b', {}, s.label); t.append(h('em', {}, s.mode));
+      b.append(t, h('span', {}, s.prompt));
+      list.append(b);
+      return b;
+    });
+    tablist(list, buttons, i => {
+      const s = d.scenarios[i];
+      rep.replaceChildren();
+      const q = h('p', { class: 'rep__q' }, '> ');
+      q.append(h('b', {}, s.prompt), ` · ${s.mode} 모드`);
+      rep.append(q);
+      for (const part of s.parts) {
+        const t = h('h4'); t.append(h('i', {}, part.letter), part.title);
+        const body = h('div'); body.innerHTML = part.html;
+        body.querySelectorAll('table').forEach(tb => { const w = h('div', { class: 'tbl' }); tb.replaceWith(w); w.append(tb); });
+        rep.append(t, ...body.childNodes);
+      }
+      if (s.end) rep.append(h('p', { class: 'rep__end' }, s.end));
+    });
+  }).catch(e => { console.warn(e); document.getElementById('rep').replaceChildren(failMsg()); });
+
+  // 추천 근거: ../data/catalog.json
+  getJSON('../data/catalog.json').then(c => {
+    document.querySelectorAll('[data-bind="toolsN"]').forEach(n => n.textContent = ` ${c.tools_total}개`);
+    document.querySelectorAll('[data-bind="kitlabel"]').forEach(n => n.textContent = `검증한 도구 ${c.tools_total}개 · 레시피 ${c.areas.length}개`);
+    document.querySelectorAll('[data-bind="liblabel"]').forEach(n => n.textContent = `가이드 ${c.guides_total}편`);
+
+    const areas = document.getElementById('areas'), pane = document.getElementById('area-pane');
+    const aBtns = c.areas.map(a => {
+      const b = h('button', { class: 'topic', role: 'tab', type: 'button', 'aria-controls': 'area-pane' }, a.label);
+      b.append(h('span', {}, a.tools.length));
+      areas.append(b);
+      return b;
+    });
+    tablist(areas, aBtns, i => {
+      const a = c.areas[i];
+      pane.replaceChildren();
+      const r = h('div', { class: 'recipe' });
+      r.append(h('span', { class: 'fig' }, 'Recipe'), h('a', { href: a.recipe.url }, a.recipe.title));
+      for (const g of a.recipe.groups) {
+        if (g.name) r.append(h('span', { class: 'fig grp' }, g.name));
+        const ol = h('ol');
+        g.steps.forEach(st => ol.append(h('li', {}, st)));
+        r.append(ol);
+      }
+      const tools = h('div', { class: 'tools', role: 'list' });
+      for (const t of a.tools) {
+        const row = h('div', { class: 'tool', role: 'listitem' });
+        const name = h('div'); name.append(h('b', {}, t.name), h('span', {}, t.what));
+        let flag = h('span');
+        if (t.maintained === false) flag = h('span', { class: 'tried stale' }, '관리 중단');
+        else if (t.tried) flag = h('span', { class: 'tried' }, '써 봄');
+        row.append(name, h('span', { class: 'kind' }, t.kind), flag);
+        tools.append(row);
+      }
+      const more = h('a', { class: 'more', href: c.changelog_url, style: 'display:inline-block' }, '변경 기록 보기 →');
+      pane.append(r, tools, more);
+    });
+
+    const gt = document.getElementById('gtopics'), gl = document.getElementById('guides');
+    const tBtns = c.topics.map(t => {
+      const b = h('button', { class: 'topic', role: 'tab', type: 'button', 'aria-controls': 'guides' }, t.label);
+      b.append(h('span', {}, `${t.guides.length}편`));
+      gt.append(b);
+      return b;
+    });
+    tablist(gt, tBtns, i => {
+      gl.replaceChildren(...c.topics[i].guides.map(g => {
+        const li = h('li');
+        li.append(h('a', { href: g.url }, g.title), h('span', {}, g.summary));
+        return li;
+      }));
+    });
+  }).catch(e => {
+    console.warn(e);
+    document.getElementById('area-pane').replaceChildren(failMsg());
+    document.getElementById('guides').replaceChildren(failMsg());
+  });
+</script>
+<script src="../concept-switch.js" data-concept="a" defer></script>
+</body>
+</html>

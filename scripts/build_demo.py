@@ -103,14 +103,26 @@ def recipe_steps(area):
     """Title and step headings; '## 레시피 N.' lines start a group (the automation file has two)."""
     lines = open(os.path.join(ROOT, "references", "recipes", f"{area}.md"), encoding="utf-8").read().split("\n")
     title = lines[0].lstrip("# ").removeprefix("레시피:").strip()
-    groups, current = [], None
+    groups, current, alt_no = [], None, None
     for l in lines:
         if l.startswith("## 레시피"):
             current = (re.sub(r"^## 레시피 \d+\.\s*", "", l).strip(), []); groups.append(current)
+            alt_no = None
         elif l.startswith("### "):
             if current is None:
                 current = ("", []); groups.append(current)
-            current[1].append(re.sub(r"^### \d+\.\s*", "", l).strip())
+            m = re.match(r"^### (\d+)([a-z]?)\.\s*(.*)", l)
+            if m and m.group(2):
+                # '### 3a. taste-skill 경로', '### 3b. ...': alternatives for one step, shown as one row
+                name = re.sub(r"\s*\(.*?\)\s*$", "", m.group(3)).removesuffix(" 경로").strip()
+                if alt_no == m.group(1):
+                    current[1][-1] += f" / {name}"
+                else:
+                    current[1].append(f"고른 경로로 짓는다: {name}")
+                    alt_no = m.group(1)
+            else:
+                current[1].append(re.sub(r"^### \d+\.\s*", "", l).strip())
+                alt_no = None
     return title, groups
 
 
@@ -224,11 +236,60 @@ def catalog_section():
     return out + [""]
 
 
+DATA_DIR = os.path.join(ROOT, "docs", "data")
+
+
+def data_catalog():
+    """docs/data/catalog.json: what the concept pages (docs/concept-*/) draw their catalog and guide
+    lists from, so every concept shows the same, current references/ content."""
+    areas = []
+    for area, label in AREAS:
+        title, groups = recipe_steps(area)
+        areas.append({
+            "id": area, "label": label,
+            "recipe": {"title": title, "url": f"{REPO}recipes/{area}.md",
+                       "groups": [{"name": n, "steps": s} for n, s in groups]},
+            "tools": [{"name": n, "kind": k, "what": w, "maintained": ok, "tried": tried}
+                      for n, k, w, ok, tried in catalog_items(area)],
+        })
+    topics = [{"folder": f, "label": label,
+               "guides": [{"title": t, "summary": s, "url": REPO + p} for t, s, p in guides(f)]}
+              for f, label in TOPICS]
+    return {"tools_total": sum(len(a["tools"]) for a in areas),
+            "tried_total": sum(t["tried"] for a in areas for t in a["tools"]),
+            "guides_total": sum(len(t["guides"]) for t in topics),
+            "changelog_url": f"{REPO}catalog/CHANGELOG.md", "areas": areas, "topics": topics}
+
+
+def data_demo(page):
+    """docs/data/demo.json: the five example answers, lifted from the #demo section of docs/index.html
+    (the hand-written source). Each answer part keeps its HTML (paragraph, table or list)."""
+    start = page.index('id="demo"')
+    sec = page[start:page.index("</section>", start)]
+    scenarios = []
+    for m in re.finditer(r'<button role="tab"[^>]*aria-controls="(sc-[\w-]+)"[^>]*>(.*?)<em>(.*?)</em><span>(.*?)</span></button>', sec):
+        pid, label, mode, prompt = m.groups()
+        pane = re.search(rf'<div class="rep" role="tabpanel" id="{pid}"[^>]*>(.*?)\n          </div>', sec, re.S).group(1)
+        parts = []
+        for h in re.finditer(r'<h4><i>([A-E])</i>(.*?)</h4>\s*(.*?)(?=\s*<h4>|\s*<p class="end">)', pane, re.S):
+            parts.append({"letter": h.group(1), "title": h.group(2), "html": h.group(3).strip()})
+        end = re.search(r'<p class="end">(.*?)</p>', pane).group(1)
+        scenarios.append({"id": pid.removeprefix("sc-"), "label": html.unescape(label), "mode": mode,
+                          "prompt": html.unescape(prompt), "parts": parts, "end": end})
+    return {"scenarios": scenarios}
+
+
+def as_json(data):
+    import json
+    return json.dumps(data, ensure_ascii=False, indent=1) + "\n"
+
+
 def sync(path, text, check):
     before = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
     if before == text:
         return False
     if not check:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             f.write(text)
     return True
@@ -237,8 +298,12 @@ def sync(path, text, check):
 if __name__ == "__main__":
     check = "--check" in sys.argv
     page, total = build(open(PAGE, encoding="utf-8").read())
-    stale = [name for name, changed in (("docs/index.html", sync(PAGE, page, check)),
-                                        ("references/INDEX.md", sync(INDEX_PATH, build_index(), check))) if changed]
+    stale = [name for name, changed in (
+        ("docs/index.html", sync(PAGE, page, check)),
+        ("references/INDEX.md", sync(INDEX_PATH, build_index(), check)),
+        ("docs/data/catalog.json", sync(os.path.join(DATA_DIR, "catalog.json"), as_json(data_catalog()), check)),
+        ("docs/data/demo.json", sync(os.path.join(DATA_DIR, "demo.json"), as_json(data_demo(page)), check)),
+    ) if changed]
     if check:
         if stale:
             sys.exit(f"out of date: {', '.join(stale)}. Run python scripts/build_demo.py")

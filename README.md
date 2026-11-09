@@ -66,7 +66,7 @@ AIAdvisor는 CLAUDE.md, 의존성 파일, git log, 이미 깔린 MCP와 스킬, 
 
 | 분야 | 카탈로그 | 레시피 |
 |---|---|---|
-| 웹 디자인 | [15개](references/catalog/web-design.yaml) | [AI 티 안 나는 랜딩·소개 페이지](references/recipes/web-design.md) |
+| 웹 디자인 | [15개](references/catalog/web-design.yaml) | [웹 화면 디자인: 생성 스킬은 하나만](references/recipes/web-design.md) |
 | 코딩 | [19개](references/catalog/coding.yaml) | [기능 하나를 계획부터 병합까지](references/recipes/coding.md) |
 | 자동화 | [12개](references/catalog/automation.yaml) | [배포·월간 점검, 매주 리뷰하는 Claude](references/recipes/automation.md) |
 
@@ -133,7 +133,7 @@ git clone --depth 1 https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/
 
 ## 데모 페이지
 
-[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)는 이 스킬의 웹 디자인 레시피 순서대로 만들었습니다. 팔레트와 서체 조합, 히어로 구성은 taste-skill 키트의 스크립트로 뽑았고, 무엇이 나왔는지는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다. 카탈로그와 가이드 목록은 `scripts/build_demo.py`가 `references/`에서 만들어서, 배포할 때마다 저장소 내용과 맞춰집니다.
+[devvshyun.github.io/AIAdvisor](https://devvshyun.github.io/AIAdvisor/)는 처음에 여러 디자인 스킬을 차례로 엮어 만들었습니다. 그 경험으로 웹 디자인 레시피를 "생성 스킬은 하나만" 방식으로 바꿨고, 같은 페이지를 스킬마다 따로 고친 비교는 [showcase/web-generators](showcase/web-generators/README.md)에 있습니다. 페이지 왼쪽 아래 "컨셉" 버튼으로 같은 내용을 레퍼런스 하나씩만 따라 지은 [컨셉 A](https://devvshyun.github.io/AIAdvisor/concept-a/)와 [컨셉 B](https://devvshyun.github.io/AIAdvisor/concept-b/)로 바꿔 볼 수 있습니다. 팔레트와 서체 조합, 히어로 구성은 taste-skill 키트의 스크립트로 뽑았고, 무엇이 나왔는지는 [docs/DESIGN.md](docs/DESIGN.md)에 있습니다. 카탈로그와 가이드 목록은 `scripts/build_demo.py`가 `references/`에서 만들어서, 배포할 때마다 저장소 내용과 맞춰집니다.
 
 ```bash
 python -m http.server 8000 --directory docs   # http://localhost:8000

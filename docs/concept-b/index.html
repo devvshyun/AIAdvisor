@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIAdvisor · 컨셉 B</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' fill='%230b0b0b'/%3E%3Cpath d='M7 18 12 8h2l5 10h-2.6l-1-2.2h-4.8l-1 2.2Zm4.4-4.2h3.2L13 10.3Z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --ink:#0b0b0b;          /* 제목, 검은 버튼, 막대 */
+  --text:#3a3a3a;         /* 본문 */
+  --muted:#6e6e6e;        /* 보조 설명, 작은 글 */
+  --faint:#9a9a9a;        /* 축 눈금, 버전 */
+  --line:#e4e4e4;         /* 구획선 */
+  --line-strong:#111;     /* 데이터 패널 테두리 */
+  --wash:#f4f4f4;         /* 선택된 행, 막대 트랙 */
+  --bg:#ffffff;
+  --code:#161616;         /* 코드 블록 */
+  --code-text:#e9e9e9;
+  --code-dim:#9b9b9b;
+  --accent:#2b4cff;       /* 강조는 한 가지 색, 한 군데씩만 */
+  --ok:#3fb27f;
+  --sans:"Inter","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --mono:"JetBrains Mono","Pretendard Variable",Pretendard,ui-monospace,monospace;
+  --wrap:1136px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.65 var(--sans);word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3,h4,p{word-break:keep-all;margin:0}
+a{color:inherit}
+code,kbd{font-family:var(--mono)}
+button{font:inherit;color:inherit}
+
+/* ---------- 바깥 틀: 양옆 세로선이 있는 문서형 레일 ---------- */
+.rail{max-width:calc(var(--wrap) + 2*48px);margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+.sec{border-top:1px solid var(--line)}
+.sec>.rail>.wrap{padding-top:64px;padding-bottom:72px}
+
+/* ---------- 공지 띠, 상단 메뉴 ---------- */
+.notice{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:9px 16px}
+.notice a{text-decoration:none}
+.nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:64px;max-width:calc(var(--wrap) + 48px)}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.brand svg{width:26px;height:26px}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:14px;color:#444}
+.nav ul a{text-decoration:none}
+.nav ul a:hover{color:var(--ink)}
+.search{flex:1;max-width:400px;display:flex;align-items:center;gap:8px;border:1px solid #d6d6d6;border-radius:2px;height:36px;padding:0 10px;font-size:13px;color:var(--faint)}
+.search kbd{margin-left:auto;border:1px solid #ccc;font-size:11px;padding:0 5px;color:#777}
+.nav .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--ink);border-radius:2px;white-space:nowrap}
+.btn--dark{background:var(--ink);color:#fff}
+.btn--dark:hover{background:#2a2a2a}
+.btn--line{background:#fff;color:var(--ink)}
+.btn--line:hover{background:var(--wash)}
+.btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+/* ---------- 작은 라벨 ---------- */
+.label{font:700 11.5px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#555}
+.tag{display:inline-block;background:var(--accent);color:#fff;font:700 10.5px/1 var(--mono);padding:4px 5px;letter-spacing:.06em;margin-right:8px}
+.kicker{display:flex;align-items:center;font:500 12.5px/1 var(--mono);letter-spacing:.06em;color:#555;text-decoration:none}
+
+/* ---------- 히어로 ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,556px);gap:64px;align-items:start;padding:64px 0 72px}
+.hero h1{margin-top:22px;font-weight:900;font-size:clamp(34px,4.6vw,58px);line-height:1.08;letter-spacing:-.055em;color:var(--ink)}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{margin-top:22px;font-size:17px;line-height:1.75;color:#4a4a4a;font-weight:300;max-width:31em}
+.hero .lede u{text-decoration:none;border-bottom:1.5px solid var(--ink);color:var(--ink);font-weight:400}
+.inst-h{margin-top:34px;font-size:14px;font-weight:700;color:var(--ink)}
+.term{position:relative;margin-top:10px;background:var(--code);color:var(--code-text);font:500 13.5px/1.5 var(--mono);display:flex;align-items:stretch;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)}
+.term code{flex:1;min-width:0;padding:17px 18px;overflow-x:auto;white-space:nowrap}
+.term code::before{content:">";color:var(--accent);margin-right:12px;filter:brightness(1.6)}
+.term button{width:46px;flex:none;background:none;border:0;border-left:1px solid #333;color:#888;cursor:pointer}
+.term button:hover{color:#fff}
+.term button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.4}
+.inst-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid #333;padding:2px;font-size:12px}
+.seg span{padding:3px 9px;color:#555}
+.seg .on{background:var(--ink);color:#fff}
+.small-link{font-size:12.5px;color:var(--muted);text-decoration:none}
+.small-link:hover{color:var(--ink)}
+.hero .ctas{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.follow{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+
+/* 데이터 패널: 검은 테두리 + 위쪽 탭 */
+.panel{border:1px solid var(--line-strong);background:#fff}
+.ptabs{display:flex;border-bottom:1px solid var(--line-strong)}
+.ptabs span{flex:1 1 auto;text-align:center;padding:12px 10px;font-size:13px;font-weight:600;color:var(--ink);border-left:1px solid var(--line-strong);white-space:nowrap}
+.ptabs span:first-child{border-left:0}
+.ptabs .on{background:var(--ink);color:#fff}
+.pbody{padding:22px 24px 18px}
+.phead{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.phead h3{font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.phead a{font-size:12.5px;color:var(--muted);text-decoration:none;white-space:nowrap}
+.phead a::before{content:"";display:inline-block;border-left:6px solid var(--accent);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-right:7px}
+.psub{font-size:12.5px;color:var(--muted);margin-top:3px}
+.bars{margin-top:20px;display:grid;gap:12px}
+.bar{display:grid;grid-template-columns:132px minmax(0,1fr) 64px;gap:14px;align-items:center}
+.bar .nm{font-size:13.5px;color:var(--ink);line-height:1.2}
+.bar .nm small{display:block;font:400 10.5px/1.4 var(--mono);color:var(--faint);margin-top:2px}
+.bar .tr{height:28px;background:var(--wash);position:relative}
+.bar .fl{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.bar.best .fl{background:var(--accent)}
+.bar .v{font:500 13.5px/1 var(--mono);text-align:right;color:#333}
+.bar.best .v{font-weight:700;font-size:17px;color:var(--ink)}
+.axis{display:grid;grid-template-columns:132px minmax(0,1fr) 64px;gap:14px;margin-top:4px}
+.axis div{position:relative;border-top:1px solid #999;height:20px;display:flex;justify-content:space-between;font:400 10px/1 var(--mono);color:var(--faint)}
+.axis div span{padding-top:7px;position:relative}
+.axis div span::before{content:"";position:absolute;top:-1px;left:50%;height:5px;border-left:1px solid #999}
+.axis div span:first-child::before{left:0}.axis div span:last-child::before{left:auto;right:0}
+.fine{margin-top:16px;padding-top:12px;border-top:1px solid #ccc;display:flex;gap:16px;justify-content:space-between;font-size:12px;line-height:1.55;color:var(--muted)}
+.fine a{color:var(--ink);white-space:nowrap}
+
+/* 도구 종류 띠 (로고 띠 자리) */
+.strip .wrap{padding-top:26px;padding-bottom:30px}
+.strip ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 22px;font:700 17px/1 var(--mono);letter-spacing:-.02em;color:#3d3d3d}
+.strip li small{font:400 11px/1 var(--mono);color:var(--faint);margin-left:5px}
+
+/* ---------- 섹션 머리 ---------- */
+.sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:end;margin-bottom:34px}
+.sh h2{margin-top:12px;font-weight:900;font-size:clamp(28px,3.4vw,42px);line-height:1.12;letter-spacing:-.05em;color:var(--ink)}
+.sh p{font-size:15px;line-height:1.75;color:#555;font-weight:300}
+.sh p a{color:var(--ink);font-weight:600}
+
+/* ---------- 2. 상황별 추천 결과 ---------- */
+.demo{display:grid;grid-template-columns:minmax(0,388px) minmax(0,1fr);gap:40px;align-items:start}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;padding:14px 12px 15px;position:relative}
+.steps li i{font:500 12px/1.9 var(--mono);color:var(--faint);font-style:normal}
+.steps li b{display:block;font-weight:500;font-size:15px;color:var(--ink);line-height:1.45}
+.steps li b em{font:500 10.5px/1 var(--mono);font-style:normal;border:1px solid #bbb;padding:2px 4px;margin-left:7px;vertical-align:2px;color:#555}
+.steps li code{display:block;font-size:12.5px;color:#444;margin-top:4px;line-height:1.5}
+.steps li code::before{content:"> ";color:var(--faint)}
+.steps li.on{background:var(--wash)}
+.steps li.on i{color:var(--accent);font-weight:700}
+.steps li.on::after{content:"";position:absolute;left:12px;bottom:0;width:38%;height:2px;background:var(--accent)}
+.steps li.on p{grid-column:2;font-size:13.5px;line-height:1.65;color:#555;margin-top:6px}
+
+.rep{border:1px solid var(--line-strong)}
+.rep-top{display:flex;align-items:center;gap:10px;background:var(--code);color:var(--code-text);font:500 13px/1.4 var(--mono);padding:12px 18px;flex-wrap:wrap}
+.rep-top b{color:#fff}
+.rep-top .p{color:var(--accent);filter:brightness(1.6)}
+.rep-top .mode{margin-left:auto;font-size:11px;color:var(--code-dim);border:1px solid #444;padding:2px 6px}
+.rep-b{padding:6px 22px 20px}
+.blk{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:16px 0;border-top:1px solid var(--line)}
+.blk:first-child{border-top:0}
+.blk>i{font:700 12px/1 var(--mono);font-style:normal;width:22px;height:22px;display:grid;place-items:center;background:var(--ink);color:#fff;margin-top:1px}
+.blk h4{font-size:13.5px;font-weight:700;color:var(--ink)}
+.blk p,.blk li{font-size:14px;line-height:1.65;color:#444}
+.blk ul{margin:6px 0 0;padding-left:18px}
+.blk>div>p{margin-top:4px}
+.tbl{margin-top:10px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+th{font:600 10.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#777;text-align:left;padding:7px 8px;border-bottom:1px solid var(--ink)}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;color:#333}
+td:first-child{font:600 12px/1.5 var(--mono);color:var(--ink);width:24px}
+td a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+td code{font-size:11.5px;background:var(--wash);padding:1px 4px}
+td.n{font-family:var(--mono);font-size:12px;white-space:nowrap}
+.pick{margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 22px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pick b{color:var(--ink)}
+.pick .nums{display:flex;gap:4px}
+.pick .nums span{font:600 12px/1 var(--mono);border:1px solid #bbb;width:26px;height:26px;display:grid;place-items:center;color:var(--ink)}
+
+/* ---------- 3. 동작 방식 ---------- */
+.how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px;align-items:start}
+.code{background:var(--code);color:var(--code-text);font:400 13px/1.85 var(--mono);padding:18px 20px 20px}
+.code .k{display:inline-block;min-width:19ch}
+.code .c{color:var(--code-dim)}
+.code .p{color:#8aa0ff}
+.code .ok{color:var(--ok)}
+.code .off{color:#777;text-decoration:line-through}
+.code .h{display:block;color:#fff;font-weight:700}
+.code .gap{display:block;height:12px}
+.cap{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--muted)}
+.pill{display:inline-flex;gap:4px}
+.cap{gap:12px}
+.pill span{white-space:nowrap;border:1px solid #ccc;border-radius:99px;padding:2px 10px;font-size:12px;color:#555}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--line-strong)}
+.mode{padding:20px 22px 22px}
+.mode+.mode{border-left:1px solid var(--line-strong)}
+.mode .label{color:var(--accent)}
+.mode h3{margin-top:10px;font-size:19px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.mode p{margin-top:6px;font-size:14px;color:#555}
+.mode ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.mode li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;padding:6px 0;border-top:1px solid var(--line);color:#333}
+.mode li i{font:700 11.5px/1 var(--mono);font-style:normal;color:var(--faint);width:12px}
+
+/* ---------- 4. 추천 근거 ---------- */
+.tabs{display:inline-flex;border:1px solid var(--line-strong);margin-bottom:26px;max-width:100%}
+.tabs button{border:0;background:#fff;padding:11px 18px;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tabs button+button{border-left:1px solid var(--line-strong)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.kit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;align-items:start}
+.kit .panel .pbody{padding:20px 22px 18px}
+.cats{margin-top:18px;display:grid;gap:12px}
+.cat{display:grid;grid-template-columns:78px minmax(0,1fr) 40px;gap:12px;align-items:center}
+.cat .nm{font-size:13.5px;color:var(--ink);font-weight:500}
+.cat .tr{height:24px;background:var(--wash);position:relative}
+.cat .fl{position:absolute;inset:0 auto 0 0;background:var(--ink)}
+.cat .tried{position:absolute;inset:0 auto 0 0;background:var(--accent)}
+.cat .v{font:600 14px/1 var(--mono);text-align:right;color:var(--ink)}
+.cat.on .nm{font-weight:700}
+.legend{display:flex;gap:16px;margin-top:14px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;background:var(--ink)}
+.legend span.t::before{background:var(--accent)}
+.recipes{margin-top:18px;border-top:1px solid #ccc;padding-top:12px}
+.recipes li{font-size:13px;line-height:1.6;color:#444}
+.recipes ul{margin:8px 0 0;padding:0;list-style:none}
+.recipes li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;padding:3px 0}
+.recipes li span{font:400 11px/1.9 var(--mono);color:var(--faint)}
+.recipes a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid #bbb}
+.tools-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.tools-h h3{font-size:15px;font-weight:700;color:var(--ink)}
+.tools-h span{font:400 11.5px/1 var(--mono);color:var(--muted)}
+.tool{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tool b{font-size:14.5px;font-weight:600;color:var(--ink)}
+.tool .k{display:flex;gap:5px;align-items:center;justify-self:end}
+.tool .k span{font:500 10.5px/1 var(--mono);border:1px solid #bbb;padding:3px 5px;color:#555}
+.tool .k .t{border-color:var(--accent);background:var(--accent);color:#fff}
+.tool p{grid-column:1/-1;font-size:13px;line-height:1.6;color:#666}
+.more{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+.gl .cat{grid-template-columns:86px minmax(0,1fr) 40px}
+[hidden]{display:none!important}
+#demo,#how,#kit,#faq,#guestbook{scroll-margin-top:64px}
+
+/* ---------- 5. FAQ + 방명록 ---------- */
+.faq{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
+.qa{border-top:1px solid var(--ink)}
+.qa>div{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;padding:18px 0;border-bottom:1px solid var(--line)}
+.qa i{font:500 12px/1.9 var(--mono);font-style:normal;color:var(--faint)}
+.qa h3{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.qa p{margin-top:6px;font-size:14px;line-height:1.7;color:#555}
+.qa code{font-size:12px;background:var(--wash);padding:1px 4px}
+.gb-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.gb-h a{font-size:12.5px;color:var(--muted)}
+.gb{height:560px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line-strong);border-top:0;padding:16px 16px 8px;background:#fff}
+.gb .giscus,.gb .giscus-frame{width:100%}
+.gb p{font-size:13.5px;color:var(--muted)}
+
+/* ---------- 데이터로 그리는 부분 ---------- */
+.fail{border:1px dashed #bbb;padding:18px 20px;font-size:14px;color:var(--muted)}
+.fail a{color:var(--ink);font-weight:600}
+button.ptab{flex:1 1 auto;text-align:center;padding:12px 10px;font:600 13px/1.4 var(--mono);color:var(--ink);border:0;border-left:1px solid var(--line-strong);background:#fff;cursor:pointer;white-space:nowrap}
+button.ptab:first-child{border-left:0}
+button.ptab[aria-selected="true"]{background:var(--ink);color:#fff}
+.bar.na .v{font-size:12px}
+.steps[role="tablist"] li{cursor:pointer}
+.steps[role="tablist"] li:not(.on):hover{background:#fafafa}
+.steps li:focus-visible,button.ptab:focus-visible,button.cat:focus-visible,.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.blk table td:nth-child(5){font-family:var(--mono);font-size:12px;white-space:nowrap}
+button.cat{width:100%;border:0;background:none;padding:4px 6px;margin:-4px -6px;text-align:left;cursor:pointer;box-sizing:content-box}
+button.cat[aria-selected="true"]{background:var(--wash)}
+button.cat[aria-selected="true"] .nm{font-weight:700}
+button.cat[aria-selected="true"] .nm::before{content:"";display:inline-block;border-left:6px solid var(--accent);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-right:6px}
+.recipes h4{margin-top:10px;font-size:14px;font-weight:700;color:var(--ink)}
+.recipes h4 a{border-bottom:1px solid #bbb;text-decoration:none}
+.recipes p.gname{margin-top:12px;font:600 11px/1.4 var(--mono);color:#555}
+.recipes ol{margin:6px 0 0;padding:0;list-style:none;counter-reset:st}
+.recipes ol li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;padding:4px 0;border-top:1px solid var(--line);font-size:13px;color:#333;counter-increment:st}
+.recipes ol li::before{content:counter(st,decimal-leading-zero);font:400 11px/1.9 var(--mono);color:var(--faint)}
+.tool .k .off{border-color:#999;background:var(--wash);color:#555;text-decoration:line-through}
+.tool b a{color:inherit;text-decoration:none;border-bottom:1px solid #bbb}
+.tool b a:hover{border-color:var(--ink)}
+
+/* ---------- 6. 마무리 ---------- */
+.close{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.close h2{font-weight:900;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.05em;line-height:1.12;color:var(--ink);margin-top:12px}
+.close p{margin-top:10px;font:400 13px/1.5 var(--mono);color:var(--muted)}
+.close .term{margin-top:24px;width:100%}
+footer{border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:22px;padding-bottom:26px;font-size:13px;color:var(--muted)}
+footer nav{display:flex;gap:20px;flex-wrap:wrap}
+footer nav a{text-decoration:none;color:#444}
+footer nav a:hover{color:var(--ink);text-decoration:underline}
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1080px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:44px}
+  .nav ul{display:none}
+}
+@media (max-width:900px){
+  .demo,.how,.kit,.faq,.sh{grid-template-columns:minmax(0,1fr);gap:24px}
+  .sh{align-items:start}
+  .search{display:none}
+}
+@media (max-width:640px){
+  .rail{border-left:0;border-right:0}
+  .wrap{padding:0 16px}
+  .nav .wrap{gap:12px;height:56px}
+  .notice{font-size:12px;line-height:1.5}
+  .sec>.rail>.wrap{padding-top:44px;padding-bottom:52px}
+  .hero{padding:40px 0 48px}
+  .hero .lede{font-size:16px}
+  .bar{grid-template-columns:96px minmax(0,1fr) 50px;gap:10px}
+  .axis{grid-template-columns:96px minmax(0,1fr) 50px;gap:10px}
+  .bar .nm{font-size:12.5px}
+  .ptabs{overflow-x:auto}
+  .ptabs span{font-size:12px;padding:11px 10px}
+  .pbody{padding:18px 16px 14px}
+  .fine{flex-direction:column;gap:6px}
+  .modes{grid-template-columns:minmax(0,1fr)}
+  .mode+.mode{border-left:0;border-top:1px solid var(--line-strong)}
+  .mode ol{grid-template-columns:1fr}
+  .rep-b{padding:4px 16px 16px}
+  .pick{padding:12px 16px;flex-direction:column;align-items:flex-start}
+  .tabs{display:flex}
+  .tabs button{flex:1;padding:11px 10px;font-size:12.5px;white-space:normal}
+  .strip ul{justify-content:flex-start;font-size:15px}
+  .close .term code{font-size:12px}
+  .term code{font-size:12px;padding:15px 14px}
+  button.ptab{font-size:12px;padding:11px 8px}
+  .gb{height:480px;padding:12px 10px 6px}
+  .gl .cat{grid-template-columns:78px minmax(0,1fr) 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="notice"><a href="#kit"><span id="notice-n"></span>2026-11-06 기준으로 다시 확인했습니다 &rarr;</a></div>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="1" y="1" width="24" height="24" fill="#0b0b0b"/><path d="M7 18 12 8h2l5 10h-2.6l-1-2.2h-4.8l-1 2.2Zm4.4-4.2h3.2L13 10.3Z" fill="#fff"/></svg>
+      AIAdvisor
+    </a>
+    <ul>
+      <li><a href="#demo">추천 결과</a></li>
+      <li><a href="#how">동작 방식</a></li>
+      <li><a href="#kit">추천 근거</a></li>
+      <li><a href="#faq">질문</a></li>
+      <li><a href="#guestbook">방명록</a></li>
+    </ul>
+    <div class="search" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#888" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="m9.5 9.5 3 3"/></svg>
+      도구·가이드 찾기…<kbd>/</kbd>
+    </div>
+    <span class="sp"></span>
+    <a class="btn btn--dark" href="#install">설치</a>
+  </div>
+</header>
+
+<main>
+
+<!-- 1. 히어로 -->
+<section id="top">
+  <div class="rail"><div class="wrap">
+    <div class="hero">
+      <div>
+        <a class="kicker" href="#kit"><span class="tag">NEW</span>카탈로그 2026-11-06 확인 &rarr;</a>
+        <h1>프로젝트를 <em>먼저 읽고</em>, 지금 깔 만한 Claude Code 도구만 골라 주는 스킬</h1>
+        <p class="lede">CLAUDE.md, 의존성, git log, 이미 깔린 MCP·스킬을 읽은 뒤 <u>스킬</u>·<u>MCP</u>·<u>플러그인</u>·<u>CLI</u>·<u>GitHub Actions</u> 중 필요한 것만 표로 냅니다. 고르기 전까지는 아무것도 설치하지 않습니다.</p>
+
+        <p class="inst-h" id="install">AIAdvisor 설치</p>
+        <div class="term">
+          <code>git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
+          <button type="button" aria-label="명령 복사"><svg viewBox="0 0 14 14"><rect x="4.5" y="4.5" width="8" height="8"/><path d="M9.5 4.5v-3h-8v8h3"/></svg></button>
+        </div>
+        <div class="inst-row">
+          <span class="seg" aria-hidden="true"><span class="on">macOS · Linux · Git Bash</span><span>PowerShell</span></span>
+          <a class="small-link" href="https://github.com/devvshyun/AIAdvisor">폴더 이름이 곧 스킬 이름 ↗</a>
+        </div>
+        <div class="ctas">
+          <a class="btn btn--dark" href="#install">스킬 설치하기<svg viewBox="0 0 12 12"><path d="M1 6h8M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--line" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a>
+        </div>
+      </div>
+
+      <div class="panel" id="hero-panel" aria-label="질문 하나에 대한 답 미리보기">
+        <div class="pbody"><p class="fail">목록을 불러오지 못했습니다. <a href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></p></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="sec strip" aria-label="추천하는 도구 종류">
+  <div class="rail"><div class="wrap">
+    <p class="label">추천하는 도구 종류</p>
+    <ul>
+      <li>skills</li><li>MCP</li><li>plugins</li><li>CLI</li><li>GitHub Actions</li><li>built-in</li><li>services</li><li>guides<small id="strip-guides"></small></li>
+    </ul>
+  </div></div>
+</section>
+
+<!-- 2. 상황별 추천 결과 -->
+<section class="sec" id="demo">
+  <div class="rail"><div class="wrap">
+    <div class="sh">
+      <div><p class="label">01 · 추천 결과</p><h2>상황별 추천 결과</h2></div>
+      <p>왼쪽에서 상황을 고르면 스킬이 내놓는 형식 그대로 보여 줍니다. 진단, 추천 표, 실행 계획, 보류할 것, 다음 질문 순서입니다. <a href="#how">동작 순서 보기</a></p>
+    </div>
+    <div class="demo" id="demo-root"><p class="fail">목록을 불러오지 못했습니다. <a href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></p></div>
+  </div></div>
+</section>
+
+<!-- 3. 동작 방식 -->
+<section class="sec" id="how">
+  <div class="rail"><div class="wrap">
+    <div class="sh">
+      <div><p class="label">02 · 동작 방식</p><h2>추천이 나오기까지 세 단계</h2></div>
+      <p>말한 내용과 폴더 상태를 보고 보완 모드와 신규 모드 중 하나를 고릅니다. 어느 쪽이든 읽고, 고르고, 정리한 다음 멈춥니다.</p>
+    </div>
+    <div class="how">
+      <ol class="steps">
+        <li class="on"><i>01</i><div><b>프로젝트와 환경을 읽습니다</b></div><p>CLAUDE.md, README, 의존성 파일, 최근 git log, 이미 깔린 MCP·스킬·플러그인을 확인합니다. 읽기만 합니다.</p></li>
+        <li><i>02</i><div><b>레시피와 카탈로그부터 봅니다</b><code>작은 색인에서 맞는 레시피와 도구 고르기</code></div></li>
+        <li><i>03</i><div><b>정리하고 번호를 기다립니다</b><code>추천 표와 실행 계획을 내고 멈춤</code></div></li>
+      </ol>
+      <div>
+        <div class="code" role="img" aria-label="스킬이 읽은 파일, 걸러 낸 후보, 정리된 결과">
+          <span class="h"><span class="p">$</span> 1 / 3 · 읽는 중</span>
+          <span class="c k">CLAUDE.md</span>규칙 14줄<br>
+          <span class="c k">package.json</span>next 15, prisma<br>
+          <span class="c k">git log</span>최근 커밋 30개<br>
+          <span class="c k">claude mcp list</span>playwright<br>
+          <span class="c k">~/.claude/skills</span>3개<br>
+          <span class="ok">✓ 확인 끝 · 수정한 파일 0개</span>
+          <span class="gap"></span>
+          <span class="h"><span class="p">$</span> 2 / 3 · 색인에서 고르는 중</span>
+          <span class="ok">+</span> 토큰 절약 도구 3개 · MarkItDown 변환 · 세션 명령어 5개 · 9Router 폴백<br>
+          <span class="off">OmniRoute</span> <span class="c">9Router와 역할 겹침</span><br>
+          <span class="off">Playwright MCP</span> <span class="c">이미 설치됨</span>
+          <span class="gap"></span>
+          <span class="h"><span class="p">$</span> 3 / 3 · 결과</span>
+          A 진단 요약 · B 추천 4건 · C 상위 3개 실행 계획 · D 보류 2건 · E 질문 2개<br>
+          <span class="ok">진행할 번호를 골라 주세요</span>
+        </div>
+        <div class="cap"><span>예시 프로젝트 ledger-app 기준으로 줄인 출력입니다.</span><span class="pill" aria-hidden="true"><span>‹</span><span>1 / 3</span><span>›</span></span></div>
+      </div>
+    </div>
+
+    <div class="modes">
+      <article class="mode">
+        <p class="label">보완 모드</p>
+        <h3>있던 프로젝트의 약점을 찾습니다</h3>
+        <p>"프로젝트에서 보완할 부분 추천해줘"라고 하면 코드와 설정을 읽고 근거와 함께 우선순위를 매깁니다.</p>
+        <ol><li><i>A</i>진단 요약</li><li><i>B</i>추천 작업 표</li><li><i>C</i>상위 3개 실행 계획</li><li><i>D</i>하지 말 것</li><li><i>E</i>다음 질문</li></ol>
+      </article>
+      <article class="mode">
+        <p class="label">신규 모드</p>
+        <h3>새 프로젝트의 시작 세트를 짭니다</h3>
+        <p>"가계부 웹앱 새로 만들 건데"처럼 말하면 빠진 것만 묻고 단계별 도구와 첫 주 계획을 짭니다.</p>
+        <ol><li><i>A</i>요약과 가정</li><li><i>B</i>단계별 시작 도구</li><li><i>C</i>첫 주 세팅 계획</li><li><i>D</i>아직 이른 것</li><li><i>E</i>다음 질문</li></ol>
+      </article>
+    </div>
+  </div></div>
+</section>
+
+<!-- 4. 추천 근거 -->
+<section class="sec" id="kit">
+  <div class="rail"><div class="wrap">
+    <div class="sh">
+      <div><p class="label">03 · 추천 근거</p><h2>직접 확인한 도구와 가이드</h2></div>
+      <p>자동화·코딩·웹 디자인은 공식 문서와 GitHub로 확인한 카탈로그로 추천하고, 도구를 엮는 순서는 레시피로 정해 둡니다. 그 밖의 주제는 가이드 <span data-n="guides_total">—</span>편을 엽니다. <a id="changelog" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/catalog/CHANGELOG.md">변경 기록 보기</a></p>
+    </div>
+
+    <div id="kit-root"><p class="fail">목록을 불러오지 못했습니다. <a href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a></p></div>
+  </div></div>
+</section>
+
+<!-- 5. FAQ + 방명록 -->
+<section class="sec" id="faq">
+  <div class="rail"><div class="wrap">
+    <div class="sh">
+      <div><p class="label">04 · 질문</p><h2>자주 묻는 질문</h2></div>
+      <p>더 궁금한 점은 저장소에 남겨 주세요. <a href="https://github.com/devvshyun/AIAdvisor/issues">GitHub 이슈 열기</a></p>
+    </div>
+    <div class="faq">
+      <div class="qa">
+        <div><i>Q1</i><div><h3>스킬이 마음대로 뭔가를 설치하나요?</h3><p>아니요. 추천 단계에서는 읽기만 합니다. "2번이랑 3번 진행해줘"처럼 고른 다음에 설치를 시작합니다.</p></div></div>
+        <div><i>Q2</i><div><h3>추천 근거는 최신인가요?</h3><p>카탈로그는 항목마다 확인한 날짜가 있고, 30일이 넘은 항목은 바뀌었을 수 있다고 표시합니다. 매달 1일 저장소 상태를 자동으로 점검하고, "카탈로그 갱신해줘"라고 하면 그날 기준으로 다시 조사합니다. 가이드 <span data-n="guides_total">—</span>편은 2026-11-05 기준입니다.</p></div></div>
+        <div><i>Q3</i><div><h3>Windows에서도 되나요?</h3><p>됩니다. 현재 OS를 확인하고 명령을 PowerShell이나 Git Bash에 맞게 바꿔 보여 줍니다.</p></div></div>
+      </div>
+      <div id="guestbook">
+        <div class="gb-h"><p class="label">방명록</p><a href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 보기</a></div>
+        <div class="gb">
+          <div class="giscus"></div>
+          <noscript><p>방명록은 스크립트가 필요합니다. <a href="https://github.com/devvshyun/AIAdvisor/discussions/categories/guestpage">Discussions에서 직접 남길 수 있습니다.</a></p></noscript>
+          <script src="https://giscus.app/client.js" data-repo="devvshyun/AIAdvisor" data-repo-id="R_kgDOVjk56g" data-category="GuestPage" data-category-id="DIC_kwDOVjk56s4DKfyK" data-mapping="specific" data-term="GuestPage" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="ko" data-loading="lazy" crossorigin="anonymous" async></script>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6. 마무리 -->
+<section class="sec">
+  <div class="rail"><div class="wrap">
+    <div class="close">
+      <div>
+        <p class="label">05 · 설치</p>
+        <h2>다음 세션부터 바로 쓰는 추천 스킬</h2>
+        <p>무료 · 공개 저장소 · git pull로 업데이트</p>
+      </div>
+      <a class="btn btn--dark" href="#install">스킬 설치하기<svg viewBox="0 0 12 12"><path d="M1 6h8M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+      <div class="term">
+        <code>git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
+        <button type="button" aria-label="명령 복사"><svg viewBox="0 0 14 14"><rect x="4.5" y="4.5" width="8" height="8"/><path d="M9.5 4.5v-3h-8v8h3"/></svg></button>
+      </div>
+    </div>
+  </div></div>
+</section>
+</main>
+
+<footer>
+  <div class="rail"><div class="wrap">
+    <span>&copy; 2026 AIAdvisor · 프로젝트를 먼저 읽고 필요한 AI 도구만 골라 주는 Claude Code 스킬</span>
+    <nav aria-label="꼬리말">
+      <a href="https://github.com/devvshyun/AIAdvisor">GitHub</a>
+      <a href="https://github.com/devvshyun/AIAdvisor/blob/main/docs/DESIGN.md">디자인 기준</a>
+      <a href="#guestbook">방명록</a>
+      <a href="../">기본 페이지</a>
+    </nav>
+  </div></div>
+</footer>
+
+<script>
+(() => {
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const pad = n => String(n).padStart(2, "0");
+  const text = html => { const d = document.createElement("div"); d.innerHTML = html; return d.textContent.trim(); };
+
+  // 탭 묶음 공통: 클릭·화살표 키로 고르기
+  function tablist(list, items, onPick) {
+    items.forEach((t, i) => {
+      t.addEventListener("click", () => pick(i));
+      t.addEventListener("keydown", e => {
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(i); return; }
+        if (!d) return;
+        e.preventDefault();
+        const j = (i + d + items.length) % items.length;
+        pick(j); items[j].focus();
+      });
+    });
+    function pick(i) {
+      items.forEach((t, k) => {
+        const on = k === i;
+        t.setAttribute("aria-selected", on);
+        t.tabIndex = on ? 0 : -1;
+        t.classList.toggle("on", on);
+      });
+      onPick(i);
+    }
+    pick(0);
+    return pick;
+  }
+
+  // 추천 표(B)에서 막대용 행 뽑기: 가이드 이름, 준비 시간(분), 비용
+  function rows(scn) {
+    const b = scn.parts.find(p => /<table/i.test(p.html));
+    if (!b) return { title: "", list: [] };
+    const d = document.createElement("div"); d.innerHTML = b.html;
+    const heads = [...d.querySelectorAll("th")].map(th => th.textContent.trim());
+    const gi = Math.max(heads.indexOf("가이드"), 1);
+    const list = [...d.querySelectorAll("tbody tr")].map(tr => {
+      const td = [...tr.children].map(c => c.textContent.trim());
+      const when = td[td.length - 2] || "";
+      const h = when.match(/(\d+)\s*시간/), m = when.match(/(\d+)\s*분/);
+      const min = h || m ? (h ? +h[1] * 60 : 0) + (m ? +m[1] : 0) : null;
+      return { n: td[0], name: td[gi], when, min, cost: td[td.length - 1] };
+    });
+    return { title: b.title, list };
+  }
+  const fmt = m => m >= 60 && m % 60 === 0 ? `${m / 60}시간` : `${m}분`;
+
+  function hero(scns) {
+    const box = $("#hero-panel");
+    box.innerHTML = `<div class="ptabs" role="tablist" aria-label="예시 질문">${scns.map((s, i) =>
+      `<button class="ptab" type="button" role="tab" title="${esc(s.label)}" aria-label="${esc(s.label)}">${pad(i + 1)}</button>`).join("")}</div>
+      <div class="pbody" role="tabpanel"></div>`;
+    const body = $(".pbody", box);
+    tablist(box, [...box.querySelectorAll(".ptab")], i => {
+      const s = scns[i], r = rows(s), timed = r.list.some(x => x.min != null);
+      const max = Math.max(...r.list.map(x => x.min || 0));
+      const top = timed ? Math.ceil(max / 10) * 10 : 0;
+      const best = timed ? Math.min(...r.list.filter(x => x.min != null).map(x => x.min)) : null;
+      const ticks = timed ? [0, 1, 2, 3].map(k => k === 0 ? "0" : fmt(Math.round(top * k / 3))) : [];
+      body.innerHTML = `
+        <div class="phead"><h3>${esc(s.prompt)}</h3><a href="#demo">전체 답변</a></div>
+        <p class="psub">${esc(s.mode)} 모드 · ${esc(r.title)} ${r.list.length}건${timed ? " · 준비 시간 (짧을수록 먼저 하기 쉬움)" : ""}</p>
+        <div class="bars">${r.list.map(x => `
+          <div class="bar${x.min != null && x.min === best ? " best" : ""}${x.min == null ? " na" : ""}">
+            <div class="nm">${esc(x.name)}<small>#${esc(x.n)} · ${esc(x.cost)}</small></div>
+            <div class="tr">${x.min != null ? `<div class="fl" style="width:${(x.min / top * 100).toFixed(1)}%"></div>` : ""}</div>
+            <div class="v">${esc(x.min != null ? fmt(x.min) : x.when)}</div>
+          </div>`).join("")}</div>
+        ${timed ? `<div class="axis" aria-hidden="true"><span></span><div>${ticks.map(t => `<span>${t}</span>`).join("")}</div><span></span></div>` : ""}
+        <div class="fine"><span>${s.parts.map(p => `${esc(p.letter)} ${esc(p.title)}`).join(" · ")}</span><a href="#how">읽는 순서</a></div>`;
+    });
+  }
+
+  function demo(scns) {
+    const root = $("#demo-root");
+    root.innerHTML = `
+      <ol class="steps" role="tablist" aria-label="예시 상황">${scns.map((s, i) => `
+        <li role="tab" id="scn-${esc(s.id)}" aria-controls="scn-panel"><i>${pad(i + 1)}</i><div><b>${esc(s.label)}<em>${esc(s.mode)}</em></b><code>${esc(s.prompt)}</code></div><p hidden></p></li>`).join("")}
+      </ol>
+      <div class="rep" id="scn-panel" role="tabpanel"></div>`;
+    const items = [...root.querySelectorAll(".steps li")], rep = $("#scn-panel");
+    tablist(root, items, i => {
+      const s = scns[i];
+      items.forEach((li, k) => {
+        const p = $("p", li), a = scns[k].parts[0];
+        p.hidden = k !== i;
+        p.textContent = k === i && a ? text(a.html) : "";
+      });
+      rep.setAttribute("aria-labelledby", items[i].id);
+      const n = rows(s).list.length;
+      rep.innerHTML = `
+        <div class="rep-top"><span class="p">&gt;</span><b>${esc(s.prompt)}</b><span class="mode">${esc(s.mode)} 모드</span></div>
+        <div class="rep-b">${s.parts.map(p => `
+          <div class="blk"><i>${esc(p.letter)}</i><div><h4>${esc(p.title)}</h4>${/<table/i.test(p.html) ? `<div class="tbl">${p.html}</div>` : p.html}</div></div>`).join("")}
+        </div>
+        <div class="pick"><b>${esc(s.end)}</b>${n ? `<span class="nums" aria-hidden="true">${Array.from({ length: n }, (_, k) => `<span>${k + 1}</span>`).join("")}</span>` : ""}</div>`;
+    });
+  }
+
+  function kit(cat) {
+    const root = $("#kit-root");
+    const maxT = Math.max(...cat.areas.map(a => a.tools.length));
+    const maxG = Math.max(...cat.topics.map(t => t.guides.length));
+    root.innerHTML = `
+      <div class="tabs" role="tablist" aria-label="추천 근거">
+        <button role="tab" type="button" id="t-kit" aria-controls="p-kit">검증한 도구 ${cat.tools_total}개 · 레시피 ${cat.areas.length}개</button>
+        <button role="tab" type="button" id="t-lib" aria-controls="p-lib">가이드 ${cat.guides_total}편</button>
+      </div>
+
+      <div class="kit" role="tabpanel" id="p-kit" aria-labelledby="t-kit">
+        <div class="panel"><div class="pbody">
+          <div class="phead"><h3>분야별 도구 수</h3></div>
+          <p class="psub">2026-11-06 확인 · 30일이 넘은 항목은 바뀌었을 수 있다고 표시</p>
+          <div class="cats" role="tablist" aria-label="분야">${cat.areas.map(a => {
+            const tried = a.tools.filter(t => t.tried).length;
+            return `<button class="cat" type="button" role="tab" aria-controls="area-tools"><span class="nm">${esc(a.label)}</span><span class="tr"><span class="fl" style="width:${(a.tools.length / maxT * 100).toFixed(1)}%"></span><span class="tried" style="width:${(tried / maxT * 100).toFixed(1)}%"></span></span><span class="v">${a.tools.length}</span></button>`;
+          }).join("")}</div>
+          <div class="legend"><span>카탈로그 항목</span><span class="t">그중 직접 써 봄 (모두 ${cat.tried_total}개)</span></div>
+          <div class="recipes" id="area-recipe"></div>
+        </div></div>
+        <div id="area-tools" role="tabpanel"></div>
+      </div>
+
+      <div class="kit" role="tabpanel" id="p-lib" aria-labelledby="t-lib" hidden>
+        <div class="panel gl"><div class="pbody">
+          <div class="phead"><h3>주제별 가이드 수</h3></div>
+          <p class="psub">2026-11-05 기준 · 모두 ${cat.guides_total}편</p>
+          <div class="cats" role="tablist" aria-label="주제">${cat.topics.map(t =>
+            `<button class="cat" type="button" role="tab" aria-controls="topic-guides"><span class="nm">${esc(t.label)}</span><span class="tr"><span class="fl" style="width:${(t.guides.length / maxG * 100).toFixed(1)}%"></span></span><span class="v">${t.guides.length}</span></button>`).join("")}</div>
+        </div></div>
+        <div id="topic-guides" role="tabpanel"></div>
+      </div>`;
+
+    const big = [...root.querySelectorAll(".tabs [role=tab]")];
+    tablist(root, big, i => big.forEach((t, k) => { document.getElementById(t.getAttribute("aria-controls")).hidden = k !== i; }));
+
+    const [areaCats, topicCats] = [...root.querySelectorAll(".cats")];
+    tablist(areaCats, [...areaCats.children], i => {
+      const a = cat.areas[i], r = a.recipe;
+      $("#area-recipe").innerHTML = `
+        <p class="label">레시피 · ${esc(a.label)}</p>
+        <h4><a href="${esc(r.url)}">${esc(r.title)}</a></h4>
+        ${r.groups.map(g => `${g.name ? `<p class="gname">${esc(g.name)}</p>` : ""}<ol>${g.steps.map(st => `<li>${esc(st)}</li>`).join("")}</ol>`).join("")}`;
+      const tried = a.tools.filter(t => t.tried).length;
+      $("#area-tools").innerHTML = `
+        <div class="tools-h"><h3>${esc(a.label)} · ${a.tools.length}개 중 ${tried}개 써 봄</h3><span>이름 · 종류 · 써 봄</span></div>
+        ${a.tools.map(t => `<div class="tool"><b>${esc(t.name)}</b><span class="k"><span>${esc(t.kind)}</span>${t.tried ? `<span class="t">써 봄</span>` : ""}${t.maintained === false ? `<span class="off">관리 중단</span>` : ""}</span><p>${esc(t.what)}</p></div>`).join("")}
+        <a class="more" href="https://github.com/devvshyun/AIAdvisor">전체 목록 보기 &rarr;</a>`;
+    });
+    tablist(topicCats, [...topicCats.children], i => {
+      const t = cat.topics[i];
+      $("#topic-guides").innerHTML = `
+        <div class="tools-h"><h3>${esc(t.label)} · ${t.guides.length}편</h3><span>references/${esc(t.folder)}</span></div>
+        ${t.guides.map(g => `<div class="tool"><b><a href="${esc(g.url)}">${esc(g.title)}</a></b><p>${esc(g.summary)}</p></div>`).join("")}
+        <a class="more" href="https://github.com/devvshyun/AIAdvisor/tree/main/references/${encodeURIComponent(t.folder)}">가이드 목록 보기 &rarr;</a>`;
+    });
+
+    $("#notice-n").textContent = `검증한 도구 ${cat.tools_total}개 · 레시피 ${cat.areas.length}개 · `;
+    $("#strip-guides").textContent = cat.guides_total;
+    document.querySelectorAll('[data-n="guides_total"]').forEach(el => { el.textContent = cat.guides_total; });
+    if (cat.changelog_url) $("#changelog").href = cat.changelog_url;
+  }
+
+  const get = url => fetch(url).then(r => { if (!r.ok) throw new Error(url + " " + r.status); return r.json(); });
+  get("../data/demo.json").then(d => { hero(d.scenarios); demo(d.scenarios); }).catch(e => console.warn("demo.json", e));
+  get("../data/catalog.json").then(kit).catch(e => console.warn("catalog.json", e));
+
+  // 복사 버튼
+  document.querySelectorAll(".term button").forEach(b => b.addEventListener("click", () => {
+    const txt = b.previousElementSibling.textContent;
+    navigator.clipboard && navigator.clipboard.writeText(txt).catch(() => {});
+  }));
+})();
+</script>
+<script src="../concept-switch.js" data-concept="b" defer></script>
+</body>
+</html>

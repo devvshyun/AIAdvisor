@@ -403,13 +403,13 @@
         </div>
         <div class="span-8 start-5 lib__panes">
           <div class="kitp" role="tabpanel" id="kp-web-design" aria-labelledby="kt-web-design">
-            <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md">AI 티 안 나는 랜딩·소개 페이지</a><div class="recipe__steps" role="list"><div role="listitem">제품 맥락과 디자인 기준부터 (impeccable)</div><div role="listitem">팔레트·서체·구성은 뽑기로 정한다 (taste-skill)</div><div role="listitem">키트로 짓는다</div><div role="listitem">모션과 호버 (emil-design-eng)</div><div role="listitem">화면으로 확인한다 (브라우저)</div><div role="listitem">접근성·성능과 AI 티 검사</div><div role="listitem">배포 (GitHub Pages)</div></div></div>
+            <div class="recipe"><a class="recipe__title" href="https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md">웹 화면 디자인 (방향은 한 곳에서만)</a><div class="recipe__steps" role="list"><div role="listitem">상황을 보고 생성 스킬 하나를 고른다</div><div role="listitem">고르지 않은 생성 스킬을 끈다</div><div role="listitem">고른 경로로 짓는다: taste-skill / impeccable / frontend-design / 레퍼런스 / 비교 모드</div><div role="listitem">움직임과 호버 (emil-design-eng)</div><div role="listitem">화면으로 확인한다</div><div role="listitem">결함 검사</div><div role="listitem">배포 (GitHub Pages)</div></div></div>
             <div class="tools" role="list">
               <div role="listitem" class="tool tool--tried"><b>Impeccable</b><i>스킬 · 써 봄</i><span>디자인 명령어(critique, polish, bolder, audit 등)와 AI 티 나는 패턴 탐지기를 묶어서, 에이전트가 이미 만든 화면을 섹션 단위로 다듬게 해 주는 스킬이다.</span></div>
               <div role="listitem" class="tool tool--tried"><b>Taste Skill (design-taste-frontend)</b><i>스킬 · 써 봄</i><span>페이지 종류에 맞춰 팔레트·폰트 조합·히어로 레이아웃을 골라 주고, 만든 뒤 실제 브라우저로 확인하는 Node 스크립트까지 포함한 새 페이지 생성용 스킬이다.</span></div>
               <div role="listitem" class="tool tool--tried"><b>emil-design-eng (Emil Kowalski skills)</b><i>스킬 · 써 봄</i><span>애니메이션 이징·지속 시간·속성 선택 같은 세부 규칙을 중심으로, 에이전트가 자주 틀리는 UI 디테일을 바로잡게 하는 스킬 묶음이다.</span></div>
               <div role="listitem" class="tool"><b>Vercel web-design-guidelines</b><i>스킬</i><span>Vercel의 웹 인터페이스 가이드라인(접근성, 포커스, 폼, 타이포그래피, 다크 모드 등 100개 이상 규칙)으로 UI 코드를 검토해 file:line 형식으로 지적해 주는 리뷰 스킬이다.</span></div>
-              <div role="listitem" class="tool"><b>frontend-design (Anthropic official)</b><i>플러그인</i><span>브리프 주제에 맞춘 뚜렷한 색·타이포그래피·레이아웃을 고르도록 Claude를 유도하는 Anthropic 공식 프런트엔드 디자인 스킬(플러그인)이다.</span></div>
+              <div role="listitem" class="tool tool--tried"><b>frontend-design (Anthropic official)</b><i>플러그인 · 써 봄</i><span>브리프 주제에 맞춘 뚜렷한 색·타이포그래피·레이아웃을 고르도록 Claude를 유도하는 Anthropic 공식 프런트엔드 디자인 스킬(플러그인)이다.</span></div>
               <div role="listitem" class="tool"><b>awesome-design-md (VoltAgent)</b><i>서비스</i><span>실제 서비스들의 디자인 언어를 분석해 DESIGN.md(토큰·규칙을 담은 마크다운) 파일로 정리한 모음집으로, 프로젝트에 복사해 에이전트의 디자인 기준으로 쓴다.</span></div>
               <div role="listitem" class="tool"><b>shadcn MCP server (+ shadcn skill)</b><i>MCP</i><span>shadcn/ui 레지스트리의 컴포넌트를 검색·조회·설치하게 해 주는 MCP 서버로, 별도 skill은 프로젝트 설정(components.json)을 읽어 shadcn CLI·테마 지식을 준다.</span></div>
               <div role="listitem" class="tool"><b>agent-browser (Vercel Labs)</b><i>CLI</i><span>에이전트용 브라우저 자동화 CLI로, 페이지 열기·클릭·스냅샷·스크린샷을 짧은 명령으로 처리해 MCP보다 적은 컨텍스트로 화면을 확인하게 해 준다.</span></div>
@@ -757,6 +757,7 @@
     setTimeout(() => { btn.textContent = was; }, 1600);
   }));
 </script>
+<script src="concept-switch.js" data-concept="base" defer></script>
 <script type="module" src="assets/system.js"></script>
 <script type="module" src="assets/motion/motion.js"></script>
 <script type="module" src="assets/layout/layout.js"></script>
