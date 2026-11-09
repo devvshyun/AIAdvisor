@@ -1,6 +1,6 @@
 # AI 도구 가이드 레퍼런스
 
-Claude Code와 주변 AI 도구를 다루는 가이드 82편입니다. 2026-11-05 기준입니다.
+Claude Code와 주변 AI 도구를 다루는 가이드 78편입니다. 2026-11-05 기준입니다. 웹 디자인 가이드 4편은 "생성 스킬은 하나만" 레시피와 충돌해서 2026-11-09에 `_archive/09-web-design/`으로 옮겼습니다. 웹 디자인은 `recipes/web-design.md`와 `catalog/web-design.yaml`을 봅니다.
 
 - 가이드마다 파일을 하나씩 두었고, 모든 파일은 `언제 쓰나 → 준비물 → 단계별 방법 → 팁·주의사항 → 체크리스트` 순서로 되어 있습니다.
 - 긴 프롬프트는 전문 대신 구조(역할, 채울 칸, 제약, 출력 형식)만 적었습니다.
@@ -20,7 +20,7 @@ Claude Code와 주변 AI 도구를 다루는 가이드 82편입니다. 2026-11-0
 | 세션 관리(되감기·분기·요약) | [claude-code-session-commands-5](05-coding/claude-code-session-commands-5.md) |
 | 바이브 코딩용 도구, 에이전트 팀 | [vibecoding3](05-coding/vibecoding3.md) · [ecc-claude-code-agent-team](01-skills-mcp/ecc-claude-code-agent-team.md) · [ruflo](03-automation/ruflo.md) · [agency-agents-7seats](03-automation/agency-agents-7seats.md) · [munder-difflin-ai-office-setup](03-automation/munder-difflin-ai-office-setup.md) |
 | 낯선 GitHub 레포 빠르게 파악 | [github-repo-diagram-ingest-cheats](05-coding/github-repo-diagram-ingest-cheats.md) · [graphify](06-cost-saving/graphify.md) |
-| AI 티 안 나는 웹 디자인 | [designskill](09-web-design/designskill.md) · [claude-design-top-5-skill](09-web-design/claude-design-top-5-skill.md) · [claude-designer-kill](09-web-design/claude-designer-kill.md) · [fable5-website](09-web-design/fable5-website.md) |
+| AI 티 안 나는 웹 디자인 | 가이드 대신 [웹 디자인 레시피](recipes/web-design.md)와 `catalog/web-design.yaml` |
 | 클로드에 기억(세컨드 브레인) 붙이기 | [claude-notebooklm-second-brain](07-study-research/claude-notebooklm-second-brain.md) · [claudeskill](01-skills-mcp/claudeskill.md) (claude-mem·Obsidian) |
 | 웹·유튜브·레딧 자료 수집 | [agent-reach](07-study-research/agent-reach.md) · [claude-youtube-skill](07-study-research/claude-youtube-skill.md) · [scrapegraphai](08-business/scrapegraphai.md) |
 | 아이디어·이력서를 비판적으로 검토 | [claude-court-jury-skill](01-skills-mcp/claude-court-jury-skill.md) · [claude-idea-council-4-agents](08-business/claude-idea-council-4-agents.md) · [claude-resume-hiring-panel](01-skills-mcp/claude-resume-hiring-panel.md) |
@@ -160,15 +160,6 @@ Claude Code와 주변 AI 도구를 다루는 가이드 82편입니다. 2026-11-0
 | [고객 유치만을 위한 클로드 에이전트(하비/Harvey) 세팅하는 법](08-business/claude-harvey-sales-agent.md) | 오픈소스 Harvey를 설치해 내 제품 홈페이지로 학습시키고, 조건에 맞는 업체를 찾아 사이트에서 본 사실로 콜드메일 초안을 쓰고, 내 승인 후 발송·회신 처리를 이어 가게 한다. 영어 메일 기준이라 해외 업체 영업에 적합. |
 | [내 아이디어를 6개월 만들기 전에 뜯어보는 네 자리 (아이디어 검토 에이전트 4개)](08-business/claude-idea-council-4-agents.md) | 지지자·회의론자·투자자·판사 네 역할을 한 번만 만들어 두고 순서대로 돌려 "만든다 / 고치고 만든다 / 접는다" 중 하나의 판결을 받는다. |
 | [클로드로 업체 연락처 수천 개를 무료로 모으는 법](08-business/scrapegraphai.md) | 무료 오픈소스 ScrapeGraphAI와 내 컴퓨터에서 도는 무료 로컬 모델(Ollama)로 웹페이지의 공개 업체 연락처만 골라 CSV로 모으고, 매일 아침 자동 실행되게 한다. (2026-08-19 공개, 읽는 데 10분, 따라 하면 약 58분, STEP 7개) |
-
-## 웹 디자인 (`09-web-design`)
-
-| 가이드 | 한 줄 요약 |
-|---|---|
-| [디자인 스킬 5개 (클로드한테 디자인 시키기 전에 깔 것)](09-web-design/claude-design-top-5-skill.md) | Awesome DESIGN.md, Image to Code, Taste, agent-browser, Web Design Guidelines를 순서대로 설치해 디자인 고정→참고 이미지→탈 AI 스타일→자기 검증→배포 전 검사 흐름을 만든다. (2026-08-25 공개, 읽는 데 16분, 7단계 따라 하면 약 28분) |
-| [클로드로 전문가가 만든 것 같은 웹사이트 만드는 법 (디자인 스킬 3개 + 연결 도구 2개)](09-web-design/claude-designer-kill.md) | 디자인 기준(스킬 3개)과 확인 도구(MCP 2개)를 설치하고 구체적인 브리프를 줘서 보라색 그라데이션·똑같은 카드 세 장 같은 "AI 티" 나는 사이트에서 벗어난다. |
-| [AI 티 안 나는 웹사이트, 클로드로 만드는 법](09-web-design/designskill.md) | 스킬 2개 설치 → `/impeccable init`으로 디자인 기준 파일(PRODUCT.md, DESIGN.md) 저장 → 빌드 요청에 가드레일 추가 → `impeccable detect`로 AI 티를 자동 검사. |
-| [스크롤할 때마다 영상이 움직이는 웹사이트, 한 줄로 만드는 세팅](09-web-design/fable5-website.md) | AI가 만든 웹사이트가 밋밋한 이유는 넣을 영상·이미지가 없어서다. 힉스필드를 클로드에 연결하면 클로드가 사이트에 필요한 영상까지 직접 생성해 붙이고 배포까지 한다. 모델은 Fable 5, 추론은 max로 올려 한 문단 주문으로 사이트를 통째로 만든다. (2026-08-30 공개, 읽는 데 11분, 따라 하면 약 20분, STEP 8개) |
 
 ## 글쓰기 (`10-writing`)
 

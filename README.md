@@ -67,15 +67,15 @@ AIAdvisor는 CLAUDE.md, 의존성 파일, git log, 이미 깔린 MCP와 스킬, 
 | 분야 | 카탈로그 | 레시피 |
 |---|---|---|
 | 웹 디자인 | [15개](references/catalog/web-design.yaml) | [웹 화면 디자인: 생성 스킬은 하나만](references/recipes/web-design.md) |
-| 코딩 | [19개](references/catalog/coding.yaml) | [기능 하나를 계획부터 병합까지](references/recipes/coding.md) |
-| 자동화 | [12개](references/catalog/automation.yaml) | [배포·월간 점검, 매주 리뷰하는 Claude](references/recipes/automation.md) |
+| 코딩 | [15개](references/catalog/coding.yaml) | [기능 하나를 계획부터 병합까지](references/recipes/coding.md) |
+| 자동화 | [11개](references/catalog/automation.yaml) | [배포·월간 점검, 매주 리뷰하는 Claude](references/recipes/automation.md) |
 
 <img src="docs/readme/catalog.jpg" alt="카탈로그 화면: 코딩 분야를 고르면 왼쪽에 레시피 10단계, 오른쪽에 도구 목록이 나온다" width="100%" />
 
 매달 1일 GitHub Actions가 카탈로그에 있는 저장소들이 보관되거나 멈췄는지 확인하고, 문제가 있으면 이슈를 엽니다. "카탈로그 갱신해줘"라고 하면 그날을 기준으로 다시 조사합니다([절차](references/catalog/REFRESH.md), [변경 기록](references/catalog/CHANGELOG.md)).
 
 <details>
-<summary>카탈로그 밖의 주제: 가이드 82편</summary>
+<summary>카탈로그 밖의 주제: 가이드 78편</summary>
 
 영상, 프롬프트, 리서치처럼 카탈로그에 없는 주제는 `references/`의 가이드를 봅니다. 2026-11-05에 정리한 자료라서, 같은 도구가 카탈로그에 있으면 카탈로그를 따릅니다. 전체 목차는 [references/README.md](references/README.md)에 있습니다.
 
@@ -89,7 +89,6 @@ AIAdvisor는 CLAUDE.md, 의존성 파일, git log, 이미 깔린 MCP와 스킬, 
 | [비용 절약](references/06-cost-saving/) | 11 | 토큰 절약 도구, 모델 폴백, 무료 서버 |
 | [공부·리서치](references/07-study-research/) | 5 | NotebookLM 세컨드 브레인 |
 | [비즈니스](references/08-business/) | 4 | 아이디어 검토 에이전트, 연락처 수집 |
-| [웹 디자인](references/09-web-design/) | 4 | AI 티 안 나는 웹사이트, 디자인 스킬 5개 |
 | [글쓰기](references/10-writing/) | 2 | AI 표식 지우기 |
 | [기타](references/99-etc/) | 2 | 무료 LLM API 연결 |
 
@@ -148,7 +147,7 @@ references/
   INDEX.md            스킬이 먼저 읽는 색인 (레시피, 카탈로그 id, 가이드 상황별 표)
   catalog/            도구 카탈로그와 형식·갱신 절차·변경 기록
   recipes/            분야별 레시피
-  01-skills-mcp/ …    가이드 82편
+  01-skills-mcp/ …    가이드 78편
 scripts/
   build_demo.py       INDEX.md와 데모 페이지의 목록 생성 (--check: 어긋남만 확인)
   check_catalog.py    카탈로그 형식 검사, 저장소 관리 상태 확인

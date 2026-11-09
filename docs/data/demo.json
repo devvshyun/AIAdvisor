@@ -43,12 +43,12 @@
     {
      "letter": "B",
      "title": "추천 작업 표",
-     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>가이드</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기준 파일 없음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/designskill.md\">AI 티 안 나는 웹사이트</a></td><td><code>/impeccable init</code>으로 DESIGN.md 만들기</td><td>하 · 15분</td><td>무료</td></tr><tr><td>2</td><td>모션·호버가 밋밋함</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/claude-designer-kill.md\">디자인 스킬 + 확인 도구</a></td><td>emil-design-eng 기준, Playwright로 캡처 확인</td><td>하 · 10분</td><td>무료</td></tr><tr><td>3</td><td>배치가 템플릿 같음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/claude-design-top-5-skill.md\">디자인 스킬 5개</a></td><td>taste-skill로 레이아웃·서체 조합 뽑기</td><td>하 · 10분</td><td>무료</td></tr></tbody></table>"
+     "html": "<table><thead><tr><th>#</th><th>보완 포인트</th><th>근거</th><th>기대 효과</th><th>난이도</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기준·방향 없음</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md\">웹 디자인 레시피</a> 1·3b단계</td><td>생성 스킬은 <code>impeccable</code> 하나로 DESIGN.md를 만들고 섹션별로 다듬기</td><td>중 · 1시간</td><td>무료</td></tr><tr><td>2</td><td>다른 디자인 스킬이 끼어듦</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md\">웹 디자인 레시피</a> 2단계</td><td>고르지 않은 생성 스킬을 로컬 설정으로 끄기</td><td>하 · 5분</td><td>없음</td></tr><tr><td>3</td><td>움직임·결함</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md\">웹 디자인 레시피</a> 4·6단계</td><td>emil-design-eng로 움직임, axe로 접근성 결함만 고치기</td><td>하 · 30분</td><td>무료</td></tr></tbody></table>"
     },
     {
      "letter": "D",
      "title": "하지 말 것",
-     "html": "<ul><li>taste-skill 저장소를 <code>--skill</code> 없이 통째로 설치하기</li><li>참고 사이트 없이 스킬만 믿기</li></ul>"
+     "html": "<ul><li>디자인 스킬 여러 개를 차례로 엮기: 방향이 섞입니다.</li><li>참고 사이트 여러 개를 섞기: 하나만 고릅니다.</li></ul>"
     },
     {
      "letter": "E",
@@ -72,7 +72,7 @@
     {
      "letter": "B",
      "title": "단계별 시작 도구",
-     "html": "<table><thead><tr><th>#</th><th>단계</th><th>가이드</th><th>왜 필요한가</th><th>시점</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기획·검증</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/08-business/claude-idea-council-4-agents.md\">아이디어 검토 에이전트 4개</a></td><td>만든다, 고친다, 접는다 중 판결</td><td>지금</td><td>무료</td></tr><tr><td>2</td><td>개발 환경</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/vibecoding3.md\">바이브 코딩 필수 3개</a></td><td>작업 방식, 최신 문서, 보안 점검</td><td>지금</td><td>무료</td></tr><tr><td>3</td><td>디자인</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/09-web-design/designskill.md\">AI 티 안 나는 웹사이트</a></td><td>첫 화면 전에 DESIGN.md 고정</td><td>지금</td><td>무료</td></tr><tr><td>4</td><td>배포</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/oracle-cloud-free-server-12gb.md\">오라클 무료 서버</a></td><td>공개할 때 상시 서버</td><td>나중에</td><td>카드 등록</td></tr></tbody></table>"
+     "html": "<table><thead><tr><th>#</th><th>단계</th><th>가이드</th><th>왜 필요한가</th><th>시점</th><th>비용</th></tr></thead><tbody><tr><td>1</td><td>기획·검증</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/08-business/claude-idea-council-4-agents.md\">아이디어 검토 에이전트 4개</a></td><td>만든다, 고친다, 접는다 중 판결</td><td>지금</td><td>무료</td></tr><tr><td>2</td><td>개발 환경</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/05-coding/vibecoding3.md\">바이브 코딩 필수 3개</a></td><td>작업 방식, 최신 문서, 보안 점검</td><td>지금</td><td>무료</td></tr><tr><td>3</td><td>디자인</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/recipes/web-design.md\">웹 디자인 레시피</a></td><td>생성 스킬 하나로 첫 화면 전에 DESIGN.md 고정</td><td>지금</td><td>무료</td></tr><tr><td>4</td><td>배포</td><td><a href=\"https://github.com/devvshyun/AIAdvisor/blob/main/references/06-cost-saving/oracle-cloud-free-server-12gb.md\">오라클 무료 서버</a></td><td>공개할 때 상시 서버</td><td>나중에</td><td>카드 등록</td></tr></tbody></table>"
     },
     {
      "letter": "D",

@@ -86,8 +86,7 @@
 - 써 보니: pre-commit의 `repo: local` 훅에 `.tools/gitleaks.exe`를 `language: system`으로 걸면 Windows에서 `WinError 2`로 실패했다. `language: script`로 바꾸자 저장소 기준 경로로 찾았다. 가짜 GitHub 토큰을 커밋하려 하자 gitleaks가 값을 가린 채 막았다. 바이너리는 릴리스의 체크섬 파일로 확인하고 받았다.
 
 ### 9. PR과 CI
-- 도구: `commit-commands`, `claude-code-security-review-action`
-- 할 일: `gh pr create`(또는 commit-commands). CI에서 테스트와, 쓰고 있다면 Semgrep이나 보안 리뷰 액션을 돌린다. `claude-code-security-review-action`은 `maintained: false`라 새로 붙이기 전에 저장소 상태를 확인한다.
+- 할 일: `gh pr create`. CI에서 테스트와, 쓰고 있다면 Semgrep 같은 보안 검사를 돌린다.
 - 넘길 것: PR 주소
 - 확인 기준: CI가 초록이고 사람 리뷰어 1명이 승인했다.
 - 써 보니: 연습용 저장소는 GitHub 원격과 gh CLI가 없어 이 단계는 직접 확인하지 못했다.

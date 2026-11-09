@@ -44,10 +44,10 @@
 |---|---:|---|
 | 이미 써 봄 | 9 (frontend-design 포함) | 결과물만 정리(`hands_on` 기록 있음) |
 | 로컬 · 돌려 봐야 앎 · 중요도 높음 | 11 (1개 완료) | 요청하면 돌린다 |
-| 로컬 · 중요도 중간 | 10 | 높음을 끝낸 뒤 고른다 |
-| 로컬 · 말로 충분 · 중요도 낮음 | 6 | 설명과 대표 도구 링크로 대신 |
-| 계정·유료 필요 | 11 | 이번에는 제외 |
-| 합계 | 46 | |
+| 로컬 · 중요도 중간 | 9 | 높음을 끝낸 뒤 고른다 |
+| 로컬 · 말로 충분 · 중요도 낮음 | 4 | 설명과 대표 도구 링크로 대신 |
+| 계정·유료 필요 | 9 | 이번에는 제외 |
+| 합계 | 41 (2026-11-09 정리로 5개 제외) | |
 
 ## 1. 이번에 돌릴 것: 로컬 · 돌려 봐야 앎 · 중요도 높음 (11)
 
@@ -71,7 +71,7 @@
 
 `taste-skill`, `impeccable`, `emil-design-eng`, `github-pages-deploy`(데모 페이지), `superpowers`, `builtin-code-review`, `builtin-security-review`, `gitleaks`(연습용 저장소). 기록은 카탈로그의 `hands_on`과 레시피의 "써 보니"에 있다. 이 중 데모 페이지 비포(`93d7af5`)와 애프터 캡처, 코드 리뷰 8건 같은 결과물을 비포·애프터 형식으로 옮긴다.
 
-## 3. 높음을 끝낸 뒤: 로컬 · 중요도 중간 (10)
+## 3. 높음을 끝낸 뒤: 로컬 · 중요도 중간 (9)
 
 | id | 분야 | 중간인 이유 |
 |---|---|---|
@@ -80,26 +80,23 @@
 | `chrome-devtools-mcp` | 웹 디자인 | 점수는 `lighthouse-cli`로 대신. 성능 트레이스가 필요할 때만 |
 | `serena` | 코딩 | 큰 저장소에서만 의미가 있고 설치가 무겁다(uv, Python 3.13) |
 | `understand-anything` | 코딩 | 이미 깔려 있다. 낯선 큰 저장소에서만 의미가 있다 |
-| `pr-review-toolkit` | 코딩 | `/code-review`와 같은 일을 나눠서 한다. 비교용 |
 | `claude-security` | 코딩 | `/security-review`보다 무겁다. 인증·입력 처리 코드가 있을 때 |
 | `claude-local-scheduling` | 자동화 | 데스크톱 앱 예약 작업. 정기 작업이 있을 때만 |
 | `lychee-action` | 자동화 | 이 저장소의 월간 점검과 비슷한 일을 이미 한다 |
 | `ntfy` | 자동화 | 동작이 단순하다(HTTP 요청 한 번). 휴대폰 앱이 필요하다 |
 
-## 4. 말로 충분 · 중요도 낮음 (6)
+## 4. 말로 충분 · 중요도 낮음 (4)
 
 | id | 분야 | 이유 |
 |---|---|---|
 | `ecc` | 코딩 | `superpowers`와 역할이 크게 겹치고 같이 깔면 지시가 부딪친다. 스킬 300개 이상이라 결과보다 구성 설명이 맞다 |
-| `feature-dev` | 코딩 | `superpowers` 흐름과 같은 일 |
-| `commit-commands` | 코딩 | git 명령을 정해진 절차로 묶은 것. 동작이 문서에 분명하다 |
 | `claude-mem` | 코딩 | 효과가 여러 세션에 걸쳐 나타나 한 번 돌려서는 보기 어렵다. 내장 메모리와 겹친다 |
 | `awesome-design-md` | 웹 디자인 | 파일 모음이라 돌릴 게 없다 |
 | `shadcn-mcp` | 웹 디자인 | shadcn/ui 프로젝트에서만 쓴다 |
 
-## 5. 이번에는 제외: 계정·유료 필요 (11)
+## 5. 이번에는 제외: 계정·유료 필요 (9)
 
-`claude-code-action`(API 키), `claude-cloud-scheduled-tasks`(유료 구독 사용량), `n8n-mcp`(n8n 인스턴스), `zapier-mcp`, `make-mcp`(각 서비스 계정), `inbox-zero`(메일 계정 권한), `github-mcp`(개인 액세스 토큰), `semgrep-guardian`(Semgrep 계정), `figma-mcp`(Figma 계정, 무료는 월 6회), `superdesign`(서비스 계정), `claude-code-security-review-action`(API 키, 관리 중단).
+`claude-code-action`(API 키), `claude-cloud-scheduled-tasks`(유료 구독 사용량), `n8n-mcp`(n8n 인스턴스), `zapier-mcp`, `make-mcp`(각 서비스 계정), `github-mcp`(개인 액세스 토큰), `semgrep-guardian`(Semgrep 계정), `figma-mcp`(Figma 계정, 무료는 월 6회), `superdesign`(서비스 계정).
 
 ## 결과물 형식
 

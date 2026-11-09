@@ -12,8 +12,8 @@
 
 id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`), "써 봄"은 이 저장소 작업에서 직접 써 본 도구(`hands_on`)입니다. 자세한 내용은 해당 yaml에서 id로 찾습니다.
 
-- `catalog/automation.yaml` 12개: `claude-code-action` (github-action), `claude-code-hooks` (built-in, +coding), `claude-cloud-scheduled-tasks` (built-in), `claude-local-scheduling` (built-in), `github-pages-deploy` (github-action, 써 봄), `lychee-action` (github-action), `n8n-mcp` (service), `zapier-mcp` (mcp), `make-mcp` (mcp), `inbox-zero` (service), `github-mcp` (mcp, +coding), `ntfy` (service)
-- `catalog/coding.yaml` 19개: `superpowers` (plugin, 써 봄), `context7` (mcp), `ecc` (plugin), `graphify` (skill), `serena` (mcp), `builtin-code-review` (built-in, 써 봄), `builtin-security-review` (built-in, 써 봄), `security-guidance` (plugin), `claude-security` (plugin), `feature-dev` (plugin), `pr-review-toolkit` (plugin), `commit-commands` (plugin), `lsp-plugins` (plugin), `semgrep-guardian` (plugin), `claude-code-security-review-action` (github-action, 관리 중단), `gitleaks` (cli, +automation, 써 봄), `claude-mem` (plugin), `caveman` (plugin), `understand-anything` (plugin)
+- `catalog/automation.yaml` 11개: `claude-code-action` (github-action), `claude-code-hooks` (built-in, +coding), `claude-cloud-scheduled-tasks` (built-in), `claude-local-scheduling` (built-in), `github-pages-deploy` (github-action, 써 봄), `lychee-action` (github-action), `n8n-mcp` (service), `zapier-mcp` (mcp), `make-mcp` (mcp), `github-mcp` (mcp, +coding), `ntfy` (service)
+- `catalog/coding.yaml` 15개: `superpowers` (plugin, 써 봄), `context7` (mcp), `ecc` (plugin), `graphify` (skill), `serena` (mcp), `builtin-code-review` (built-in, 써 봄), `builtin-security-review` (built-in, 써 봄), `security-guidance` (plugin), `claude-security` (plugin), `lsp-plugins` (plugin), `semgrep-guardian` (plugin), `gitleaks` (cli, +automation, 써 봄), `claude-mem` (plugin), `caveman` (plugin), `understand-anything` (plugin)
 - `catalog/web-design.yaml` 15개: `impeccable` (skill, 써 봄), `taste-skill` (skill, 써 봄), `emil-design-eng` (skill, 써 봄), `web-design-guidelines` (skill), `frontend-design` (plugin, 써 봄), `awesome-design-md` (service), `shadcn-mcp` (mcp), `agent-browser` (cli), `playwright-mcp` (mcp, +coding, automation), `playwright-cli` (cli, +automation), `chrome-devtools-mcp` (mcp), `figma-mcp` (mcp), `lighthouse-cli` (cli), `axe-cli` (cli), `superdesign` (plugin)
 
 ## 상황별 빠른 찾기
@@ -26,7 +26,7 @@ id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`), "써 봄
 | 세션 관리(되감기·분기·요약) | [claude-code-session-commands-5](05-coding/claude-code-session-commands-5.md) |
 | 바이브 코딩용 도구, 에이전트 팀 | [vibecoding3](05-coding/vibecoding3.md) · [ecc-claude-code-agent-team](01-skills-mcp/ecc-claude-code-agent-team.md) · [ruflo](03-automation/ruflo.md) · [agency-agents-7seats](03-automation/agency-agents-7seats.md) · [munder-difflin-ai-office-setup](03-automation/munder-difflin-ai-office-setup.md) |
 | 낯선 GitHub 레포 빠르게 파악 | [github-repo-diagram-ingest-cheats](05-coding/github-repo-diagram-ingest-cheats.md) · [graphify](06-cost-saving/graphify.md) |
-| AI 티 안 나는 웹 디자인 | [designskill](09-web-design/designskill.md) · [claude-design-top-5-skill](09-web-design/claude-design-top-5-skill.md) · [claude-designer-kill](09-web-design/claude-designer-kill.md) · [fable5-website](09-web-design/fable5-website.md) |
+| AI 티 안 나는 웹 디자인 | 가이드 대신 [웹 디자인 레시피](recipes/web-design.md)와 `catalog/web-design.yaml` |
 | 클로드에 기억(세컨드 브레인) 붙이기 | [claude-notebooklm-second-brain](07-study-research/claude-notebooklm-second-brain.md) · [claudeskill](01-skills-mcp/claudeskill.md) (claude-mem·Obsidian) |
 | 웹·유튜브·레딧 자료 수집 | [agent-reach](07-study-research/agent-reach.md) · [claude-youtube-skill](07-study-research/claude-youtube-skill.md) · [scrapegraphai](08-business/scrapegraphai.md) |
 | 아이디어·이력서를 비판적으로 검토 | [claude-court-jury-skill](01-skills-mcp/claude-court-jury-skill.md) · [claude-idea-council-4-agents](08-business/claude-idea-council-4-agents.md) · [claude-resume-hiring-panel](01-skills-mcp/claude-resume-hiring-panel.md) |
@@ -60,6 +60,5 @@ id 뒤 괄호는 종류, `+`는 함께 쓰이는 다른 분야(`also`), "써 봄
 - **비용 절약** `06-cost-saving/`: 9router-free-fallback, 9router, claude-skills-top5-0815, google-aitool-free-15, graphify, markitdown-pdf-token-saver, omniroute, oracle-cloud-free-server-12gb, prompt-master, pxpipe-token-save, tokensave
 - **공부·리서치** `07-study-research/`: agent-reach, chagpt-4commands-study, chatgpt-book-mindmap-codes, claude-notebooklm-second-brain, claude-youtube-skill
 - **비즈니스** `08-business/`: 84skills, claude-harvey-sales-agent, claude-idea-council-4-agents, scrapegraphai
-- **웹 디자인** `09-web-design/`: claude-design-top-5-skill, claude-designer-kill, designskill, fable5-website
 - **글쓰기** `10-writing/`: remove-ai-marks, storyscope-ai-fiction
 - **기타** `99-etc/`: chatgpt-newtake-object-head-dance-challenge, free-llm-api-claude-code-setup

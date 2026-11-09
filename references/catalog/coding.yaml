@@ -22,7 +22,7 @@
   maintained: true
   cost: free
   needs: Claude Code 플러그인 지원
-  overlaps: [ecc, feature-dev]
+  overlaps: [ecc]
   risks: SessionStart 훅으로 using-superpowers 지시를 매 세션(그리고 compact 후) 주입하므로 스킬 호출이 잦아지고 단순 작업도 절차가 길어질 수 있다. 다른 워크플로 플러그인과 지시가 충돌할 수 있다.
   always_on_tokens: null
   hands_on: '2026-11-06: 연습용 저장소에서 brainstorming, writing-plans로 설계와 계획을 쓰고 TDD로 구현했다. 질문이 하나씩 이어져 작은 기능에는 길게 느껴졌다(사용자가 세 번째 질문에서 "묻지 말고 진행"을 골랐다). 계획에 코드 전문을 적어서 실행 중 코드가 바뀌면 계획과 어긋난다'
@@ -87,7 +87,7 @@
   maintained: true
   cost: free
   needs: Node.js(npx)
-  overlaps: [superpowers, feature-dev, pr-review-toolkit, claude-code-hooks]
+  overlaps: [superpowers, claude-code-hooks]
   risks: 규모가 매우 커서 스킬 목록·훅이 컨텍스트와 지연을 늘릴 수 있다. 설치 방법을 섞으면 스킬·훅이 중복된다고 README가 직접 경고한다. 저장소 이름이 everything-claude-code에서 ECC로 바뀌어 예전 글의 명령이 다를 수 있다.
   always_on_tokens: null
   source_checked: 2026-11-06
@@ -172,7 +172,7 @@
   maintained: true
   cost: free
   needs: Claude Code, git 저장소(PR 대상이면 gh 또는 GitLab 연동)
-  overlaps: [pr-review-toolkit]
+  overlaps: []
   risks: 노력 단계를 지정하지 않으면 마지막으로 입력한 단계를 재사용한다. ultra 단계는 클라우드에서 돌고 무료 횟수 이후 사용량 크레딧이 든다. high 이상은 토큰을 많이 쓴다.
   always_on_tokens: null
   hands_on: '2026-11-06: 연습용 CLI(Python 30줄 남짓)에 /code-review high를 돌려 8건을 받았고 모두 실제로 고칠 만했다(전각 숫자 허용, 앞자리 0, 전역 출력 변경 등)'
@@ -198,7 +198,7 @@
   maintained: true
   cost: free
   needs: Claude Code, origin 원격이 있는 git 저장소
-  overlaps: [claude-security, security-guidance, claude-code-security-review-action, semgrep-guardian]
+  overlaps: [claude-security, security-guidance, semgrep-guardian]
   risks: LLM 판단이라 놓치는 것과 오탐이 있다. diff 범위만 보므로 기존 코드의 취약점은 대상이 아니다.
   always_on_tokens: null
   hands_on: '2026-11-06: origin 원격이 없으면 git diff origin/HEAD...에서 바로 실패했다. 빈 로컬 저장소를 origin으로 붙여 돌렸고, 로컬 CLI라 발견은 0건이었다'
@@ -259,78 +259,6 @@
   sources:
   - https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-security
 
-- id: feature-dev
-  name: feature-dev (Anthropic 공식 플러그인)
-  kind: plugin
-  area: coding
-  what: 코드베이스 탐색, 아키텍처 설계, 품질 리뷰를 맡는 전문 에이전트로 기능 개발을 단계별로 진행하게 해 주는 공식 워크플로 플러그인이다.
-  when: superpowers 같은 큰 프레임워크 없이 공식 플러그인만으로 "탐색→설계→구현→리뷰" 흐름을 쓰고 싶을 때.
-  not_when: superpowers나 ECC를 이미 쓰고 있을 때(역할 중복).
-  install: /plugin install feature-dev@claude-plugins-official
-  verify: /plugin list 에서 활성 확인 후 / 입력 시 feature-dev 명령이 보이는지 확인.
-  repo: https://github.com/anthropics/claude-plugins-official
-  docs: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/feature-dev
-  license: Apache-2.0
-  stars: 46230
-  last_push: 2026-11-06
-  maintained: true
-  cost: free
-  needs: Claude Code
-  overlaps: [superpowers, ecc]
-  risks: 여러 서브에이전트를 띄우므로 작은 작업에는 토큰이 과하다. TDD를 강제하지는 않는다.
-  always_on_tokens: null
-  source_checked: 2026-11-06
-  sources:
-  - https://raw.githubusercontent.com/anthropics/claude-plugins-official/main/.claude-plugin/marketplace.json
-
-- id: pr-review-toolkit
-  name: pr-review-toolkit (Anthropic 공식 플러그인)
-  kind: plugin
-  area: coding
-  what: 주석, 테스트 커버리지, 오류 처리, 타입 설계, 코드 품질, 단순화를 각각 따로 보는 전문 리뷰 에이전트 묶음이다.
-  when: 내장 /code-review 가 잡지 않는 테스트 누락·오류 삼킴·타입 설계 같은 관점별 리뷰가 필요할 때.
-  not_when: 정확성 버그만 빠르게 보면 될 때(내장 /code-review 로 충분).
-  install: /plugin install pr-review-toolkit@claude-plugins-official
-  verify: /plugin list 에서 활성 확인, /agents 에 리뷰 에이전트들이 추가됐는지 확인.
-  repo: https://github.com/anthropics/claude-plugins-official
-  docs: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit
-  license: Apache-2.0
-  stars: 46230
-  last_push: 2026-11-06
-  maintained: true
-  cost: free
-  needs: Claude Code
-  overlaps: [builtin-code-review, ecc]
-  risks: 에이전트 설명이 서브에이전트 목록에 올라가 컨텍스트를 조금씩 차지한다. 관점별로 돌리면 토큰이 여러 배로 든다.
-  always_on_tokens: null
-  source_checked: 2026-11-06
-  sources:
-  - https://raw.githubusercontent.com/anthropics/claude-plugins-official/main/.claude-plugin/marketplace.json
-
-- id: commit-commands
-  name: commit-commands (Anthropic 공식 플러그인)
-  kind: plugin
-  area: coding
-  what: 커밋, 푸시, PR 생성을 정해진 명령으로 처리해 git 작업을 일관된 절차로 하게 해 주는 공식 플러그인이다.
-  when: 커밋 메시지·PR 생성 절차를 매번 같은 방식으로 하고 싶을 때.
-  not_when: 이미 팀 규칙이 담긴 자체 커밋 스킬이나 gh 별칭이 있을 때.
-  install: /plugin install commit-commands@claude-plugins-official
-  verify: /plugin list 에서 활성 확인, / 입력 시 commit-commands 명령이 보이는지 확인.
-  repo: https://github.com/anthropics/claude-plugins-official
-  docs: https://github.com/anthropics/claude-plugins-official/tree/main/plugins/commit-commands
-  license: Apache-2.0
-  stars: 46230
-  last_push: 2026-11-06
-  maintained: true
-  cost: free
-  needs: Claude Code, git, PR 생성 시 gh CLI
-  overlaps: [github-mcp]
-  risks: 푸시·PR 생성처럼 되돌리기 어려운 동작을 명령 하나로 실행하므로 권한 설정에서 push를 확인 대상으로 두는 것이 안전하다.
-  always_on_tokens: null
-  source_checked: 2026-11-06
-  sources:
-  - https://raw.githubusercontent.com/anthropics/claude-plugins-official/main/.claude-plugin/marketplace.json
-
 - id: lsp-plugins
   name: 공식 LSP 플러그인 (pyright-lsp, typescript-lsp, gopls-lsp, rust-analyzer-lsp 등)
   kind: plugin
@@ -387,34 +315,6 @@
   sources:
   - https://github.com/semgrep/guardian
   - https://github.com/semgrep/mcp
-
-- id: claude-code-security-review-action
-  name: Claude Code Security Reviewer (GitHub Action)
-  kind: github-action
-  area: coding
-  what: PR이 열리면 Claude가 변경 diff를 보안 관점에서 분석하고 오탐을 걸러 PR에 줄 단위 코멘트를 남기는 GitHub Action이다.
-  when: 로컬 점검과 별개로 CI에서 모든 PR에 보안 리뷰를 자동으로 걸고 싶을 때.
-  not_when: 외부 기여자 PR을 자동으로 돌리는 공개 저장소(프롬프트 인젝션 방어가 없다고 README가 명시), API 키를 CI에 둘 수 없을 때.
-  install: |
-    # .github/workflows/security.yml
-    # - uses: anthropics/claude-code-security-review@main
-    #   with: { comment-pr: true, claude-api-key: ${{ secrets.CLAUDE_API_KEY }} }
-    # 권한: pull-requests: write, contents: read
-  verify: 테스트 PR을 열어 Actions 탭에서 작업이 성공하고 findings-count 출력과 PR 코멘트가 생기는지 확인.
-  repo: https://github.com/anthropics/claude-code-security-review
-  docs: https://github.com/anthropics/claude-code-security-review#readme
-  license: MIT
-  stars: 6746
-  last_push: 2026-02-11
-  maintained: false
-  cost: paid
-  needs: Anthropic API 키(GitHub secret), GitHub Actions
-  overlaps: [builtin-security-review, semgrep-guardian, claude-security]
-  risks: 기본 브랜치 마지막 커밋이 2026-02-11로 6개월 넘게 갱신이 없다(유지보수 주의). 기본 모델이 claude-opus-4-1로 오래됐다. @main 고정이라 공급망 위험이 있어 커밋 SHA로 고정하는 편이 낫다. API 호출 비용이 PR마다 든다.
-  always_on_tokens: null
-  source_checked: 2026-11-06
-  sources:
-  - https://github.com/anthropics/claude-code-security-review
 
 - id: gitleaks
   name: 'Gitleaks (후속: Betterleaks)'

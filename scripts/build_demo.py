@@ -26,7 +26,7 @@ INDEX = "https://github.com/devvshyun/AIAdvisor/blob/main/references/README.md"
 TOPICS = [
     ("01-skills-mcp", "스킬·MCP"), ("02-video-image", "영상·이미지"), ("03-automation", "자동화"),
     ("04-prompts", "프롬프트"), ("05-coding", "코딩"), ("06-cost-saving", "비용 절약"),
-    ("07-study-research", "공부·리서치"), ("08-business", "비즈니스"), ("09-web-design", "웹 디자인"),
+    ("07-study-research", "공부·리서치"), ("08-business", "비즈니스"),
     ("10-writing", "글쓰기"), ("99-etc", "기타"),
 ]
 e = html.escape
@@ -171,7 +171,7 @@ def kit(total_tools):
 
 def build(page):
     folders = sorted(d for d in os.listdir(os.path.join(ROOT, "references"))
-                     if os.path.isdir(os.path.join(ROOT, "references", d)) and d not in ("catalog", "recipes"))
+                     if os.path.isdir(os.path.join(ROOT, "references", d)) and d not in ("catalog", "recipes", "_archive"))
     missing = [d for d in folders if d not in dict(TOPICS)]
     if missing:
         sys.exit(f"topic folders without a label in TOPICS: {missing}")
