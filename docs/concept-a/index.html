@@ -175,6 +175,8 @@ main p { max-width: 34em; }
 .head { margin-bottom: 64px; }
 .head h2 { margin-top: 20px; max-width: 16em; }
 .head p { margin-top: 20px; color: var(--muted); font-size: 17px; line-height: 1.6; }
+.head p a { color: var(--text); border-bottom: 1px solid var(--line-strong); }
+.head p a:hover { color: var(--amber-hi); border-bottom-color: var(--amber); }
 .head p.gb__note { margin-top: 12px; font-size: var(--fs-list); }
 .motion .reveal { opacity: 0; transform: translateY(8px); }
 .motion .reveal.in { opacity: 1; transform: none; transition: opacity .5s var(--ease), transform .5s var(--ease); }
@@ -314,7 +316,7 @@ td code { font-size: var(--fs-label); color: var(--text); }
 
 /* close + footer */
 .close { padding: 160px 0 128px; text-align: left; }
-.close h2 { max-width: 12em; }
+.close h2 { max-width: 12em; text-wrap: balance; }
 .close p { margin-top: 20px; }
 .close .hero__actions { margin-top: 36px; }
 .foot { border-top: 1px solid var(--line); background: var(--surface); padding: 48px 0 64px; font-size: var(--fs-aux); color: var(--muted); }
@@ -333,6 +335,7 @@ td code { font-size: var(--fs-label); color: var(--text); }
 @media (max-width: 860px) {
   :root { --gutter: 16px; }
   .nav__links a:not(.keep), .nav__sep { display: none; }
+  .nav .wrap { gap: 12px; }
   .hero { padding-top: 88px; }
   h1 { font-size: clamp(40px, 11.4vw, 44px); line-height: 1.06; }
   h2 { font-size: clamp(30px, 8.8vw, 34px); line-height: 1.12; }
@@ -380,6 +383,17 @@ td code { font-size: var(--fs-label); color: var(--text); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .card:hover, .tool:hover, .guides li:hover { transform: none; }
 }
+/* 좁은 화면 섹션 메뉴 */
+.menu-btn { display: none; width: 40px; height: 40px; margin-right: -8px; border: 0; background: none; color: var(--text); border-radius: 8px; cursor: pointer; place-items: center; }
+.menu-btn svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.6; fill: none; }
+.menu-btn:hover, .menu-btn[aria-expanded="true"] { background: rgb(255 255 255 / .08); }
+.menu-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.m-menu { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-direction: column; padding: 8px var(--gutter) 16px; background: rgb(14 15 17); border-bottom: 1px solid var(--line); box-shadow: 0 16px 32px rgb(0 0 0 / .4); }
+.m-menu[hidden] { display: none; }
+.m-menu a { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--text); font-size: var(--fs-body); }
+.m-menu a:last-child { border-bottom: 0; }
+.m-menu a:hover { color: var(--amber-hi); }
+@media (max-width: 860px) { .menu-btn { display: grid; } }
 </style>
 </head>
 <body>
@@ -400,7 +414,9 @@ td code { font-size: var(--fs-label); color: var(--text); }
       <a class="keep" href="https://github.com/devvshyun/AIAdvisor">GitHub</a>
     </nav>
     <a class="pill pill--light" href="#install">설치</a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="m-menu" aria-label="섹션 메뉴"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
   </div>
+  <nav id="m-menu" class="m-menu" aria-label="섹션 메뉴" hidden><a href="#demo">추천 결과</a><a href="#how">동작 방식</a><a href="#kit">추천 근거</a><a href="#faq">질문</a><a href="#guestbook">방명록</a></nav>
 </header>
 
 <main>
@@ -413,7 +429,7 @@ td code { font-size: var(--fs-label); color: var(--text); }
         <a class="newlink" href="#kit"><b>2026-11-06 확인</b><span data-bind="kitlabel">검증한 도구와 레시피</span> →</a>
       </div>
       <div class="hero__actions" id="install">
-        <a class="pill pill--light pill--lg" href="#install">스킬 설치하기</a>
+        <a class="pill pill--light pill--lg" href="#demo">추천 결과 보기</a>
         <a class="pill pill--ghost pill--lg" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a>
       </div>
       <div class="cmd">
@@ -442,8 +458,8 @@ td code { font-size: var(--fs-label); color: var(--text); }
                 <h3>토큰이 너무 빨리 닳는데 뭐 깔면 좋을까</h3>
                 <p class="q">보완 모드 · 추천 단계에서는 읽기만 합니다.</p>
                 <h4>읽은 것</h4>
-                <div class="act"><span class="ic"></span><b>CLAUDE.md</b> · <b>package.json</b> · <b>claude mcp list</b> 읽는 중</div>
-                <div class="act"><span class="ic"></span>확인 끝 · 수정한 파일 0개</div>
+                <div class="act"><span class="ic"></span><span><b>CLAUDE.md</b> · <b>package.json</b> · <b>claude mcp list</b> 읽는 중</span></div>
+                <div class="act"><span class="ic"></span><span>확인 끝 · 수정한 파일 0개</span></div>
                 <div class="reply">
                   <div class="reply__who"><b>project-upgrade-advisor</b> · 방금</div>
                   <p>추천 4건이에요. 토큰 절약 도구 3개와 MarkItDown부터 권합니다.</p>
@@ -595,7 +611,7 @@ td code { font-size: var(--fs-label); color: var(--text); }
         <div class="head">
           <span class="eyebrow">질문 · 3개</span>
           <h2><span class="hi">자주 묻는</span> 질문</h2>
-          <p>더 궁금한 점은 저장소에 남겨 주세요.</p>
+          <p>더 궁금한 점은 <a href="#guestbook">방명록</a>이나 <a href="https://github.com/devvshyun/AIAdvisor/issues">GitHub 이슈</a>에 남겨 주세요.</p>
         </div>
         <div class="faq__list">
           <div class="faq__item"><h3>스킬이 마음대로 뭔가를 설치하나요?</h3><p>아니요. 추천 단계에서는 읽기만 합니다. "2번이랑 3번 진행해줘"처럼 고른 다음에 설치를 시작합니다.</p></div>
@@ -775,7 +791,7 @@ td code { font-size: var(--fs-label); color: var(--text); }
       for (const part of s.parts) {
         const t = h('h4'); t.append(h('i', {}, part.letter), part.title);
         const body = h('div'); body.innerHTML = part.html;
-        body.querySelectorAll('table').forEach(tb => { const w = h('div', { class: 'tbl' }); tb.replaceWith(w); w.append(tb); });
+        body.querySelectorAll('table').forEach(tb => { const w = h('div', { class: 'tbl', tabindex: '0', role: 'region', 'aria-label': '추천 표' }); tb.replaceWith(w); w.append(tb); });
         rep.append(t, ...body.childNodes);
       }
       if (s.end) rep.append(h('p', { class: 'rep__end' }, s.end));
@@ -847,6 +863,17 @@ td code { font-size: var(--fs-label); color: var(--text); }
     document.getElementById('area-pane').replaceChildren(failMsg());
     document.getElementById('guides').replaceChildren(failMsg());
   });
+// 좁은 화면의 섹션 메뉴: 버튼으로 열고, 링크를 누르거나 Esc·바깥을 누르면 닫힌다
+(() => {
+  const btn = document.querySelector(".menu-btn"), menu = document.getElementById("m-menu");
+  if (!btn || !menu) return;
+  const set = open => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
+  btn.addEventListener("click", () => { const open = menu.hidden; set(open); if (open) menu.querySelector("a").focus(); });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { set(false); btn.focus(); } });
+  document.addEventListener("click", e => { if (!menu.hidden && !e.target.closest(".menu-btn, #m-menu")) set(false); });
+  matchMedia("(min-width: 861px)").addEventListener("change", e => { if (e.matches) set(false); });
+})();
 </script>
 <script src="../concept-switch.js" data-concept="a" defer></script>
 </body>

@@ -58,6 +58,23 @@ button{font:inherit;color:inherit}
 .nav ul a:hover{color:var(--ink)}
 .search{flex:1;max-width:400px;display:flex;align-items:center;gap:8px;border:1px solid #d6d6d6;border-radius:2px;height:36px;padding:0 10px;font-size:var(--fs-sm);color:var(--faint)}
 .search kbd{margin-left:auto;border:1px solid #ccc;font-size:var(--fs-xs);padding:0 5px;color:var(--muted)}
+.search{position:relative}
+.search:focus-within{border-color:var(--ink)}
+.search input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;color:var(--ink);height:100%}
+.search input::placeholder{color:var(--faint)}
+.search input::-webkit-search-cancel-button{display:none}
+.q-list{position:absolute;top:calc(100% + 6px);left:-1px;width:max(calc(100% + 2px),440px);background:#fff;border:1px solid var(--line-strong);max-height:min(60vh,440px);overflow:auto;z-index:60;box-shadow:0 12px 32px rgba(0,0,0,.08)}
+.q-list a{display:block;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
+.q-list a:last-child{border-bottom:0}
+.q-list a:hover,.q-list a:focus-visible{background:var(--wash);outline:0}
+.q-list b{display:block;color:var(--ink);font-weight:600;font-size:var(--fs-list)}
+.q-list small{display:block;margin-top:2px;font-size:var(--fs-xs);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q-list .q-k{font:500 var(--fs-xs)/1 var(--mono);color:var(--accent);margin-right:6px}
+.q-list p{padding:12px 14px;font-size:var(--fs-sm);color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tool.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,40%{background:#e8ecff}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.tool.flash{animation:none;outline:2px solid var(--accent)}}
 .nav .sp{flex:1}
 .btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;font-weight:600;font-size:var(--fs-list);text-decoration:none;border:1px solid var(--ink);border-radius:2px;white-space:nowrap}
 .btn--dark{background:var(--ink);color:#fff}
@@ -82,11 +99,14 @@ button{font:inherit;color:inherit}
 .term code{flex:1;min-width:0;padding:17px 18px;overflow-x:auto;white-space:nowrap}
 .term code::before{content:">";color:var(--accent);margin-right:12px;filter:brightness(1.6)}
 .term button{width:46px;flex:none;background:none;border:0;border-left:1px solid #333;color:#888;cursor:pointer}
-.term button:hover{color:#fff}
+.term button:hover,.term button.ok{color:#fff}
+.term button.ok{color:var(--ok)}
 .term button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.4}
 .inst-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap}
 .seg{display:inline-flex;border:1px solid #333;padding:2px;font-size:var(--fs-xs)}
-.seg span{padding:3px 9px;color:#555}
+.seg button{all:unset;cursor:pointer;padding:3px 9px;color:#555}
+.seg button:not(.on):hover{color:var(--ink);background:var(--wash)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .seg .on{background:var(--ink);color:#fff}
 .small-link{font-size:var(--fs-sm);color:var(--muted);text-decoration:none}
 .small-link:hover{color:var(--ink)}
@@ -169,8 +189,6 @@ td code{font-size:var(--fs-xs);background:var(--wash);padding:1px 4px}
 td.n{font-family:var(--mono);font-size:var(--fs-xs);white-space:nowrap}
 .pick{margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 22px;border-top:1px solid var(--line);font-size:var(--fs-sm);color:var(--muted)}
 .pick b{color:var(--ink)}
-.pick .nums{display:flex;gap:4px}
-.pick .nums span{font:600 var(--fs-xs)/1 var(--mono);border:1px solid #bbb;width:26px;height:26px;display:grid;place-items:center;color:var(--ink)}
 
 /* ---------- 3. 동작 방식 ---------- */
 .how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px;align-items:start}
@@ -185,6 +203,11 @@ td.n{font-family:var(--mono);font-size:var(--fs-xs);white-space:nowrap}
 .cap{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:var(--fs-xs);color:var(--muted)}
 .pill{display:inline-flex;gap:4px}
 .cap{gap:12px}
+.steps li:not(.on) p{display:none}
+.hw-p{min-height:11.5em}
+.hw-nav button{all:unset;box-sizing:border-box;cursor:pointer;border:1px solid #ccc;border-radius:99px;padding:2px 10px;font-size:var(--fs-xs);color:#555;line-height:1.5}
+.hw-nav button:hover{background:#f2f2f2}
+.hw-nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .pill span{white-space:nowrap;border:1px solid #ccc;border-radius:99px;padding:2px 10px;font-size:var(--fs-xs);color:#555}
 .modes{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--line-strong)}
 .mode{padding:20px 22px 22px}
@@ -296,6 +319,7 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
 @media (max-width:1080px){
   .hero{grid-template-columns:minmax(0,1fr);gap:44px}
   .nav ul{display:none}
+  .nav .wrap{gap:12px}
 }
 @media (max-width:900px){
   .demo,.how,.kit,.faq,.sh{grid-template-columns:minmax(0,1fr);gap:24px}
@@ -331,6 +355,18 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
   .gb{height:480px;padding:12px 10px 6px}
   .gl .cat{grid-template-columns:78px minmax(0,1fr) 32px}
 }
+/* 좁은 화면 섹션 메뉴 */
+.menu-btn{display:none;width:38px;height:38px;flex:none;border:1px solid var(--ink);border-radius:2px;background:#fff;color:var(--ink);cursor:pointer;place-items:center}
+.menu-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.6;fill:none}
+.menu-btn:hover,.menu-btn[aria-expanded="true"]{background:var(--wash)}
+.menu-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.m-menu{position:absolute;left:0;right:0;top:100%;display:flex;flex-direction:column;padding:4px 24px 12px;background:#fff;border-bottom:1px solid var(--line-strong);box-shadow:0 12px 24px rgba(0,0,0,.06)}
+.m-menu[hidden]{display:none}
+.m-menu a{padding:14px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:var(--fs-body);font-weight:500}
+.m-menu a:last-child{border-bottom:0}
+.m-menu a:hover{color:var(--accent)}
+@media (max-width:1080px){.menu-btn{display:grid}}
+@media (max-width:640px){.m-menu{padding:4px 16px 12px}}
 </style>
 </head>
 <body>
@@ -350,13 +386,18 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       <li><a href="#faq">질문</a></li>
       <li><a href="#guestbook">방명록</a></li>
     </ul>
-    <div class="search" aria-hidden="true">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#888" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="m9.5 9.5 3 3"/></svg>
-      도구·가이드 찾기…<kbd>/</kbd>
+    <div class="search" role="search">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#888" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="6" r="4.5"/><path d="m9.5 9.5 3 3"/></svg>
+      <input type="search" id="q" placeholder="도구·가이드 찾기…" aria-label="도구·가이드 찾기" autocomplete="off" aria-controls="q-list" aria-describedby="q-hint">
+      <kbd aria-hidden="true">/</kbd>
+      <span id="q-hint" class="sr">입력하면 아래에 결과가 나옵니다. 아래 화살표로 결과로 이동합니다.</span>
+      <div id="q-list" class="q-list" hidden></div>
     </div>
     <span class="sp"></span>
     <a class="btn btn--dark" href="#install">설치</a>
+    <button type="button" class="menu-btn" aria-expanded="false" aria-controls="m-menu" aria-label="섹션 메뉴"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 5h12M3 9h12M3 13h12"/></svg></button>
   </div>
+  <nav id="m-menu" class="m-menu" aria-label="섹션 메뉴" hidden><a href="#demo">추천 결과</a><a href="#how">동작 방식</a><a href="#kit">추천 근거</a><a href="#faq">질문</a><a href="#guestbook">방명록</a></nav>
 </header>
 
 <main>
@@ -376,11 +417,11 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
           <button type="button" aria-label="명령 복사"><svg viewBox="0 0 14 14"><rect x="4.5" y="4.5" width="8" height="8"/><path d="M9.5 4.5v-3h-8v8h3"/></svg></button>
         </div>
         <div class="inst-row">
-          <span class="seg" aria-hidden="true"><span class="on">macOS · Linux · Git Bash</span><span>PowerShell</span></span>
+          <span class="seg" role="group" aria-label="설치 명령 셸"><button type="button" class="on" aria-pressed="true" data-os="sh">macOS · Linux · Git Bash</button><button type="button" aria-pressed="false" data-os="ps">PowerShell</button></span>
           <a class="small-link" href="https://github.com/devvshyun/AIAdvisor">폴더 이름이 곧 스킬 이름 ↗</a>
         </div>
         <div class="ctas">
-          <a class="btn btn--dark" href="#install">스킬 설치하기<svg viewBox="0 0 12 12"><path d="M1 6h8M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+          <a class="btn btn--dark" href="#demo">추천 결과 보기<svg viewBox="0 0 12 12"><path d="M1 6h8M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
           <a class="btn btn--line" href="https://github.com/devvshyun/AIAdvisor">GitHub에서 보기</a>
         </div>
       </div>
@@ -420,31 +461,35 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       <p>말한 내용과 폴더 상태를 보고 보완 모드와 신규 모드 중 하나를 고릅니다. 어느 쪽이든 읽고, 고르고, 정리한 다음 멈춥니다.</p>
     </div>
     <div class="how">
-      <ol class="steps">
-        <li class="on"><i>01</i><div><b>프로젝트와 환경을 읽습니다</b></div><p>CLAUDE.md, README, 의존성 파일, 최근 git log, 이미 깔린 MCP·스킬·플러그인을 확인합니다. 읽기만 합니다.</p></li>
-        <li><i>02</i><div><b>레시피와 카탈로그부터 봅니다</b><code>작은 색인에서 맞는 레시피와 도구 고르기</code></div></li>
-        <li><i>03</i><div><b>정리하고 번호를 기다립니다</b><code>추천 표와 실행 계획을 내고 멈춤</code></div></li>
+      <ol class="steps" role="tablist" aria-label="추천 단계">
+        <li class="on" role="tab" id="hw-t1" aria-controls="hw-p1" aria-selected="true" tabindex="0"><i>01</i><div><b>프로젝트와 환경을 읽습니다</b></div><p>CLAUDE.md, README, 의존성 파일, 최근 git log, 이미 깔린 MCP·스킬·플러그인을 확인합니다. 읽기만 합니다.</p></li>
+        <li role="tab" id="hw-t2" aria-controls="hw-p2" aria-selected="false" tabindex="-1"><i>02</i><div><b>레시피와 카탈로그부터 봅니다</b><code>작은 색인에서 맞는 레시피와 도구 고르기</code></div><p>작은 색인에서 맞는 레시피와 도구를 고르고, 이미 있는 도구와 역할이 겹치는 도구, 관리가 멈춘 도구는 뺍니다. 그 밖의 주제는 가이드를 엽니다.</p></li>
+        <li role="tab" id="hw-t3" aria-controls="hw-p3" aria-selected="false" tabindex="-1"><i>03</i><div><b>정리하고 번호를 기다립니다</b><code>추천 표와 실행 계획을 내고 멈춤</code></div><p>추천 표와 실행 계획을 내고 멈춥니다. API 키나 유료 플랜이 필요한 항목은 따로 표시합니다.</p></li>
       </ol>
       <div>
-        <div class="code" role="img" aria-label="스킬이 읽은 파일, 걸러 낸 후보, 정리된 결과">
-          <span class="h"><span class="p">$</span> 1 / 3 · 읽는 중</span>
-          <span class="c k">CLAUDE.md</span>규칙 14줄<br>
-          <span class="c k">package.json</span>next 15, prisma<br>
-          <span class="c k">git log</span>최근 커밋 30개<br>
-          <span class="c k">claude mcp list</span>playwright<br>
-          <span class="c k">~/.claude/skills</span>3개<br>
-          <span class="ok">✓ 확인 끝 · 수정한 파일 0개</span>
-          <span class="gap"></span>
-          <span class="h"><span class="p">$</span> 2 / 3 · 색인에서 고르는 중</span>
-          <span class="ok">+</span> 토큰 절약 도구 3개 · MarkItDown 변환 · 세션 명령어 5개 · 9Router 폴백<br>
-          <span class="off">OmniRoute</span> <span class="c">9Router와 역할 겹침</span><br>
-          <span class="off">Playwright MCP</span> <span class="c">이미 설치됨</span>
-          <span class="gap"></span>
-          <span class="h"><span class="p">$</span> 3 / 3 · 결과</span>
-          A 진단 요약 · B 추천 4건 · C 상위 3개 실행 계획 · D 보류 2건 · E 질문 2개<br>
-          <span class="ok">진행할 번호를 골라 주세요</span>
+        <div class="code">
+          <div class="hw-p" role="tabpanel" id="hw-p1" aria-labelledby="hw-t1">
+            <span class="h"><span class="p">$</span> 1 / 3 · 읽는 중</span>
+            <span class="c k">CLAUDE.md</span>규칙 14줄<br>
+            <span class="c k">package.json</span>next 15, prisma<br>
+            <span class="c k">git log</span>최근 커밋 30개<br>
+            <span class="c k">claude mcp list</span>playwright<br>
+            <span class="c k">~/.claude/skills</span>3개<br>
+            <span class="ok">✓ 확인 끝 · 수정한 파일 0개</span>
+          </div>
+          <div class="hw-p" role="tabpanel" id="hw-p2" aria-labelledby="hw-t2">
+            <span class="h"><span class="p">$</span> 2 / 3 · 색인에서 고르는 중</span>
+            <span class="ok">+</span> 토큰 절약 도구 3개 · MarkItDown 변환 · 세션 명령어 5개 · 9Router 폴백<br>
+            <span class="off">OmniRoute</span> <span class="c">9Router와 역할 겹침</span><br>
+            <span class="off">Playwright MCP</span> <span class="c">이미 설치됨</span>
+          </div>
+          <div class="hw-p" role="tabpanel" id="hw-p3" aria-labelledby="hw-t3">
+            <span class="h"><span class="p">$</span> 3 / 3 · 결과</span>
+            A 진단 요약 · B 추천 4건 · C 상위 3개 실행 계획 · D 보류 2건 · E 질문 2개<br>
+            <span class="ok">진행할 번호를 골라 주세요</span>
+          </div>
         </div>
-        <div class="cap"><span>예시 프로젝트 ledger-app 기준으로 줄인 출력입니다.</span><span class="pill" aria-hidden="true"><span>‹</span><span>1 / 3</span><span>›</span></span></div>
+        <div class="cap"><span>예시 프로젝트 ledger-app 기준으로 줄인 출력입니다.</span><span class="pill hw-nav"><button type="button" class="hw-prev" aria-label="이전 단계">‹</button><span class="hw-count" aria-live="polite">1 / 3</span><button type="button" class="hw-next" aria-label="다음 단계">›</button></span></div>
       </div>
     </div>
 
@@ -584,13 +629,19 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
   }
   const fmt = m => m >= 60 && m % 60 === 0 ? `${m / 60}시간` : `${m}분`;
 
+  let demoPick = null, kitApi = null;
+
   function hero(scns) {
     const box = $("#hero-panel");
     box.innerHTML = `<div class="ptabs" role="tablist" aria-label="예시 질문">${scns.map((s, i) =>
       `<button class="ptab" type="button" role="tab" title="${esc(s.label)}" aria-label="${esc(s.label)}">${pad(i + 1)}</button>`).join("")}</div>
       <div class="pbody" role="tabpanel"></div>`;
     const body = $(".pbody", box);
+    let cur = 0;
+    // "전체 답변"은 아래 추천 결과에서 같은 상황을 열어 둔다
+    box.addEventListener("click", e => { if (e.target.closest(".phead a") && demoPick) demoPick(cur); });
     tablist(box, [...box.querySelectorAll(".ptab")], i => {
+      cur = i;
       const s = scns[i], r = rows(s), timed = r.list.some(x => x.min != null);
       const max = Math.max(...r.list.map(x => x.min || 0));
       const top = timed ? Math.ceil(max / 10) * 10 : 0;
@@ -619,7 +670,7 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       </ol>
       <div class="rep" id="scn-panel" role="tabpanel"></div>`;
     const items = [...root.querySelectorAll(".steps li")], rep = $("#scn-panel");
-    tablist(root, items, i => {
+    demoPick = tablist(root, items, i => {
       const s = scns[i];
       items.forEach((li, k) => {
         const p = $("p", li), a = scns[k].parts[0];
@@ -631,9 +682,9 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       rep.innerHTML = `
         <div class="rep-top"><span class="p">&gt;</span><b>${esc(s.prompt)}</b><span class="mode">${esc(s.mode)} 모드</span></div>
         <div class="rep-b">${s.parts.map(p => `
-          <div class="blk"><i>${esc(p.letter)}</i><div><h4>${esc(p.title)}</h4>${/<table/i.test(p.html) ? `<div class="tbl">${p.html}</div>` : p.html}</div></div>`).join("")}
+          <div class="blk"><i>${esc(p.letter)}</i><div><h4>${esc(p.title)}</h4>${/<table/i.test(p.html) ? `<div class="tbl" tabindex="0" role="region" aria-label="${esc(p.title)}">${p.html}</div>` : p.html}</div></div>`).join("")}
         </div>
-        <div class="pick"><b>${esc(s.end)}</b>${n ? `<span class="nums" aria-hidden="true">${Array.from({ length: n }, (_, k) => `<span>${k + 1}</span>`).join("")}</span>` : ""}</div>`;
+        <div class="pick"><b>${esc(s.end)}</b>${n ? `<span>예: "1번 진행해줘"</span>` : ""}</div>`;
     });
   }
 
@@ -685,10 +736,10 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       </div>`;
 
     const big = [...root.querySelectorAll(".tabs [role=tab]")];
-    tablist(root, big, i => big.forEach((t, k) => { document.getElementById(t.getAttribute("aria-controls")).hidden = k !== i; }));
+    const pickBig = tablist(root, big, i => big.forEach((t, k) => { document.getElementById(t.getAttribute("aria-controls")).hidden = k !== i; }));
 
     const [areaCats, topicCats] = [...root.querySelectorAll(".cats")];
-    tablist(areaCats, [...areaCats.children], i => {
+    const pickArea = tablist(areaCats, [...areaCats.children], i => {
       const a = cat.areas[i], r = a.recipe;
       $("#area-tools").classList.remove("open");
       $("#area-recipe").innerHTML = `
@@ -712,21 +763,118 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
         <a class="more" href="https://github.com/devvshyun/AIAdvisor/tree/main/references/${encodeURIComponent(t.folder)}">가이드 목록 보기 &rarr;</a>`;
     });
 
+    // 검색에서 도구를 고르면: 분야 탭을 열고, 접혀 있으면 펼친 뒤 그 도구로 스크롤
+    kitApi = (ai, ti) => {
+      pickBig(0); pickArea(ai);
+      const box = $("#area-tools"), el = box.querySelectorAll(".tool")[ti];
+      if (ti >= SHOW) box.querySelector(".showall")?.click();
+      el.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+      el.tabIndex = -1; el.focus({ preventScroll: true });
+    };
+    search(cat);
+
     $("#notice-n").textContent = `검증한 도구 ${cat.tools_total}개 · 레시피 ${cat.areas.length}개 · `;
     $("#strip-guides").textContent = cat.guides_total;
     document.querySelectorAll('[data-n="guides_total"]').forEach(el => { el.textContent = cat.guides_total; });
     if (cat.changelog_url) $("#changelog").href = cat.changelog_url;
   }
 
+  // 동작 방식: 단계를 누르면 그 단계의 출력만 보인다. 스크립트가 없으면 세 단계가 모두 보인다
+  (() => {
+    const list = $("#how .steps"); if (!list) return;
+    const items = [...list.children], panels = [...document.querySelectorAll("#how .hw-p")];
+    const count = $("#how .hw-count");
+    let cur = 0;
+    const pick = tablist(list, items, i => {
+      cur = i;
+      panels.forEach((p, k) => { p.hidden = k !== i; });
+      if (count) count.textContent = `${i + 1} / ${items.length}`;
+    });
+    $("#how .hw-prev")?.addEventListener("click", () => pick((cur - 1 + items.length) % items.length));
+    $("#how .hw-next")?.addEventListener("click", () => pick((cur + 1) % items.length));
+  })();
+
   const get = url => fetch(url).then(r => { if (!r.ok) throw new Error(url + " " + r.status); return r.json(); });
   get("../data/demo.json").then(d => { hero(d.scenarios); demo(d.scenarios); }).catch(e => console.warn("demo.json", e));
   get("../data/catalog.json").then(kit).catch(e => console.warn("catalog.json", e));
 
-  // 복사 버튼
-  document.querySelectorAll(".term button").forEach(b => b.addEventListener("click", () => {
-    const txt = b.previousElementSibling.textContent;
-    navigator.clipboard && navigator.clipboard.writeText(txt).catch(() => {});
+  // 상단 검색: 도구(이름·설명)와 가이드(제목·요약)에서 찾는다. 도구는 아래 추천 근거로, 가이드는 GitHub 원문으로 간다
+  function search(cat) {
+    const q = $("#q"), list = $("#q-list");
+    if (!q) return;
+    const idx = [
+      ...cat.areas.flatMap((a, ai) => a.tools.map((t, ti) => ({ kind: a.label, name: t.name, sub: t.what, hay: (t.name + " " + t.what).toLowerCase(), go: () => kitApi(ai, ti) }))),
+      ...cat.topics.flatMap(tp => tp.guides.map(g => ({ kind: "가이드", name: g.title, sub: g.summary, hay: (g.title + " " + g.summary).toLowerCase(), url: g.url }))),
+    ];
+    const close = () => { list.hidden = true; };
+    const render = () => {
+      const v = q.value.trim().toLowerCase();
+      if (!v) return close();
+      const hits = idx.filter(x => x.hay.includes(v))
+        .sort((a, b) => (b.name.toLowerCase().includes(v)) - (a.name.toLowerCase().includes(v))).slice(0, 8);
+      list.innerHTML = hits.length
+        ? hits.map((x, k) => `<a href="${x.url ? esc(x.url) : "#kit"}" data-k="${idx.indexOf(x)}"><b><span class="q-k">${esc(x.kind)}</span>${esc(x.name)}</b><small>${esc(x.sub)}</small></a>`).join("")
+        : `<p>"${esc(q.value.trim())}"에 맞는 도구나 가이드가 없습니다.</p>`;
+      list.hidden = false;
+    };
+    q.addEventListener("input", render);
+    q.addEventListener("click", () => { if (q.value.trim() && list.hidden) render(); });
+    list.addEventListener("click", e => {
+      const a = e.target.closest("a[data-k]"); if (!a) return;
+      const x = idx[+a.dataset.k];
+      if (x.go) { e.preventDefault(); close(); x.go(); }
+    });
+    const links = () => [...list.querySelectorAll("a")];
+    $(".search").addEventListener("keydown", e => {
+      const ls = links(), i = ls.indexOf(document.activeElement);
+      if (e.key === "Escape") { close(); q.focus(); }
+      else if (e.key === "ArrowDown" && ls.length) { e.preventDefault(); ls[Math.min(i + 1, ls.length - 1)].focus(); }
+      else if (e.key === "ArrowUp" && i >= 0) { e.preventDefault(); i === 0 ? q.focus() : ls[i - 1].focus(); }
+    });
+    document.addEventListener("click", e => { if (!e.target.closest(".search")) close(); });
+    $(".search").addEventListener("focusout", () => setTimeout(() => { if (!$(".search").contains(document.activeElement)) close(); }));
+    // "/"를 누르면 검색으로 (입력 중일 때는 제외)
+    document.addEventListener("keydown", e => {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.target.closest("input,textarea,select,[contenteditable]")) return;
+      if (!q.offsetParent) return;
+      e.preventDefault(); q.focus();
+    });
+  }
+
+  // 설치 명령: 셸을 고르면 두 명령 칸이 함께 바뀐다
+  const CMD = {
+    sh: "git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor",
+    ps: 'git clone https://github.com/devvshyun/AIAdvisor.git "$env:USERPROFILE\\.claude\\skills\\project-upgrade-advisor"',
+  };
+  document.querySelectorAll(".seg [data-os]").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".seg [data-os]").forEach(x => { const on = x === b; x.classList.toggle("on", on); x.setAttribute("aria-pressed", on); });
+    document.querySelectorAll(".term code").forEach(c => { c.textContent = CMD[b.dataset.os]; });
   }));
+
+  // 복사 버튼: 복사되면 체크 표시와 함께 알린다
+  const live = document.createElement("span"); live.className = "sr"; live.setAttribute("aria-live", "polite"); document.body.appendChild(live);
+  document.querySelectorAll(".term button").forEach(b => {
+    const icon = b.innerHTML;
+    b.addEventListener("click", async () => {
+      const txt = b.previousElementSibling.textContent;
+      try { await navigator.clipboard.writeText(txt); b.innerHTML = '<svg viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7"/></svg>'; b.classList.add("ok"); live.textContent = "명령을 복사했습니다"; }
+      catch (_) { live.textContent = "복사하지 못했습니다. 명령을 선택해서 복사해 주세요"; }
+      setTimeout(() => { b.innerHTML = icon; b.classList.remove("ok"); live.textContent = ""; }, 1600);
+    });
+  });
+})();
+// 좁은 화면의 섹션 메뉴: 버튼으로 열고, 링크를 누르거나 Esc·바깥을 누르면 닫힌다
+(() => {
+  const btn = document.querySelector(".menu-btn"), menu = document.getElementById("m-menu");
+  if (!btn || !menu) return;
+  const set = open => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
+  btn.addEventListener("click", () => { const open = menu.hidden; set(open); if (open) menu.querySelector("a").focus(); });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) set(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { set(false); btn.focus(); } });
+  document.addEventListener("click", e => { if (!menu.hidden && !e.target.closest(".menu-btn, #m-menu")) set(false); });
+  matchMedia("(min-width: 1081px)").addEventListener("change", e => { if (e.matches) set(false); });
 })();
 </script>
 <script src="../concept-switch.js" data-concept="b" defer></script>
