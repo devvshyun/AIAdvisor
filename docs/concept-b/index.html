@@ -7,14 +7,14 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Crect x='1' y='1' width='24' height='24' fill='%230b0b0b'/%3E%3Cpath d='M7 18 12 8h2l5 10h-2.6l-1-2.2h-4.8l-1 2.2Zm4.4-4.2h3.2L13 10.3Z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
 :root{
   --ink:#0b0b0b;          /* 제목, 검은 버튼, 막대 */
   --text:#3a3a3a;         /* 본문 */
   --muted:#6e6e6e;        /* 보조 설명, 작은 글 */
-  --faint:#9a9a9a;        /* 축 눈금, 버전 */
+  --faint:#6a6a6a;        /* 축 눈금, 버전 (흰 바탕·#f4f4f4 위 4.5:1 이상) */
   --line:#e4e4e4;         /* 구획선 */
   --line-strong:#111;     /* 데이터 패널 테두리 */
   --wash:#f4f4f4;         /* 선택된 행, 막대 트랙 */
@@ -24,13 +24,17 @@
   --code-dim:#9b9b9b;
   --accent:#2b4cff;       /* 강조는 한 가지 색, 한 군데씩만 */
   --ok:#3fb27f;
-  --sans:"Inter","Pretendard Variable",Pretendard,system-ui,sans-serif;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
   --mono:"JetBrains Mono","Pretendard Variable",Pretendard,ui-monospace,monospace;
   --wrap:1136px;
+  --fs-body:15px;          /* 본문·설명 */
+  --fs-list:14px;          /* 표·목록 */
+  --fs-sm:13px;            /* 보조·캡션 */
+  --fs-xs:12px;            /* 작은 라벨 */
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.65 var(--sans);word-break:keep-all;overflow-wrap:break-word}
+body{margin:0;background:var(--bg);color:var(--text);font:400 var(--fs-body)/1.65 var(--sans);word-break:keep-all;overflow-wrap:break-word}
 h1,h2,h3,h4,p{word-break:keep-all;margin:0}
 a{color:inherit}
 code,kbd{font-family:var(--mono)}
@@ -43,19 +47,19 @@ button{font:inherit;color:inherit}
 .sec>.rail>.wrap{padding-top:64px;padding-bottom:72px}
 
 /* ---------- 공지 띠, 상단 메뉴 ---------- */
-.notice{background:var(--ink);color:#fff;text-align:center;font-size:13px;padding:9px 16px}
+.notice{background:var(--ink);color:#fff;text-align:center;font-size:var(--fs-sm);padding:9px 16px}
 .notice a{text-decoration:none}
 .nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
 .nav .wrap{display:flex;align-items:center;gap:28px;height:64px;max-width:calc(var(--wrap) + 48px)}
 .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
 .brand svg{width:26px;height:26px}
-.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:14px;color:#444}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;font-size:var(--fs-list);color:#444}
 .nav ul a{text-decoration:none}
 .nav ul a:hover{color:var(--ink)}
-.search{flex:1;max-width:400px;display:flex;align-items:center;gap:8px;border:1px solid #d6d6d6;border-radius:2px;height:36px;padding:0 10px;font-size:13px;color:var(--faint)}
-.search kbd{margin-left:auto;border:1px solid #ccc;font-size:11px;padding:0 5px;color:#777}
+.search{flex:1;max-width:400px;display:flex;align-items:center;gap:8px;border:1px solid #d6d6d6;border-radius:2px;height:36px;padding:0 10px;font-size:var(--fs-sm);color:var(--faint)}
+.search kbd{margin-left:auto;border:1px solid #ccc;font-size:var(--fs-xs);padding:0 5px;color:var(--muted)}
 .nav .sp{flex:1}
-.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--ink);border-radius:2px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 15px;font-weight:600;font-size:var(--fs-list);text-decoration:none;border:1px solid var(--ink);border-radius:2px;white-space:nowrap}
 .btn--dark{background:var(--ink);color:#fff}
 .btn--dark:hover{background:#2a2a2a}
 .btn--line{background:#fff;color:var(--ink)}
@@ -63,9 +67,9 @@ button{font:inherit;color:inherit}
 .btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.6}
 
 /* ---------- 작은 라벨 ---------- */
-.label{font:700 11.5px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#555}
-.tag{display:inline-block;background:var(--accent);color:#fff;font:700 10.5px/1 var(--mono);padding:4px 5px;letter-spacing:.06em;margin-right:8px}
-.kicker{display:flex;align-items:center;font:500 12.5px/1 var(--mono);letter-spacing:.06em;color:#555;text-decoration:none}
+.label{font:700 var(--fs-xs)/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#555}
+.tag{display:inline-block;background:var(--accent);color:#fff;font:700 var(--fs-xs)/1 var(--mono);padding:4px 5px;letter-spacing:.06em;margin-right:8px}
+.kicker{display:flex;align-items:center;font:500 var(--fs-sm)/1 var(--mono);letter-spacing:.06em;color:#555;text-decoration:none}
 
 /* ---------- 히어로 ---------- */
 .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,556px);gap:64px;align-items:start;padding:64px 0 72px}
@@ -73,160 +77,159 @@ button{font:inherit;color:inherit}
 .hero h1 em{font-style:normal;color:var(--accent)}
 .hero .lede{margin-top:22px;font-size:17px;line-height:1.75;color:#4a4a4a;font-weight:300;max-width:31em}
 .hero .lede u{text-decoration:none;border-bottom:1.5px solid var(--ink);color:var(--ink);font-weight:400}
-.inst-h{margin-top:34px;font-size:14px;font-weight:700;color:var(--ink)}
-.term{position:relative;margin-top:10px;background:var(--code);color:var(--code-text);font:500 13.5px/1.5 var(--mono);display:flex;align-items:stretch;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)}
+.inst-h{margin-top:34px;font-size:var(--fs-list);font-weight:700;color:var(--ink)}
+.term{position:relative;margin-top:10px;background:var(--code);color:var(--code-text);font:500 var(--fs-list)/1.5 var(--mono);display:flex;align-items:stretch;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)}
 .term code{flex:1;min-width:0;padding:17px 18px;overflow-x:auto;white-space:nowrap}
 .term code::before{content:">";color:var(--accent);margin-right:12px;filter:brightness(1.6)}
 .term button{width:46px;flex:none;background:none;border:0;border-left:1px solid #333;color:#888;cursor:pointer}
 .term button:hover{color:#fff}
 .term button svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.4}
 .inst-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;flex-wrap:wrap}
-.seg{display:inline-flex;border:1px solid #333;padding:2px;font-size:12px}
+.seg{display:inline-flex;border:1px solid #333;padding:2px;font-size:var(--fs-xs)}
 .seg span{padding:3px 9px;color:#555}
 .seg .on{background:var(--ink);color:#fff}
-.small-link{font-size:12.5px;color:var(--muted);text-decoration:none}
+.small-link{font-size:var(--fs-sm);color:var(--muted);text-decoration:none}
 .small-link:hover{color:var(--ink)}
 .hero .ctas{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
-.follow{display:inline-block;margin-top:22px;font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+.follow{display:inline-block;margin-top:22px;font-size:var(--fs-list);font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
 
 /* 데이터 패널: 검은 테두리 + 위쪽 탭 */
 .panel{border:1px solid var(--line-strong);background:#fff}
 .ptabs{display:flex;border-bottom:1px solid var(--line-strong)}
-.ptabs span{flex:1 1 auto;text-align:center;padding:12px 10px;font-size:13px;font-weight:600;color:var(--ink);border-left:1px solid var(--line-strong);white-space:nowrap}
+.ptabs span{flex:1 1 auto;text-align:center;padding:12px 10px;font-size:var(--fs-sm);font-weight:600;color:var(--ink);border-left:1px solid var(--line-strong);white-space:nowrap}
 .ptabs span:first-child{border-left:0}
 .ptabs .on{background:var(--ink);color:#fff}
 .pbody{padding:22px 24px 18px}
 .phead{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
 .phead h3{font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
-.phead a{font-size:12.5px;color:var(--muted);text-decoration:none;white-space:nowrap}
+.phead a{font-size:var(--fs-sm);color:var(--muted);text-decoration:none;white-space:nowrap}
 .phead a::before{content:"";display:inline-block;border-left:6px solid var(--accent);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-right:7px}
-.psub{font-size:12.5px;color:var(--muted);margin-top:3px}
+.psub{font-size:var(--fs-sm);color:var(--muted);margin-top:3px}
 .bars{margin-top:20px;display:grid;gap:12px}
 .bar{display:grid;grid-template-columns:132px minmax(0,1fr) 64px;gap:14px;align-items:center}
-.bar .nm{font-size:13.5px;color:var(--ink);line-height:1.2}
-.bar .nm small{display:block;font:400 10.5px/1.4 var(--mono);color:var(--faint);margin-top:2px}
+.bar .nm{font-size:var(--fs-list);color:var(--ink);line-height:1.2}
+.bar .nm small{display:block;font:400 var(--fs-xs)/1.4 var(--mono);color:var(--faint);margin-top:2px}
 .bar .tr{height:28px;background:var(--wash);position:relative}
 .bar .fl{position:absolute;inset:0 auto 0 0;background:var(--ink)}
-.bar.best .fl{background:var(--accent)}
-.bar .v{font:500 13.5px/1 var(--mono);text-align:right;color:#333}
+.bar .v{font:500 var(--fs-list)/1 var(--mono);text-align:right;color:#333}
 .bar.best .v{font-weight:700;font-size:17px;color:var(--ink)}
 .axis{display:grid;grid-template-columns:132px minmax(0,1fr) 64px;gap:14px;margin-top:4px}
-.axis div{position:relative;border-top:1px solid #999;height:20px;display:flex;justify-content:space-between;font:400 10px/1 var(--mono);color:var(--faint)}
+.axis div{position:relative;border-top:1px solid #999;height:20px;display:flex;justify-content:space-between;font:400 var(--fs-xs)/1 var(--mono);color:var(--faint)}
 .axis div span{padding-top:7px;position:relative}
 .axis div span::before{content:"";position:absolute;top:-1px;left:50%;height:5px;border-left:1px solid #999}
 .axis div span:first-child::before{left:0}.axis div span:last-child::before{left:auto;right:0}
-.fine{margin-top:16px;padding-top:12px;border-top:1px solid #ccc;display:flex;gap:16px;justify-content:space-between;font-size:12px;line-height:1.55;color:var(--muted)}
+.fine{margin-top:16px;padding-top:12px;border-top:1px solid #ccc;display:flex;gap:16px;justify-content:space-between;font-size:var(--fs-xs);line-height:1.55;color:var(--muted)}
 .fine a{color:var(--ink);white-space:nowrap}
 
 /* 도구 종류 띠 (로고 띠 자리) */
 .strip .wrap{padding-top:26px;padding-bottom:30px}
 .strip ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 22px;font:700 17px/1 var(--mono);letter-spacing:-.02em;color:#3d3d3d}
-.strip li small{font:400 11px/1 var(--mono);color:var(--faint);margin-left:5px}
+.strip li small{font:400 var(--fs-xs)/1 var(--mono);color:var(--faint);margin-left:5px}
 
 /* ---------- 섹션 머리 ---------- */
 .sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:end;margin-bottom:34px}
 .sh h2{margin-top:12px;font-weight:900;font-size:clamp(28px,3.4vw,42px);line-height:1.12;letter-spacing:-.05em;color:var(--ink)}
-.sh p{font-size:15px;line-height:1.75;color:#555;font-weight:300}
+.sh p{font-size:var(--fs-body);line-height:1.75;color:#555;font-weight:300}
 .sh p a{color:var(--ink);font-weight:600}
 
 /* ---------- 2. 상황별 추천 결과 ---------- */
 .demo{display:grid;grid-template-columns:minmax(0,388px) minmax(0,1fr);gap:40px;align-items:start}
 .steps{list-style:none;margin:0;padding:0}
 .steps li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;padding:14px 12px 15px;position:relative}
-.steps li i{font:500 12px/1.9 var(--mono);color:var(--faint);font-style:normal}
-.steps li b{display:block;font-weight:500;font-size:15px;color:var(--ink);line-height:1.45}
-.steps li b em{font:500 10.5px/1 var(--mono);font-style:normal;border:1px solid #bbb;padding:2px 4px;margin-left:7px;vertical-align:2px;color:#555}
-.steps li code{display:block;font-size:12.5px;color:#444;margin-top:4px;line-height:1.5}
+.steps li i{font:500 var(--fs-xs)/1.9 var(--mono);color:var(--faint);font-style:normal}
+.steps li b{display:block;font-weight:500;font-size:var(--fs-body);color:var(--ink);line-height:1.45}
+.steps li b em{font:500 var(--fs-xs)/1 var(--mono);font-style:normal;border:1px solid #bbb;padding:2px 4px;margin-left:7px;vertical-align:2px;color:#555}
+.steps li code{display:block;font-size:var(--fs-sm);color:#444;margin-top:4px;line-height:1.5}
 .steps li code::before{content:"> ";color:var(--faint)}
 .steps li.on{background:var(--wash)}
 .steps li.on i{color:var(--accent);font-weight:700}
 .steps li.on::after{content:"";position:absolute;left:12px;bottom:0;width:38%;height:2px;background:var(--accent)}
-.steps li.on p{grid-column:2;font-size:13.5px;line-height:1.65;color:#555;margin-top:6px}
+.steps li.on p{grid-column:2;font-size:var(--fs-list);line-height:1.65;color:#555;margin-top:6px}
 
 .rep{border:1px solid var(--line-strong)}
-.rep-top{display:flex;align-items:center;gap:10px;background:var(--code);color:var(--code-text);font:500 13px/1.4 var(--mono);padding:12px 18px;flex-wrap:wrap}
+.rep-top{display:flex;align-items:center;gap:10px;background:var(--code);color:var(--code-text);font:500 var(--fs-sm)/1.4 var(--mono);padding:12px 18px;flex-wrap:wrap}
 .rep-top b{color:#fff}
 .rep-top .p{color:var(--accent);filter:brightness(1.6)}
-.rep-top .mode{margin-left:auto;font-size:11px;color:var(--code-dim);border:1px solid #444;padding:2px 6px}
+.rep-top .mode{margin-left:auto;font-size:var(--fs-xs);color:var(--code-dim);border:1px solid #444;padding:2px 6px}
 .rep-b{padding:6px 22px 20px}
 .blk{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:16px 0;border-top:1px solid var(--line)}
 .blk:first-child{border-top:0}
-.blk>i{font:700 12px/1 var(--mono);font-style:normal;width:22px;height:22px;display:grid;place-items:center;background:var(--ink);color:#fff;margin-top:1px}
-.blk h4{font-size:13.5px;font-weight:700;color:var(--ink)}
-.blk p,.blk li{font-size:14px;line-height:1.65;color:#444}
+.blk>i{font:700 var(--fs-xs)/1 var(--mono);font-style:normal;width:22px;height:22px;display:grid;place-items:center;background:var(--ink);color:#fff;margin-top:1px}
+.blk h4{font-size:var(--fs-list);font-weight:700;color:var(--ink)}
+.blk p,.blk li{font-size:var(--fs-list);line-height:1.65;color:#444}
 .blk ul{margin:6px 0 0;padding-left:18px}
 .blk>div>p{margin-top:4px}
 .tbl{margin-top:10px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
-th{font:600 10.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:#777;text-align:left;padding:7px 8px;border-bottom:1px solid var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);min-width:560px}
+th{font:600 var(--fs-xs)/1.3 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;padding:7px 8px;border-bottom:1px solid var(--ink)}
 td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;color:#333}
-td:first-child{font:600 12px/1.5 var(--mono);color:var(--ink);width:24px}
+td:first-child{font:600 var(--fs-xs)/1.5 var(--mono);color:var(--ink);width:24px}
 td a{color:var(--ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-td code{font-size:11.5px;background:var(--wash);padding:1px 4px}
-td.n{font-family:var(--mono);font-size:12px;white-space:nowrap}
-.pick{margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 22px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+td code{font-size:var(--fs-xs);background:var(--wash);padding:1px 4px}
+td.n{font-family:var(--mono);font-size:var(--fs-xs);white-space:nowrap}
+.pick{margin-top:4px;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 22px;border-top:1px solid var(--line);font-size:var(--fs-sm);color:var(--muted)}
 .pick b{color:var(--ink)}
 .pick .nums{display:flex;gap:4px}
-.pick .nums span{font:600 12px/1 var(--mono);border:1px solid #bbb;width:26px;height:26px;display:grid;place-items:center;color:var(--ink)}
+.pick .nums span{font:600 var(--fs-xs)/1 var(--mono);border:1px solid #bbb;width:26px;height:26px;display:grid;place-items:center;color:var(--ink)}
 
 /* ---------- 3. 동작 방식 ---------- */
 .how{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:40px;align-items:start}
-.code{background:var(--code);color:var(--code-text);font:400 13px/1.85 var(--mono);padding:18px 20px 20px}
+.code{background:var(--code);color:var(--code-text);font:400 var(--fs-sm)/1.85 var(--mono);padding:18px 20px 20px}
 .code .k{display:inline-block;min-width:19ch}
 .code .c{color:var(--code-dim)}
 .code .p{color:#8aa0ff}
 .code .ok{color:var(--ok)}
-.code .off{color:#777;text-decoration:line-through}
+.code .off{color:var(--code-dim);text-decoration:line-through}
 .code .h{display:block;color:#fff;font-weight:700}
 .code .gap{display:block;height:12px}
-.cap{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--muted)}
+.cap{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:var(--fs-xs);color:var(--muted)}
 .pill{display:inline-flex;gap:4px}
 .cap{gap:12px}
-.pill span{white-space:nowrap;border:1px solid #ccc;border-radius:99px;padding:2px 10px;font-size:12px;color:#555}
+.pill span{white-space:nowrap;border:1px solid #ccc;border-radius:99px;padding:2px 10px;font-size:var(--fs-xs);color:#555}
 .modes{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border:1px solid var(--line-strong)}
 .mode{padding:20px 22px 22px}
 .mode+.mode{border-left:1px solid var(--line-strong)}
 .mode .label{color:var(--accent)}
 .mode h3{margin-top:10px;font-size:19px;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
-.mode p{margin-top:6px;font-size:14px;color:#555}
+.mode p{margin-top:6px;font-size:var(--fs-list);color:#555}
 .mode ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
-.mode li{display:flex;gap:8px;align-items:baseline;font-size:13.5px;padding:6px 0;border-top:1px solid var(--line);color:#333}
-.mode li i{font:700 11.5px/1 var(--mono);font-style:normal;color:var(--faint);width:12px}
+.mode li{display:flex;gap:8px;align-items:baseline;font-size:var(--fs-list);padding:6px 0;border-top:1px solid var(--line);color:#333}
+.mode li i{font:700 var(--fs-xs)/1 var(--mono);font-style:normal;color:var(--faint);width:12px}
 
 /* ---------- 4. 추천 근거 ---------- */
 .tabs{display:inline-flex;border:1px solid var(--line-strong);margin-bottom:26px;max-width:100%}
-.tabs button{border:0;background:#fff;padding:11px 18px;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tabs button{border:0;background:#fff;padding:11px 18px;font-size:var(--fs-list);font-weight:600;cursor:pointer;white-space:nowrap}
 .tabs button+button{border-left:1px solid var(--line-strong)}
 .tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
 .kit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:40px;align-items:start}
 .kit .panel .pbody{padding:20px 22px 18px}
 .cats{margin-top:18px;display:grid;gap:12px}
 .cat{display:grid;grid-template-columns:78px minmax(0,1fr) 40px;gap:12px;align-items:center}
-.cat .nm{font-size:13.5px;color:var(--ink);font-weight:500}
+.cat .nm{font-size:var(--fs-list);color:var(--ink);font-weight:500}
 .cat .tr{height:24px;background:var(--wash);position:relative}
 .cat .fl{position:absolute;inset:0 auto 0 0;background:var(--ink)}
 .cat .tried{position:absolute;inset:0 auto 0 0;background:var(--accent)}
-.cat .v{font:600 14px/1 var(--mono);text-align:right;color:var(--ink)}
+.cat .v{font:600 var(--fs-list)/1 var(--mono);text-align:right;color:var(--ink)}
 .cat.on .nm{font-weight:700}
-.legend{display:flex;gap:16px;margin-top:14px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.legend{display:flex;gap:16px;margin-top:14px;font-size:var(--fs-xs);color:var(--muted);flex-wrap:wrap}
 .legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;background:var(--ink)}
 .legend span.t::before{background:var(--accent)}
 .recipes{margin-top:18px;border-top:1px solid #ccc;padding-top:12px}
-.recipes li{font-size:13px;line-height:1.6;color:#444}
+.recipes li{font-size:var(--fs-sm);line-height:1.6;color:#444}
 .recipes ul{margin:8px 0 0;padding:0;list-style:none}
 .recipes li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;padding:3px 0}
-.recipes li span{font:400 11px/1.9 var(--mono);color:var(--faint)}
+.recipes li span{font:400 var(--fs-xs)/1.9 var(--mono);color:var(--faint)}
 .recipes a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:1px solid #bbb}
 .tools-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
-.tools-h h3{font-size:15px;font-weight:700;color:var(--ink)}
-.tools-h span{font:400 11.5px/1 var(--mono);color:var(--muted)}
+.tools-h h3{font-size:var(--fs-body);font-weight:700;color:var(--ink)}
+.tools-h span{font:400 var(--fs-xs)/1 var(--mono);color:var(--muted)}
 .tool{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;padding:12px 0;border-bottom:1px solid var(--line)}
-.tool b{font-size:14.5px;font-weight:600;color:var(--ink)}
+.tool b{font-size:var(--fs-list);font-weight:600;color:var(--ink)}
 .tool .k{display:flex;gap:5px;align-items:center;justify-self:end}
-.tool .k span{font:500 10.5px/1 var(--mono);border:1px solid #bbb;padding:3px 5px;color:#555}
+.tool .k span{font:500 var(--fs-xs)/1 var(--mono);border:1px solid #bbb;padding:3px 5px;color:#555}
 .tool .k .t{border-color:var(--accent);background:var(--accent);color:#fff}
-.tool p{grid-column:1/-1;font-size:13px;line-height:1.6;color:#666}
-.more{display:inline-block;margin-top:14px;font-size:13.5px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
+.tool p{grid-column:1/-1;font-size:var(--fs-sm);line-height:1.6;color:#666}
+.more{display:inline-block;margin-top:14px;font-size:var(--fs-list);font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--ink)}
 .gl .cat{grid-template-columns:86px minmax(0,1fr) 40px}
 [hidden]{display:none!important}
 #demo,#how,#kit,#faq,#guestbook{scroll-margin-top:64px}
@@ -235,37 +238,37 @@ td.n{font-family:var(--mono);font-size:12px;white-space:nowrap}
 .faq{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
 .qa{border-top:1px solid var(--ink)}
 .qa>div{display:grid;grid-template-columns:40px minmax(0,1fr);gap:8px;padding:18px 0;border-bottom:1px solid var(--line)}
-.qa i{font:500 12px/1.9 var(--mono);font-style:normal;color:var(--faint)}
+.qa i{font:500 var(--fs-xs)/1.9 var(--mono);font-style:normal;color:var(--faint)}
 .qa h3{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
-.qa p{margin-top:6px;font-size:14px;line-height:1.7;color:#555}
-.qa code{font-size:12px;background:var(--wash);padding:1px 4px}
+.qa p{margin-top:6px;font-size:var(--fs-list);line-height:1.7;color:#555}
+.qa code{font-size:var(--fs-xs);background:var(--wash);padding:1px 4px}
 .gb-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
-.gb-h a{font-size:12.5px;color:var(--muted)}
+.gb-h a{font-size:var(--fs-sm);color:var(--muted)}
 .gb{height:560px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line-strong);border-top:0;padding:16px 16px 8px;background:#fff}
 .gb .giscus,.gb .giscus-frame{width:100%}
-.gb p{font-size:13.5px;color:var(--muted)}
+.gb p{font-size:var(--fs-list);color:var(--muted)}
 
 /* ---------- 데이터로 그리는 부분 ---------- */
-.fail{border:1px dashed #bbb;padding:18px 20px;font-size:14px;color:var(--muted)}
+.fail{border:1px dashed #bbb;padding:18px 20px;font-size:var(--fs-list);color:var(--muted)}
 .fail a{color:var(--ink);font-weight:600}
-button.ptab{flex:1 1 auto;text-align:center;padding:12px 10px;font:600 13px/1.4 var(--mono);color:var(--ink);border:0;border-left:1px solid var(--line-strong);background:#fff;cursor:pointer;white-space:nowrap}
+button.ptab{flex:1 1 auto;text-align:center;padding:12px 10px;font:600 var(--fs-sm)/1.4 var(--mono);color:var(--ink);border:0;border-left:1px solid var(--line-strong);background:#fff;cursor:pointer;white-space:nowrap}
 button.ptab:first-child{border-left:0}
 button.ptab[aria-selected="true"]{background:var(--ink);color:#fff}
-.bar.na .v{font-size:12px}
+.bar.na .v{font-size:var(--fs-xs)}
 .steps[role="tablist"] li{cursor:pointer}
 .steps[role="tablist"] li:not(.on):hover{background:#fafafa}
 .steps li:focus-visible,button.ptab:focus-visible,button.cat:focus-visible,.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.blk table td:nth-child(5){font-family:var(--mono);font-size:12px;white-space:nowrap}
+.blk table td:nth-child(5){font-family:var(--mono);font-size:var(--fs-xs);white-space:nowrap}
 button.cat{width:100%;border:0;background:none;padding:4px 6px;margin:-4px -6px;text-align:left;cursor:pointer;box-sizing:content-box}
 button.cat[aria-selected="true"]{background:var(--wash)}
 button.cat[aria-selected="true"] .nm{font-weight:700}
 button.cat[aria-selected="true"] .nm::before{content:"";display:inline-block;border-left:6px solid var(--accent);border-top:4px solid transparent;border-bottom:4px solid transparent;margin-right:6px}
-.recipes h4{margin-top:10px;font-size:14px;font-weight:700;color:var(--ink)}
+.recipes h4{margin-top:10px;font-size:var(--fs-list);font-weight:700;color:var(--ink)}
 .recipes h4 a{border-bottom:1px solid #bbb;text-decoration:none}
-.recipes p.gname{margin-top:12px;font:600 11px/1.4 var(--mono);color:#555}
+.recipes p.gname{margin-top:12px;font:600 var(--fs-xs)/1.4 var(--mono);color:#555}
 .recipes ol{margin:6px 0 0;padding:0;list-style:none;counter-reset:st}
-.recipes ol li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;padding:4px 0;border-top:1px solid var(--line);font-size:13px;color:#333;counter-increment:st}
-.recipes ol li::before{content:counter(st,decimal-leading-zero);font:400 11px/1.9 var(--mono);color:var(--faint)}
+.recipes ol li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;padding:4px 0;border-top:1px solid var(--line);font-size:var(--fs-sm);color:#333;counter-increment:st}
+.recipes ol li::before{content:counter(st,decimal-leading-zero);font:400 var(--fs-xs)/1.9 var(--mono);color:var(--faint)}
 .tool .k .off{border-color:#999;background:var(--wash);color:#555;text-decoration:line-through}
 .tool b a{color:inherit;text-decoration:none;border-bottom:1px solid #bbb}
 .tool b a:hover{border-color:var(--ink)}
@@ -273,14 +276,22 @@ button.cat[aria-selected="true"] .nm::before{content:"";display:inline-block;bor
 /* ---------- 6. 마무리 ---------- */
 .close{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .close h2{font-weight:900;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.05em;line-height:1.12;color:var(--ink);margin-top:12px}
-.close p{margin-top:10px;font:400 13px/1.5 var(--mono);color:var(--muted)}
+.close p{margin-top:10px;font:400 var(--fs-sm)/1.5 var(--mono);color:var(--muted)}
 .close .term{margin-top:24px;width:100%}
 footer{border-top:1px solid var(--line)}
-footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:22px;padding-bottom:26px;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-top:22px;padding-bottom:26px;font-size:var(--fs-sm);color:var(--muted)}
 footer nav{display:flex;gap:20px;flex-wrap:wrap}
 footer nav a{text-decoration:none;color:#444}
 footer nav a:hover{color:var(--ink);text-decoration:underline}
 
+/* 긴 목록 접기 (처음 6개: .tools-h 다음 2~7번째 자식) */
+#area-tools:not(.open)>.tool:nth-child(n+8),#topic-guides:not(.open)>.tool:nth-child(n+8){display:none}
+.showall{display:block;width:100%;margin-top:12px;padding:10px 12px;border:1px solid var(--ink);background:#fff;font-size:var(--fs-list);font-weight:600;color:var(--ink);cursor:pointer}
+.showall:hover{background:var(--wash)}
+/* 히어로 막대: 축 이름, 시간 없는 상황은 이름과 값만 */
+.axis-name{display:grid;grid-template-columns:132px minmax(0,1fr) 64px;gap:14px;margin-top:2px;font:500 var(--fs-xs)/1.3 var(--mono);color:var(--muted)}
+.axis-name span:nth-child(2){text-align:center}
+.bars.untimed .bar{grid-template-columns:minmax(0,1fr) auto}
 /* ---------- 반응형 ---------- */
 @media (max-width:1080px){
   .hero{grid-template-columns:minmax(0,1fr);gap:44px}
@@ -295,15 +306,15 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
   .rail{border-left:0;border-right:0}
   .wrap{padding:0 16px}
   .nav .wrap{gap:12px;height:56px}
-  .notice{font-size:12px;line-height:1.5}
+  .notice{font-size:var(--fs-xs);line-height:1.5}
   .sec>.rail>.wrap{padding-top:44px;padding-bottom:52px}
   .hero{padding:40px 0 48px}
   .hero .lede{font-size:16px}
   .bar{grid-template-columns:96px minmax(0,1fr) 50px;gap:10px}
-  .axis{grid-template-columns:96px minmax(0,1fr) 50px;gap:10px}
-  .bar .nm{font-size:12.5px}
+  .axis,.axis-name{grid-template-columns:96px minmax(0,1fr) 50px;gap:10px}
+  .bar .nm{font-size:var(--fs-sm)}
   .ptabs{overflow-x:auto}
-  .ptabs span{font-size:12px;padding:11px 10px}
+  .ptabs span{font-size:var(--fs-xs);padding:11px 10px}
   .pbody{padding:18px 16px 14px}
   .fine{flex-direction:column;gap:6px}
   .modes{grid-template-columns:minmax(0,1fr)}
@@ -312,11 +323,11 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
   .rep-b{padding:4px 16px 16px}
   .pick{padding:12px 16px;flex-direction:column;align-items:flex-start}
   .tabs{display:flex}
-  .tabs button{flex:1;padding:11px 10px;font-size:12.5px;white-space:normal}
-  .strip ul{justify-content:flex-start;font-size:15px}
-  .close .term code{font-size:12px}
-  .term code{font-size:12px;padding:15px 14px}
-  button.ptab{font-size:12px;padding:11px 8px}
+  .tabs button{flex:1;padding:11px 10px;font-size:var(--fs-sm);white-space:normal}
+  .strip ul{justify-content:flex-start;font-size:var(--fs-body)}
+  .close .term code{font-size:var(--fs-xs)}
+  .term code{font-size:var(--fs-xs);padding:15px 14px}
+  button.ptab{font-size:var(--fs-xs);padding:11px 8px}
   .gb{height:480px;padding:12px 10px 6px}
   .gl .cat{grid-template-columns:78px minmax(0,1fr) 32px}
 }
@@ -361,7 +372,7 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
 
         <p class="inst-h" id="install">AIAdvisor 설치</p>
         <div class="term">
-          <code>git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
+          <code tabindex="0" aria-label="설치 명령">git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
           <button type="button" aria-label="명령 복사"><svg viewBox="0 0 14 14"><rect x="4.5" y="4.5" width="8" height="8"/><path d="M9.5 4.5v-3h-8v8h3"/></svg></button>
         </div>
         <div class="inst-row">
@@ -502,7 +513,7 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       </div>
       <a class="btn btn--dark" href="#install">스킬 설치하기<svg viewBox="0 0 12 12"><path d="M1 6h8M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
       <div class="term">
-        <code>git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
+        <code tabindex="0" aria-label="설치 명령">git clone https://github.com/devvshyun/AIAdvisor.git ~/.claude/skills/project-upgrade-advisor</code>
         <button type="button" aria-label="명령 복사"><svg viewBox="0 0 14 14"><rect x="4.5" y="4.5" width="8" height="8"/><path d="M9.5 4.5v-3h-8v8h3"/></svg></button>
       </div>
     </div>
@@ -584,17 +595,18 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       const max = Math.max(...r.list.map(x => x.min || 0));
       const top = timed ? Math.ceil(max / 10) * 10 : 0;
       const best = timed ? Math.min(...r.list.filter(x => x.min != null).map(x => x.min)) : null;
-      const ticks = timed ? [0, 1, 2, 3].map(k => k === 0 ? "0" : fmt(Math.round(top * k / 3))) : [];
+      const ticks = timed ? [0, 1, 2, 3].map(k => String(Math.round(top * k / 3))) : [];
       body.innerHTML = `
         <div class="phead"><h3>${esc(s.prompt)}</h3><a href="#demo">전체 답변</a></div>
-        <p class="psub">${esc(s.mode)} 모드 · ${esc(r.title)} ${r.list.length}건${timed ? " · 준비 시간 (짧을수록 먼저 하기 쉬움)" : ""}</p>
-        <div class="bars">${r.list.map(x => `
+        <p class="psub">${esc(s.mode)} 모드 · ${esc(r.title)} ${r.list.length}건${timed ? " · 준비 시간이 짧을수록 먼저 하기 쉬움" : " · 시간 대신 시점(지금/나중에)만 있어 막대 없이 값만 표시"}</p>
+        <div class="bars${timed ? "" : " untimed"}">${r.list.map(x => `
           <div class="bar${x.min != null && x.min === best ? " best" : ""}${x.min == null ? " na" : ""}">
             <div class="nm">${esc(x.name)}<small>#${esc(x.n)} · ${esc(x.cost)}</small></div>
-            <div class="tr">${x.min != null ? `<div class="fl" style="width:${(x.min / top * 100).toFixed(1)}%"></div>` : ""}</div>
+            ${timed ? `<div class="tr">${x.min != null ? `<div class="fl" style="width:${(x.min / top * 100).toFixed(1)}%"></div>` : ""}</div>` : ""}
             <div class="v">${esc(x.min != null ? fmt(x.min) : x.when)}</div>
           </div>`).join("")}</div>
-        ${timed ? `<div class="axis" aria-hidden="true"><span></span><div>${ticks.map(t => `<span>${t}</span>`).join("")}</div><span></span></div>` : ""}
+        ${timed ? `<div class="axis" aria-hidden="true"><span></span><div>${ticks.map(t => `<span>${t}</span>`).join("")}</div><span></span></div>
+        <p class="axis-name"><span></span><span>준비 시간(분)</span><span></span></p>` : ""}
         <div class="fine"><span>${s.parts.map(p => `${esc(p.letter)} ${esc(p.title)}`).join(" · ")}</span><a href="#how">읽는 순서</a></div>`;
     });
   }
@@ -624,6 +636,19 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
         <div class="pick"><b>${esc(s.end)}</b>${n ? `<span class="nums" aria-hidden="true">${Array.from({ length: n }, (_, k) => `<span>${k + 1}</span>`).join("")}</span>` : ""}</div>`;
     });
   }
+
+  // 긴 목록: 처음 SHOW개만 보이고 "전체 보기 (N개)" / "접기"로 펼침. 목록을 다시 그리면 접힌 상태로 돌아감
+  const SHOW = 6;
+  const toggle = n => n > SHOW ? `<button type="button" class="showall" aria-expanded="false" data-n="${n}">전체 보기 (${n}개)</button>` : "";
+  document.addEventListener("click", e => {
+    const b = e.target.closest(".showall");
+    if (!b) return;
+    const open = b.getAttribute("aria-expanded") !== "true";
+    b.setAttribute("aria-expanded", open);
+    b.parentElement.classList.toggle("open", open);
+    b.textContent = open ? "접기" : `전체 보기 (${b.dataset.n}개)`;
+    if (!open) b.scrollIntoView({ block: "nearest" });
+  });
 
   function kit(cat) {
     const root = $("#kit-root");
@@ -665,6 +690,7 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
     const [areaCats, topicCats] = [...root.querySelectorAll(".cats")];
     tablist(areaCats, [...areaCats.children], i => {
       const a = cat.areas[i], r = a.recipe;
+      $("#area-tools").classList.remove("open");
       $("#area-recipe").innerHTML = `
         <p class="label">레시피 · ${esc(a.label)}</p>
         <h4><a href="${esc(r.url)}">${esc(r.title)}</a></h4>
@@ -673,13 +699,16 @@ footer nav a:hover{color:var(--ink);text-decoration:underline}
       $("#area-tools").innerHTML = `
         <div class="tools-h"><h3>${esc(a.label)} · ${a.tools.length}개 중 ${tried}개 써 봄</h3><span>이름 · 종류 · 써 봄</span></div>
         ${a.tools.map(t => `<div class="tool"><b>${esc(t.name)}</b><span class="k"><span>${esc(t.kind)}</span>${t.tried ? `<span class="t">써 봄</span>` : ""}${t.maintained === false ? `<span class="off">관리 중단</span>` : ""}</span><p>${esc(t.what)}</p></div>`).join("")}
+        ${toggle(a.tools.length)}
         <a class="more" href="https://github.com/devvshyun/AIAdvisor">전체 목록 보기 &rarr;</a>`;
     });
     tablist(topicCats, [...topicCats.children], i => {
       const t = cat.topics[i];
+      $("#topic-guides").classList.remove("open");
       $("#topic-guides").innerHTML = `
         <div class="tools-h"><h3>${esc(t.label)} · ${t.guides.length}편</h3><span>references/${esc(t.folder)}</span></div>
         ${t.guides.map(g => `<div class="tool"><b><a href="${esc(g.url)}">${esc(g.title)}</a></b><p>${esc(g.summary)}</p></div>`).join("")}
+        ${toggle(t.guides.length)}
         <a class="more" href="https://github.com/devvshyun/AIAdvisor/tree/main/references/${encodeURIComponent(t.folder)}">가이드 목록 보기 &rarr;</a>`;
     });
 

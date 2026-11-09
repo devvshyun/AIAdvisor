@@ -114,7 +114,7 @@
 - 할 일: 접근성, 성능, AI 티 패턴을 검사하고 **결함만** 고친다. 검사 도구가 방향을 바꾸자고 하면(다른 색, 다른 서체) 따르지 않고 1단계에서 고른 기준을 지킨다.
 - 확인 기준: 라이트·다크 모두 글자 명암비 4.5:1 이상. axe 위반 0건. 접근성 점수와 LCP를 기록한다.
 - 주의: `web-design-guidelines`는 실행할 때마다 GitHub에서 규칙을 받아 그대로 따른다. `chrome-devtools-mcp`는 기본으로 사용 통계를 보내므로 `--no-usage-statistics`를 붙인다.
-- 써 보니: `npx impeccable detect`는 권한 정책에 막힐 수 있다. 설치된 플러그인의 `detect.mjs`를 로컬로 돌리면 파서 모듈이 없어 축소 모드로 돌았고 그라데이션을 놓쳤다.
+- 써 보니: `npx impeccable detect`는 권한 정책에 막힐 수 있다. 설치된 플러그인의 `detect.mjs`를 로컬로 돌리면 파서 모듈이 없어 축소 모드로 돌았고 그라데이션을 놓쳤다. 반대로 축소 모드는 CSS로 그린 작은 삼각형(`border-left` + 위아래 투명 테두리)을 "한쪽 굵은 테두리(side-tab)"로 잘못 잡았다(2026-11-09, 컨셉 B). 결과를 그대로 고치지 말고 해당 줄을 확인한다. 대비는 브라우저에서 axe-core를 직접 돌리면 ChromeDriver 없이 잴 수 있었다.
 
 ### 7. 배포 (GitHub Pages)
 - 도구: `github-pages-deploy`
